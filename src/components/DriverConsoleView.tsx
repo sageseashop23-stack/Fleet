@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Driver, Trip } from '../types';
 import { StatusBadge } from './StatusBadge';
-import { Shield, KeyRound, Power, CheckCircle, Navigation, AlertTriangle, DollarSign, Calendar, MapPin, Truck, HelpCircle } from 'lucide-react';
+import { Shield, KeyRound, Power, CheckCircle, Navigation, AlertTriangle, DollarSign, Calendar, MapPin, Truck, HelpCircle, RefreshCw, Database } from 'lucide-react';
 
 interface DriverConsoleViewProps {
   drivers: Driver[];
@@ -11,6 +11,8 @@ interface DriverConsoleViewProps {
   onToggleDuty: (driverId: string, isAvailable: boolean) => Promise<void>;
   trips: Trip[];
   onUpdateTripStatus: (tripId: string, statusOps: string, extraData?: any) => Promise<void>;
+  onImportGasData?: () => Promise<void>;
+  onOpenGasModal?: () => void;
 }
 
 export const DriverConsoleView: React.FC<DriverConsoleViewProps> = ({
@@ -20,10 +22,14 @@ export const DriverConsoleView: React.FC<DriverConsoleViewProps> = ({
   onLogoutDriver,
   onToggleDuty,
   trips,
-  onUpdateTripStatus
+  onUpdateTripStatus,
+  onImportGasData,
+  onOpenGasModal
 }) => {
   const [inputPin, setInputPin] = useState('');
   const [loginError, setLoginError] = useState<string | null>(null);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncMessage, setSyncMessage] = useState<string | null>(null);
 
   // Dispute Modal State
   const [disputeTrip, setDisputeTrip] = useState<Trip | null>(null);
@@ -34,16 +40,32 @@ export const DriverConsoleView: React.FC<DriverConsoleViewProps> = ({
   const handlePinSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError(null);
-    if (!inputPin || inputPin.length < 4) {
+    const clean = inputPin.trim();
+    if (!clean || clean.length < 4) {
       setLoginError('Enter a valid 4-digit security PIN.');
       return;
     }
 
-    const ok = await onLoginPin(inputPin);
+    const ok = await onLoginPin(clean);
     if (!ok) {
-      setLoginError('Invalid 4-digit PIN code. Check registered PINs in Admin Registry.');
+      setLoginError('Invalid 4-digit PIN code. Check registered PINs below or click "Sync Drivers from Google Sheet".');
     } else {
       setInputPin('');
+    }
+  };
+
+  const handleSyncGSheet = async () => {
+    if (!onImportGasData) return;
+    setIsSyncing(true);
+    setSyncMessage(null);
+    setLoginError(null);
+    try {
+      await onImportGasData();
+      setSyncMessage('Successfully imported drivers & trips from Google Sheet!');
+    } catch (err: any) {
+      setLoginError('Failed to import from Google Sheet: ' + (err.message || 'Check Web App URL'));
+    } finally {
+      setIsSyncing(false);
     }
   };
 
@@ -78,8 +100,25 @@ export const DriverConsoleView: React.FC<DriverConsoleViewProps> = ({
             </div>
 
             {loginError && (
-              <p className="text-xs font-bold text-rose-500 bg-rose-50 dark:bg-rose-950/60 p-2 rounded-lg border border-rose-200 dark:border-rose-800">
-                {loginError}
+              <div className="text-xs font-bold text-rose-500 bg-rose-50 dark:bg-rose-950/60 p-3 rounded-lg border border-rose-200 dark:border-rose-800 text-left space-y-2">
+                <p>{loginError}</p>
+                {onImportGasData && (
+                  <button
+                    type="button"
+                    onClick={handleSyncGSheet}
+                    disabled={isSyncing}
+                    className="w-full flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-bold py-1.5 px-3 rounded text-[11px] transition-all"
+                  >
+                    <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
+                    <span>Sync Drivers from Google Sheet Now</span>
+                  </button>
+                )}
+              </div>
+            )}
+
+            {syncMessage && (
+              <p className="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 p-2 rounded-lg border border-emerald-200 dark:border-emerald-800">
+                {syncMessage}
               </p>
             )}
 
@@ -91,24 +130,54 @@ export const DriverConsoleView: React.FC<DriverConsoleViewProps> = ({
             </button>
           </form>
 
-          {/* Quick PIN Quick-Select for Preview Testing */}
-          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 text-left">
-            <span className="text-[11px] font-bold text-slate-400 block mb-2">Registered Drivers (Click PIN to test):</span>
-            <div className="space-y-1.5">
+          {/* Sync Button & Registered Drivers Preview */}
+          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 text-left space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-bold text-slate-400">Registered Drivers ({drivers.length}):</span>
+              {onImportGasData && (
+                <button
+                  type="button"
+                  onClick={handleSyncGSheet}
+                  disabled={isSyncing}
+                  className="flex items-center gap-1.5 text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:underline disabled:opacity-50"
+                >
+                  <RefreshCw className={`w-3 h-3 ${isSyncing ? 'animate-spin' : ''}`} />
+                  <span>Pull from Google Sheet</span>
+                </button>
+              )}
+            </div>
+
+            <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
               {drivers.map((d) => (
                 <button
                   key={d.id}
                   type="button"
                   onClick={() => setInputPin(d.pin)}
-                  className="w-full flex items-center justify-between p-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 rounded-lg text-xs transition-all border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+                  className="w-full flex items-center justify-between p-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 rounded-lg text-xs transition-all border border-transparent hover:border-slate-200 dark:hover:border-slate-700 text-left"
                 >
-                  <span className="font-semibold text-slate-800 dark:text-slate-200">{d.name}</span>
+                  <div>
+                    <span className="font-semibold text-slate-800 dark:text-slate-200 block">{d.name}</span>
+                    <span className="text-[10px] text-slate-400">{d.vehicleModel || 'Fleet Driver'}</span>
+                  </div>
                   <span className="font-mono font-bold bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
                     PIN: {d.pin}
                   </span>
                 </button>
               ))}
             </div>
+
+            {onOpenGasModal && (
+              <div className="pt-2 text-center">
+                <button
+                  type="button"
+                  onClick={onOpenGasModal}
+                  className="inline-flex items-center gap-1.5 text-[11px] text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 font-medium"
+                >
+                  <Database className="w-3.5 h-3.5" />
+                  <span>Configure Google Sheet Sync Settings</span>
+                </button>
+              </div>
+            )}
           </div>
 
         </div>

@@ -325,6 +325,8 @@ export default function App() {
               onUpdateTripStatus={(tripId, statusOps, extraData) =>
                 handleUpdateTrip(tripId, { statusOps: statusOps as any, ...extraData })
               }
+              onImportGasData={handleImportGasData}
+              onOpenGasModal={() => setIsGasModalOpen(true)}
             />
           )}
 

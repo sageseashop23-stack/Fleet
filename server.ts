@@ -174,7 +174,16 @@ async function startServer() {
   app.post('/api/drivers/login', (req, res) => {
     const db = readDb();
     const { pin } = req.body;
-    const driver = db.drivers.find((d: any) => d.pin === pin);
+    const cleanPin = String(pin || '').trim();
+    if (!cleanPin) {
+      res.status(400).json({ error: 'PIN is required' });
+      return;
+    }
+    const driver = db.drivers.find((d: any) => {
+      const p1 = String(d.pin || '').trim();
+      const p2 = String(d['PIN'] || '').trim();
+      return p1 === cleanPin || p2 === cleanPin;
+    });
     if (!driver) {
       res.status(401).json({ error: 'Invalid 4-digit PIN code' });
       return;
@@ -413,18 +422,25 @@ async function startServer() {
         }
 
         if (Array.isArray(data.drivers) && data.drivers.length > 0) {
-          db.drivers = data.drivers.map((raw: any, idx: number) => ({
-            id: raw.id || `DRV-${101 + idx}`,
-            name: raw.name || raw['Driver Name'] || `Driver ${idx + 1}`,
-            phone: raw.phone || raw['Phone Number'] || '',
-            pin: String(raw.pin || raw['PIN'] || '1234').replace(/\D/g, '') || '1234',
-            isAvailable: raw.isAvailable !== undefined ? Boolean(raw.isAvailable) : (String(raw['Is_Available']).toUpperCase() === 'ON-DUTY' || String(raw['Is_Available']).toUpperCase() === 'TRUE'),
-            vehicleModel: raw.vehicleModel || 'Executive Fleet Sedan',
-            licensePlate: raw.licensePlate || `CPT-${1000 + idx}`,
-            adminRole: raw.adminRole !== undefined ? Boolean(raw.adminRole) : (String(raw['Admin Role']).toUpperCase() === 'TRUE' || String(raw['Admin Role']).toUpperCase() === 'YES'),
-            totalCompletedJobs: Number(raw.totalCompletedJobs) || 25,
-            rating: Number(raw.rating) || 4.9
-          }));
+          db.drivers = data.drivers.map((raw: any, idx: number) => {
+            const rawPin = raw.pin ?? raw['PIN'] ?? raw['Pin'] ?? raw['pin_code'] ?? '1234';
+            const cleanPin = String(rawPin).trim() || '1234';
+            return {
+              id: raw.id || `DRV-${101 + idx}`,
+              name: raw.name || raw['Driver Name'] || `Driver ${idx + 1}`,
+              'Driver Name': raw['Driver Name'] || raw.name || `Driver ${idx + 1}`,
+              phone: raw.phone || raw['Phone Number'] || '',
+              'Phone Number': raw['Phone Number'] || raw.phone || '',
+              pin: cleanPin,
+              PIN: cleanPin,
+              isAvailable: raw.isAvailable !== undefined ? Boolean(raw.isAvailable) : (String(raw['Is_Available']).toUpperCase() === 'ON-DUTY' || String(raw['Is_Available']).toUpperCase() === 'TRUE'),
+              vehicleModel: raw.vehicleModel || 'Executive Fleet Sedan',
+              licensePlate: raw.licensePlate || `CPT-${1000 + idx}`,
+              adminRole: raw.adminRole !== undefined ? Boolean(raw.adminRole) : (String(raw['Admin Role']).toUpperCase() === 'TRUE' || String(raw['Admin Role']).toUpperCase() === 'YES'),
+              totalCompletedJobs: Number(raw.totalCompletedJobs) || 25,
+              rating: Number(raw.rating) || 4.9
+            };
+          });
         }
 
         db.gasConfig.syncStatus = 'SUCCESS';
