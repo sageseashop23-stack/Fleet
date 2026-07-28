@@ -281,12 +281,20 @@ async function startServer() {
         db.activityLogs = db.activityLogs.slice(0, 20);
       }
 
-      // Increment driver completed jobs
+      // Increment driver completed jobs and apply rating
       const driverId = req.body.assignedDriverId || prevTrip.assignedDriverId;
       if (driverId) {
         const dIdx = db.drivers.findIndex((d: any) => d.id === driverId);
         if (dIdx !== -1) {
-          db.drivers[dIdx].totalCompletedJobs = (db.drivers[dIdx].totalCompletedJobs || 0) + 1;
+          const prevJobsCount = db.drivers[dIdx].totalCompletedJobs || 0;
+          db.drivers[dIdx].totalCompletedJobs = prevJobsCount + 1;
+
+          if (typeof patchData.passengerRating === 'number') {
+            const currentRating = db.drivers[dIdx].rating || 5.0;
+            // Simple running average using totalCompletedJobs
+            const newAvg = ((currentRating * prevJobsCount) + patchData.passengerRating) / (prevJobsCount + 1);
+            db.drivers[dIdx].rating = parseFloat(newAvg.toFixed(1));
+          }
         }
       }
     }

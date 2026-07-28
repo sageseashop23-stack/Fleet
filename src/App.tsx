@@ -12,7 +12,8 @@ import { AiDispatchModal } from './components/AiDispatchModal';
 import { INITIAL_DRIVERS, INITIAL_TRIPS, INITIAL_ACTIVITY_LOGS, INITIAL_GAS_CONFIG } from './data/seedData';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'PASSENGER' | 'DRIVER' | 'ADMIN'>('ADMIN');
+  const appMode = (import.meta.env.VITE_APP_MODE as 'PASSENGER' | 'DRIVER' | 'ADMIN' | undefined) || 'ADMIN';
+  const [activeTab, setActiveTab] = useState<'PASSENGER' | 'DRIVER' | 'ADMIN'>(appMode === 'ADMIN' ? 'ADMIN' : appMode);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   // Core Datasets State
@@ -29,14 +30,16 @@ export default function App() {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
 
+  const apiBase = import.meta.env.VITE_API_BASE_URL || '';
+
   // Fetch initial data from Express backend
   const refreshData = async () => {
     try {
       const [tripsRes, driversRes, actRes, gasRes] = await Promise.all([
-        fetch('/api/trips').then((r) => (r.ok ? r.json() : null)),
-        fetch('/api/drivers').then((r) => (r.ok ? r.json() : null)),
-        fetch('/api/activity').then((r) => (r.ok ? r.json() : null)),
-        fetch('/api/gas-config').then((r) => (r.ok ? r.json() : null))
+        fetch(`${apiBase}/api/trips`).then((r) => (r.ok ? r.json() : null)),
+        fetch(`${apiBase}/api/drivers`).then((r) => (r.ok ? r.json() : null)),
+        fetch(`${apiBase}/api/activity`).then((r) => (r.ok ? r.json() : null)),
+        fetch(`${apiBase}/api/gas-config`).then((r) => (r.ok ? r.json() : null))
       ]);
 
       if (tripsRes) setTrips(tripsRes);
@@ -70,7 +73,7 @@ export default function App() {
   // Passenger Handlers
   const handleCreateTrip = async (tripData: any) => {
     try {
-      const res = await fetch('/api/trips', {
+      const res = await fetch(`${apiBase}/api/trips`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(tripData)
@@ -111,7 +114,7 @@ export default function App() {
   // Dispatch / Trip Update Handlers
   const handleUpdateTrip = async (tripId: string, updates: Partial<Trip>) => {
     try {
-      const res = await fetch(`/api/trips/${tripId}`, {
+      const res = await fetch(`${apiBase}/api/trips/${tripId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updates)
@@ -132,7 +135,7 @@ export default function App() {
 
   const handleDeleteTrip = async (tripId: string) => {
     try {
-      await fetch(`/api/trips/${tripId}`, { method: 'DELETE' });
+      await fetch(`${apiBase}/api/trips/${tripId}`, { method: 'DELETE' });
     } catch (err) {
       console.error(err);
     }
@@ -142,7 +145,7 @@ export default function App() {
   // Driver Authentication & Operations
   const handleLoginPin = async (pin: string): Promise<boolean> => {
     try {
-      const res = await fetch('/api/drivers/login', {
+      const res = await fetch(`${apiBase}/api/drivers/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ pin })
@@ -171,7 +174,7 @@ export default function App() {
 
   const handleToggleDuty = async (driverId: string, isAvailable: boolean) => {
     try {
-      const res = await fetch(`/api/drivers/${driverId}`, {
+      const res = await fetch(`${apiBase}/api/drivers/${driverId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ isAvailable })
@@ -187,7 +190,7 @@ export default function App() {
 
   const handleCreateDriver = async (driverData: any) => {
     try {
-      const res = await fetch('/api/drivers', {
+      const res = await fetch(`${apiBase}/api/drivers`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(driverData)
@@ -215,7 +218,7 @@ export default function App() {
 
   const handleUpdateDriver = async (driverId: string, updates: Partial<Driver>) => {
     try {
-      const res = await fetch(`/api/drivers/${driverId}`, {
+      const res = await fetch(`${apiBase}/api/drivers/${driverId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updates)
@@ -232,7 +235,7 @@ export default function App() {
   // Google Apps Script Handlers
   const handleSaveGasConfig = async (webAppUrl: string, autoSyncOnComplete: boolean) => {
     try {
-      const res = await fetch('/api/gas-config', {
+      const res = await fetch(`${apiBase}/api/gas-config`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ webAppUrl, autoSyncOnComplete })
@@ -248,7 +251,7 @@ export default function App() {
 
   const handleTriggerManualGasSync = async () => {
     try {
-      const res = await fetch('/api/sync-gas', { method: 'POST' });
+      const res = await fetch(`${apiBase}/api/sync-gas`, { method: 'POST' });
       const data = await res.json();
       if (data) {
         setGasConfig(data.gasConfig || data);
@@ -260,7 +263,7 @@ export default function App() {
 
   const handleImportGasData = async () => {
     try {
-      const res = await fetch('/api/import-gas', { method: 'POST' });
+      const res = await fetch(`${apiBase}/api/import-gas`, { method: 'POST' });
       const result = await res.json();
       if (res.ok) {
         if (result.trips) setTrips(result.trips);
@@ -277,36 +280,42 @@ export default function App() {
   return (
     <div className="flex h-screen bg-slate-50 text-slate-900 font-sans overflow-hidden antialiased">
       
-      {/* Sidebar Navigation */}
-      <Sidebar
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        disputedTripsCount={disputedTripsCount}
-        activeDriver={activeDriver}
-        onLogoutDriver={handleLogoutDriver}
-        onOpenReportModal={() => setIsReportModalOpen(true)}
-        onOpenGasModal={() => setIsGasModalOpen(true)}
-        onOpenAiModal={() => setIsAiModalOpen(true)}
-        isMobileOpen={isMobileSidebarOpen}
-        setIsMobileOpen={setIsMobileSidebarOpen}
-      />
+      {/* Sidebar Navigation - Only show if mode is ADMIN (default) */}
+      {appMode === 'ADMIN' && (
+        <Sidebar
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          disputedTripsCount={disputedTripsCount}
+          activeDriver={activeDriver}
+          onLogoutDriver={handleLogoutDriver}
+          onOpenReportModal={() => setIsReportModalOpen(true)}
+          onOpenGasModal={() => setIsGasModalOpen(true)}
+          onOpenAiModal={() => setIsAiModalOpen(true)}
+          isMobileOpen={isMobileSidebarOpen}
+          setIsMobileOpen={setIsMobileSidebarOpen}
+        />
+      )}
 
       {/* Main Content Workspace */}
       <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
         
-        {/* Compact Top Header Bar */}
-        <TopHeader
-          activeTab={activeTab}
-          disputedTripsCount={disputedTripsCount}
-          onOpenNewDispatch={() => setActiveTab('PASSENGER')}
-          onOpenReportModal={() => setIsReportModalOpen(true)}
-          onOpenGasModal={() => setIsGasModalOpen(true)}
-          onOpenAiModal={() => setIsAiModalOpen(true)}
-          onToggleMobileSidebar={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
-        />
+        {/* Compact Top Header Bar - Only show if mode is ADMIN */}
+        {appMode === 'ADMIN' && (
+          <>
+            <TopHeader
+              activeTab={activeTab}
+              disputedTripsCount={disputedTripsCount}
+              onOpenNewDispatch={() => setActiveTab('PASSENGER')}
+              onOpenReportModal={() => setIsReportModalOpen(true)}
+              onOpenGasModal={() => setIsGasModalOpen(true)}
+              onOpenAiModal={() => setIsAiModalOpen(true)}
+              onToggleMobileSidebar={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+            />
 
-        {/* Real-time Activity Ticker Stream */}
-        <ActivityStream activities={activities} />
+            {/* Real-time Activity Ticker Stream */}
+            <ActivityStream activities={activities} />
+          </>
+        )}
 
         {/* Scrollable View Area */}
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">

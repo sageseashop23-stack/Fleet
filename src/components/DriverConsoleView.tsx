@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Driver, Trip } from '../types';
 import { StatusBadge } from './StatusBadge';
-import { Shield, KeyRound, Power, CheckCircle, Navigation, AlertTriangle, DollarSign, Calendar, MapPin, Truck, HelpCircle, RefreshCw, Database } from 'lucide-react';
+import { Shield, KeyRound, Power, CheckCircle, Navigation, AlertTriangle, DollarSign, Calendar, MapPin, Truck, HelpCircle, RefreshCw, Database, Star } from 'lucide-react';
 
 interface DriverConsoleViewProps {
   drivers: Driver[];
@@ -36,6 +36,26 @@ export const DriverConsoleView: React.FC<DriverConsoleViewProps> = ({
   const [driverCalculatedAmount, setDriverCalculatedAmount] = useState<number>(0);
   const [driverDisputeReason, setDriverDisputeReason] = useState<string>('');
   const [isSubmittingDispute, setIsSubmittingDispute] = useState(false);
+
+  // Completion Rating Modal State
+  const [ratingTrip, setRatingTrip] = useState<Trip | null>(null);
+  const [passengerRating, setPassengerRating] = useState<number>(5);
+  const [isSubmittingRating, setIsSubmittingRating] = useState(false);
+
+  const handleConfirmCompletion = async () => {
+    if (!ratingTrip) return;
+    setIsSubmittingRating(true);
+    try {
+      await onUpdateTripStatus(ratingTrip.id, 'COMPLETED', {
+        passengerRating
+      });
+      setRatingTrip(null);
+    } catch (err: any) {
+      alert('Error completing trip: ' + err.message);
+    } finally {
+      setIsSubmittingRating(false);
+    }
+  };
 
   const handlePinSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -391,7 +411,7 @@ export const DriverConsoleView: React.FC<DriverConsoleViewProps> = ({
                   {trip.statusOps === 'ARRIVED' && (
                     <button
                       type="button"
-                      onClick={() => onUpdateTripStatus(trip.id, 'COMPLETED')}
+                      onClick={() => { setRatingTrip(trip); setPassengerRating(5); }}
                       className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-lg transition-all flex items-center gap-1.5 shadow-sm"
                     >
                       <CheckCircle className="w-4 h-4" />
@@ -535,6 +555,68 @@ export const DriverConsoleView: React.FC<DriverConsoleViewProps> = ({
                 </button>
               </div>
             </form>
+
+          </div>
+        </div>
+      )}
+
+      {/* Trip Completion & Passenger Rating Modal */}
+      {ratingTrip && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-sm w-full p-6 shadow-xl text-center space-y-6">
+            
+            <div>
+              <div className="w-16 h-16 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="w-8 h-8" />
+              </div>
+              <h3 className="font-black text-xl text-slate-900 dark:text-white">Trip Completed!</h3>
+              <p className="text-xs text-slate-500 mt-2">
+                Please hand the device to <span className="font-bold text-slate-800 dark:text-slate-200">{ratingTrip.passengerName}</span> for a quick rating.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <span className="text-sm font-bold text-slate-700 dark:text-slate-300 block">How was your ride?</span>
+              <div className="flex items-center justify-center gap-2">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    type="button"
+                    onClick={() => setPassengerRating(star)}
+                    className="p-1 transition-transform hover:scale-110 active:scale-95"
+                  >
+                    <Star 
+                      className={`w-10 h-10 ${
+                        passengerRating >= star 
+                          ? 'fill-amber-400 text-amber-400' 
+                          : 'fill-transparent text-slate-300 dark:text-slate-700'
+                      }`}
+                    />
+                  </button>
+                ))}
+              </div>
+              <p className="text-[11px] font-medium text-amber-600 dark:text-amber-500">
+                {passengerRating} {passengerRating === 1 ? 'Star' : 'Stars'}
+              </p>
+            </div>
+
+            <div className="flex gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => setRatingTrip(null)}
+                className="flex-1 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-bold transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmCompletion}
+                disabled={isSubmittingRating}
+                className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-md"
+              >
+                {isSubmittingRating ? 'Saving...' : 'Submit & Complete'}
+              </button>
+            </div>
 
           </div>
         </div>
