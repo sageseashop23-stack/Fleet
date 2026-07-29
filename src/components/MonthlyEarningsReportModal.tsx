@@ -4,14 +4,14 @@ import { FileText, Printer, Download, Filter, X, DollarSign, TrendingUp, Users, 
 
 interface MonthlyEarningsReportModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onTutup: () => void;
   drivers: Driver[];
   trips: Trip[];
 }
 
 export const MonthlyEarningsReportModal: React.FC<MonthlyEarningsReportModalProps> = ({
   isOpen,
-  onClose,
+  onTutup,
   drivers,
   trips
 }) => {
@@ -134,7 +134,7 @@ export const MonthlyEarningsReportModal: React.FC<MonthlyEarningsReportModalProp
             </button>
 
             <button
-              onClick={onClose}
+              onClick={onTutup}
               className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-lg font-bold"
             >
               <X className="w-5 h-5" />

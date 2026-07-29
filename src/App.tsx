@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Driver, Trip, ActivityItem, GasConfig } from './types';
 import { Sidebar } from './components/Sidebar';
 import { TopHeader } from './components/TopHeader';
@@ -12,7 +13,8 @@ import { AiDispatchModal } from './components/AiDispatchModal';
 import { INITIAL_DRIVERS, INITIAL_TRIPS, INITIAL_ACTIVITY_LOGS, INITIAL_GAS_CONFIG } from './data/seedData';
 
 export default function App() {
-  const appMode = (import.meta.env.VITE_APP_MODE as 'PASSENGER' | 'DRIVER' | 'ADMIN' | undefined) || 'ADMIN';
+  const rawMode = (import.meta.env.VITE_APP_MODE || 'ADMIN') as string;
+  const appMode = rawMode.replace(/['"]/g, '').toUpperCase() as 'PASSENGER' | 'DRIVER' | 'ADMIN';
   const [activeTab, setActiveTab] = useState<'PASSENGER' | 'DRIVER' | 'ADMIN'>(appMode === 'ADMIN' ? 'ADMIN' : appMode);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
@@ -29,6 +31,15 @@ export default function App() {
   const [isGasModalOpen, setIsGasModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+  const [isAutoRefreshEnabled, setIsAutoRefreshEnabled] = useState(true);
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const apiBase = import.meta.env.VITE_API_BASE_URL || '';
 
@@ -47,15 +58,17 @@ export default function App() {
       if (actRes) setActivities(actRes);
       if (gasRes) setGasConfig(gasRes);
     } catch (err) {
-      console.warn('Backend API connection warning, using local state fallback:', err);
+      console.warn('Amaran sambungan API Backend, menggunakan keadaan setempat:', err);
     }
   };
 
   useEffect(() => {
     refreshData();
-    const interval = setInterval(refreshData, 10000); // 10s background sync
-    return () => clearInterval(interval);
-  }, []);
+    if (isAutoRefreshEnabled) {
+      const interval = setInterval(refreshData, 10000); // 10s background sync
+      return () => clearInterval(interval);
+    }
+  }, [isAutoRefreshEnabled]);
 
   // Sync active driver status if drivers list changes
   useEffect(() => {
@@ -278,11 +291,49 @@ export default function App() {
   };
 
   return (
-    <div className="flex h-screen bg-slate-50 text-slate-900 font-sans overflow-hidden antialiased">
-      
-      {/* Sidebar Navigation - Only show if mode is ADMIN (default) */}
-      {appMode === 'ADMIN' && (
-        <Sidebar
+    <>
+      <AnimatePresence>
+        {showSplash && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: 'easeInOut' }}
+            className="fixed inset-0 flex items-center justify-center bg-primary text-secondary z-[9999]"
+          >
+            <div className="text-center space-y-6">
+              <motion.h1 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="text-4xl md:text-6xl font-serif italic font-bold tracking-tight"
+              >
+                City Dispatch
+              </motion.h1>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+                className="w-12 h-px bg-secondary/50 mx-auto"
+              ></motion.div>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 1 }}
+                className="text-secondary/70 uppercase tracking-widest text-xs font-bold"
+              >
+                Premium Logistics
+              </motion.p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {!showSplash && (
+        <div className="flex h-screen bg-secondary text-primary font-sans overflow-hidden antialiased">
+          
+          {/* Sidebar Navigation - Only show if mode is ADMIN (default) */}
+          {appMode === 'ADMIN' && (
+            <Sidebar
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           disputedTripsCount={disputedTripsCount}
@@ -294,7 +345,7 @@ export default function App() {
           isMobileOpen={isMobileSidebarOpen}
           setIsMobileOpen={setIsMobileSidebarOpen}
         />
-      )}
+          )}
 
       {/* Main Content Workspace */}
       <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
@@ -310,12 +361,14 @@ export default function App() {
               onOpenGasModal={() => setIsGasModalOpen(true)}
               onOpenAiModal={() => setIsAiModalOpen(true)}
               onToggleMobileSidebar={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+              isAutoRefreshEnabled={isAutoRefreshEnabled}
+              onToggleAutoRefresh={() => setIsAutoRefreshEnabled(!isAutoRefreshEnabled)}
             />
+          </>
+          )}
 
             {/* Real-time Activity Ticker Stream */}
             <ActivityStream activities={activities} />
-          </>
-        )}
 
         {/* Scrollable View Area */}
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
@@ -336,6 +389,8 @@ export default function App() {
               }
               onImportGasData={handleImportGasData}
               onOpenGasModal={() => setIsGasModalOpen(true)}
+              isAutoRefreshEnabled={isAutoRefreshEnabled}
+              onToggleAutoRefresh={() => setIsAutoRefreshEnabled(!isAutoRefreshEnabled)}
             />
           )}
 
@@ -354,7 +409,8 @@ export default function App() {
           )}
         </main>
 
-      </div>
+          </div>
+
 
       {/* Modals */}
       <MonthlyEarningsReportModal
@@ -379,7 +435,8 @@ export default function App() {
         trips={trips}
         drivers={drivers}
       />
-
-    </div>
+      </div>
+      )}
+    </>
   );
 }

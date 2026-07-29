@@ -7,7 +7,7 @@ interface AdminDispatchViewProps {
   trips: Trip[];
   drivers: Driver[];
   onUpdateTrip: (tripId: string, updates: Partial<Trip>) => Promise<void>;
-  onDeleteTrip: (tripId: string) => Promise<void>;
+  onPadamTrip: (tripId: string) => Promise<void>;
   onCreateDriver: (driverData: any) => Promise<void>;
   onUpdateDriver: (driverId: string, updates: Partial<Driver>) => Promise<void>;
   onOpenReportModal: () => void;
@@ -19,7 +19,7 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
   trips,
   drivers,
   onUpdateTrip,
-  onDeleteTrip,
+  onPadamTrip,
   onCreateDriver,
   onUpdateDriver,
   onOpenReportModal,
@@ -28,31 +28,31 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
 }) => {
   const [activeAdminSubTab, setActiveAdminSubTab] = useState<'DISPATCH_BOARD' | 'DISPUTES' | 'REGISTRY'>('DISPATCH_BOARD');
   
-  // Dispatch Board Filter State
+  // Tugasan Board Filter State
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [driverFilter, setDriverFilter] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Editing Trip Rate State
-  const [editingTripId, setEditingTripId] = useState<string | null>(null);
-  const [editPaymentAmount, setEditPaymentAmount] = useState<number>(0);
-  const [editPaymentDriver, setEditPaymentDriver] = useState<number>(0);
+  // Suntinging Trip Rate State
+  const [editingTripId, setSuntingingTripId] = useState<string | null>(null);
+  const [editPaymentAmount, setSuntingPaymentAmount] = useState<number>(0);
+  const [editPaymentDriver, setSuntingPaymentDriver] = useState<number>(0);
 
   // Dispute Resolution Modal State
   const [resolvingTrip, setResolvingTrip] = useState<Trip | null>(null);
   const [resolvedPayoutAmount, setResolvedPayoutAmount] = useState<number>(0);
 
-  // New Driver Form State
-  const [newDriverName, setNewDriverName] = useState('');
-  const [newDriverPhone, setNewDriverPhone] = useState('');
-  const [newDriverPin, setNewDriverPin] = useState('1234');
-  const [newDriverVehicle, setNewDriverVehicle] = useState('Executive Sedan');
-  const [newDriverPlate, setNewDriverPlate] = useState('CPT-0000');
-  const [newDriverAdmin, setNewDriverAdmin] = useState(false);
+  // Baru Driver Form State
+  const [newDriverName, setBaruDriverName] = useState('');
+  const [newDriverPhone, setBaruDriverPhone] = useState('');
+  const [newDriverPin, setBaruDriverPin] = useState('1234');
+  const [newDriverVehicle, setBaruDriverVehicle] = useState('Executive Sedan');
+  const [newDriverPlate, setBaruDriverPlate] = useState('CPT-0000');
+  const [newDriverAdmin, setBaruDriverAdmin] = useState(false);
   const [isCreatingDriver, setIsCreatingDriver] = useState(false);
 
   // Calculate High Density KPI Metrics
-  const activeDispatchesCount = trips.filter((t) => t.statusOps !== 'COMPLETED' && t.statusOps !== 'CANCELLED').length;
+  const activeTugasanesCount = trips.filter((t) => t.statusOps !== 'COMPLETED' && t.statusOps !== 'CANCELLED').length;
   const onDutyDriversCount = drivers.filter((d) => d.isAvailable).length;
   const disputedTrips = trips.filter((t) => t.statusOps === 'DISPUTED');
   const totalGrossRevenue = trips
@@ -73,13 +73,13 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
     return true;
   });
 
-  const handleStartEditRates = (trip: Trip) => {
-    setEditingTripId(trip.id);
-    setEditPaymentAmount(trip.paymentAmount);
-    setEditPaymentDriver(trip.paymentDriver);
+  const handleStartSuntingRates = (trip: Trip) => {
+    setSuntingingTripId(trip.id);
+    setSuntingPaymentAmount(trip.paymentAmount);
+    setSuntingPaymentDriver(trip.paymentDriver);
   };
 
-  const handleSaveEditedRates = async (tripId: string) => {
+  const handleSimpanSuntingedRates = async (tripId: string) => {
     const grossFare = editPaymentAmount;
     const driverPayout = editPaymentDriver;
     const companyProfit = Math.round((grossFare - driverPayout) * 100) / 100;
@@ -89,7 +89,7 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
       paymentDriver: driverPayout,
       grossProfit: companyProfit
     });
-    setEditingTripId(null);
+    setSuntingingTripId(null);
   };
 
   const handleResolveDispute = async (e: React.FormEvent) => {
@@ -110,7 +110,7 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
     setResolvingTrip(null);
   };
 
-  const handleCreateNewDriver = async (e: React.FormEvent) => {
+  const handleCreateBaruDriver = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newDriverName || !newDriverPin) return;
     setIsCreatingDriver(true);
@@ -123,9 +123,9 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
         licensePlate: newDriverPlate,
         adminRole: newDriverAdmin
       });
-      setNewDriverName('');
-      setNewDriverPhone('');
-      setNewDriverPin('1234');
+      setBaruDriverName('');
+      setBaruDriverPhone('');
+      setBaruDriverPin('1234');
     } finally {
       setIsCreatingDriver(false);
     }
@@ -137,14 +137,14 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
       {/* High Density Metric Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         
-        {/* Card 1: Active Dispatches */}
+        {/* Card 1: Active Tugasanes */}
         <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
           <div className="flex items-center justify-between text-slate-500">
-            <span className="text-[10px] uppercase font-bold tracking-wider">Active Dispatches</span>
+            <span className="text-[10px] uppercase font-bold tracking-wider">Active Tugasanes</span>
             <Clock className="w-4 h-4 text-blue-500" />
           </div>
           <div className="mt-2 flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-slate-900">{activeDispatchesCount}</span>
+            <span className="text-2xl font-bold text-slate-900">{activeTugasanesCount}</span>
             <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-1.5 py-0.5 rounded">↑ Live</span>
           </div>
         </div>
@@ -213,7 +213,7 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Dispatch Board ({trips.length})
+              Tugasan Board ({trips.length})
             </button>
 
             <button
@@ -274,7 +274,7 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
                   onChange={(e) => setStatusFilter(e.target.value)}
                   className="bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs text-slate-900 font-semibold"
                 >
-                  <option value="ALL">All Statuses</option>
+                  <option value="ALL">Semua Status</option>
                   <option value="UNASSIGNED">Unassigned</option>
                   <option value="ASSIGNED">Assigned</option>
                   <option value="EN_ROUTE">En Route</option>
@@ -291,7 +291,7 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
                   onChange={(e) => setDriverFilter(e.target.value)}
                   className="bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs text-slate-900 font-semibold"
                 >
-                  <option value="ALL">All Drivers</option>
+                  <option value="ALL">Semua Pemandu</option>
                   {drivers.map((d) => (
                     <option key={d.id} value={d.id}>
                       {d.name}
@@ -321,7 +321,7 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-xs">
                   {filteredTrips.map((trip) => {
-                    const isEditing = editingTripId === trip.id;
+                    const isSuntinging = editingTripId === trip.id;
 
                     return (
                       <tr key={trip.id} className="hover:bg-blue-50/60 transition-colors">
@@ -370,12 +370,12 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
 
                         {/* Gross Fare */}
                         <td className="py-2.5 px-4 font-mono font-bold text-slate-900">
-                          {isEditing ? (
+                          {isSuntinging ? (
                             <input
                               type="number"
                               step="0.01"
                               value={editPaymentAmount}
-                              onChange={(e) => setEditPaymentAmount(Number(e.target.value))}
+                              onChange={(e) => setSuntingPaymentAmount(Number(e.target.value))}
                               className="w-16 bg-white border border-blue-500 rounded p-0.5 text-xs font-bold"
                             />
                           ) : (
@@ -385,12 +385,12 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
 
                         {/* Driver Payout */}
                         <td className="py-2.5 px-4 font-mono font-bold text-emerald-600">
-                          {isEditing ? (
+                          {isSuntinging ? (
                             <input
                               type="number"
                               step="0.01"
                               value={editPaymentDriver}
-                              onChange={(e) => setEditPaymentDriver(Number(e.target.value))}
+                              onChange={(e) => setSuntingPaymentDriver(Number(e.target.value))}
                               className="w-16 bg-white border border-blue-500 rounded p-0.5 text-xs font-bold"
                             />
                           ) : (
@@ -400,17 +400,17 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
 
                         {/* Manage Actions */}
                         <td className="py-2.5 px-4 text-right space-x-1">
-                          {isEditing ? (
+                          {isSuntinging ? (
                             <button
-                              onClick={() => handleSaveEditedRates(trip.id)}
+                              onClick={() => handleSimpanSuntingedRates(trip.id)}
                               className="px-2 py-1 bg-emerald-600 text-white rounded font-bold text-[10px]"
                             >
-                              Save
+                              Simpan
                             </button>
                           ) : (
                             <button
-                              onClick={() => handleStartEditRates(trip)}
-                              title="Edit Fare Rates"
+                              onClick={() => handleStartSuntingRates(trip)}
+                              title="Sunting Fare Rates"
                               className="p-1 text-slate-400 hover:text-blue-600 rounded"
                             >
                               <Edit3 className="w-3.5 h-3.5" />
@@ -418,8 +418,8 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
                           )}
 
                           <button
-                            onClick={() => onDeleteTrip(trip.id)}
-                            title="Delete Dispatch"
+                            onClick={() => onPadamTrip(trip.id)}
+                            title="Padam Tugasan"
                             className="p-1 text-slate-400 hover:text-rose-600 rounded"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -556,16 +556,16 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
             </div>
           </div>
 
-          {/* Add New Driver Form */}
+          {/* Add Baru Driver Form */}
           <div className="lg:col-span-5 bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-3">
             <div className="pb-2 border-b border-slate-100">
               <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
                 <UserPlus className="w-4 h-4 text-blue-500" />
-                Register New Chauffeur
+                Register Baru Chauffeur
               </h3>
             </div>
 
-            <form onSubmit={handleCreateNewDriver} className="space-y-3 text-xs">
+            <form onSubmit={handleCreateBaruDriver} className="space-y-3 text-xs">
               <div>
                 <label className="block font-bold text-slate-700 mb-1">Driver Name *</label>
                 <input
@@ -573,7 +573,7 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
                   required
                   placeholder="e.g. Victor Lawson"
                   value={newDriverName}
-                  onChange={(e) => setNewDriverName(e.target.value)}
+                  onChange={(e) => setBaruDriverName(e.target.value)}
                   className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-slate-900"
                 />
               </div>
@@ -585,7 +585,7 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
                     type="tel"
                     placeholder="+1 (555) 000-1122"
                     value={newDriverPhone}
-                    onChange={(e) => setNewDriverPhone(e.target.value)}
+                    onChange={(e) => setBaruDriverPhone(e.target.value)}
                     className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-slate-900"
                   />
                 </div>
@@ -597,7 +597,7 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
                     maxLength={4}
                     required
                     value={newDriverPin}
-                    onChange={(e) => setNewDriverPin(e.target.value.replace(/\D/g, ''))}
+                    onChange={(e) => setBaruDriverPin(e.target.value.replace(/\D/g, ''))}
                     className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 font-mono font-bold text-slate-900 text-center"
                   />
                 </div>
@@ -610,7 +610,7 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
                     type="text"
                     placeholder="Executive Sedan"
                     value={newDriverVehicle}
-                    onChange={(e) => setNewDriverVehicle(e.target.value)}
+                    onChange={(e) => setBaruDriverVehicle(e.target.value)}
                     className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-slate-900"
                   />
                 </div>
@@ -621,7 +621,7 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
                     type="text"
                     placeholder="CPT-8800"
                     value={newDriverPlate}
-                    onChange={(e) => setNewDriverPlate(e.target.value)}
+                    onChange={(e) => setBaruDriverPlate(e.target.value)}
                     className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-slate-900"
                   />
                 </div>
@@ -675,7 +675,7 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
                   onClick={() => setResolvingTrip(null)}
                   className="flex-1 py-2 bg-slate-100 text-slate-700 rounded-xl text-xs font-bold"
                 >
-                  Cancel
+                  Batal
                 </button>
                 <button
                   type="submit"

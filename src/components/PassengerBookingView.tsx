@@ -13,13 +13,13 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
   const [activeSubTab, setActiveSubTab] = useState<'RESERVATION' | 'TRACKING'>('RESERVATION');
 
   // Form State
-  const [passengerName, setPassengerName] = useState('');
-  const [passengerPhone, setPassengerPhone] = useState('');
+  const [passengerName, setPenumpangName] = useState('');
+  const [passengerPhone, setPenumpangPhone] = useState('');
   const [pickupAddress, setPickupAddress] = useState('');
   const [dropoffAddress, setDropoffAddress] = useState('');
   const [pickupDate, setPickupDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [pickupTime, setPickupTime] = useState('14:30');
-  const [passengerCount, setPassengerCount] = useState(2);
+  const [passengerCount, setPenumpangCount] = useState(2);
   const [vehicleType, setVehicleType] = useState<VehicleServiceType>('STANDARD_SEDAN');
   const [isRoundTrip, setIsRoundTrip] = useState(false);
   const [estimatedDistanceKm, setEstimatedDistanceKm] = useState(18);
@@ -36,7 +36,7 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
     setVehicleType(est.vehicleType);
     setEstimatedDistanceKm(est.distanceKm);
     setIsRoundTrip(est.isRoundTrip);
-    setPassengerCount(est.passengerCount);
+    setPenumpangCount(est.passengerCount);
   };
 
   const handleSubmitBooking = async (e: React.FormEvent) => {
@@ -63,8 +63,8 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
       });
       setBookingSuccessId('TRP-2026-SUBMITTED');
       // Reset fields
-      setPassengerName('');
-      setPassengerPhone('');
+      setPenumpangName('');
+      setPenumpangPhone('');
       setPickupAddress('');
       setDropoffAddress('');
       setSpecialNotes('');
@@ -105,7 +105,7 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-              Passenger Booking & Live Dispatch
+              Penumpang Booking & Live Dispatch
             </h1>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
               Book luxury point-to-point transfers and track real-time trip execution
@@ -165,14 +165,14 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
             <form onSubmit={handleSubmitBooking} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-sm space-y-5">
               
               <div className="pb-3 border-b border-slate-100 dark:border-slate-800">
-                <h3 className="text-base font-bold text-slate-900 dark:text-white">Passenger Details</h3>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">Penumpang Details</h3>
                 <p className="text-xs text-slate-500">Provide rider name and mobile contact for driver notifications</p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                    Passenger Full Name *
+                    Nama Penuh Penumpang *
                   </label>
                   <div className="relative">
                     <User className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
@@ -181,7 +181,7 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
                       required
                       placeholder="e.g. Jonathan Sterling"
                       value={passengerName}
-                      onChange={(e) => setPassengerName(e.target.value)}
+                      onChange={(e) => setPenumpangName(e.target.value)}
                       className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg pl-9 pr-3 py-2 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
@@ -198,7 +198,7 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
                       required
                       placeholder="e.g. +1 (555) 234-5678"
                       value={passengerPhone}
-                      onChange={(e) => setPassengerPhone(e.target.value)}
+                      onChange={(e) => setPenumpangPhone(e.target.value)}
                       className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg pl-9 pr-3 py-2 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
@@ -206,7 +206,7 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
               </div>
 
               <div className="pb-3 border-b border-slate-100 dark:border-slate-800 pt-2">
-                <h3 className="text-base font-bold text-slate-900 dark:text-white">Route & Schedule</h3>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">Laluan & Schedule</h3>
                 <p className="text-xs text-slate-500">Pickup, destination, date and timing</p>
               </div>
 
@@ -230,7 +230,7 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                    Dropoff Destination *
+                    Destinasi Menurunkan Penumpang *
                   </label>
                   <div className="relative">
                     <MapPin className="w-4 h-4 text-indigo-500 absolute left-3 top-2.5" />
@@ -263,7 +263,7 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
 
                   <div>
                     <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                      Pickup Time
+                      Waktu Pengambilan
                     </label>
                     <div className="relative">
                       <Clock className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
@@ -323,9 +323,9 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
         <div className="max-w-3xl mx-auto space-y-6">
           
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
-            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">Track Trip Dispatch Status</h3>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">Jejaki Status Penghantaran Tugas</h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
-              Enter your Request ID (e.g. TRP-2026-8801) or registered passenger phone number
+              Masukkan ID Permintaan Anda (e.g. TRP-2026-8801) or registered passenger phone number
             </p>
 
             <form onSubmit={handleSearchTracking} className="flex gap-2">
@@ -343,7 +343,7 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
                 type="submit"
                 className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-5 py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all"
               >
-                Search Order
+                Cari Pesanan
               </button>
             </form>
           </div>
@@ -360,7 +360,7 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
               
               <div className="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-slate-100 dark:border-slate-800">
                 <div>
-                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Dispatch Request ID</span>
+                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">ID Permintaan Tugas</span>
                   <h3 className="text-xl font-black text-slate-900 dark:text-white">{searchedTrip.id}</h3>
                 </div>
                 <StatusBadge statusOps={searchedTrip.statusOps} />
@@ -369,26 +369,26 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
               {/* Progress Bar Visualizer */}
               <div className="bg-slate-50 dark:bg-slate-800/60 p-4 rounded-xl border border-slate-200/60 dark:border-slate-700/60">
                 <div className="flex justify-between text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-2">
-                  <span>UNASSIGNED</span>
-                  <span>ASSIGNED</span>
-                  <span>EN ROUTE</span>
-                  <span>ARRIVED</span>
-                  <span>COMPLETED</span>
+                  <span>BELUM DITETAPKAN</span>
+                  <span>DITETAPKAN</span>
+                  <span>DALAM PERJALANAN</span>
+                  <span>TIBA</span>
+                  <span>SELESAI</span>
                 </div>
                 <div className="w-full h-3 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden flex">
                   <div
                     className="bg-blue-600 transition-all duration-500 rounded-full"
                     style={{
                       width:
-                        searchedTrip.statusOps === 'UNASSIGNED'
+                        searchedTrip.statusOps === 'BELUM DITETAPKAN'
                           ? '15%'
-                          : searchedTrip.statusOps === 'ASSIGNED'
+                          : searchedTrip.statusOps === 'DITETAPKAN'
                           ? '40%'
                           : searchedTrip.statusOps === 'EN_ROUTE'
                           ? '65%'
-                          : searchedTrip.statusOps === 'ARRIVED'
+                          : searchedTrip.statusOps === 'TIBA'
                           ? '85%'
-                          : searchedTrip.statusOps === 'COMPLETED'
+                          : searchedTrip.statusOps === 'SELESAI'
                           ? '100%'
                           : '10%'
                     }}
@@ -400,17 +400,17 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div className="space-y-2">
                   <div>
-                    <span className="text-slate-400 block font-semibold">Passenger</span>
+                    <span className="text-slate-400 block font-semibold">Penumpang</span>
                     <span className="text-slate-900 dark:text-white font-bold text-sm">{searchedTrip.passengerName}</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block font-semibold">Route</span>
+                    <span className="text-slate-400 block font-semibold">Laluan</span>
                     <span className="text-slate-800 dark:text-slate-200">
                       {searchedTrip.pickupAddress} <span className="text-blue-500 font-bold">→</span> {searchedTrip.dropoffAddress}
                     </span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block font-semibold">Schedule Date & Time</span>
+                    <span className="text-slate-400 block font-semibold">Tarikh Jadual & Time</span>
                     <span className="text-slate-800 dark:text-slate-200 font-medium">
                       {searchedTrip.pickupDate} at {searchedTrip.pickupTime}
                     </span>
@@ -419,13 +419,13 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
 
                 <div className="space-y-2">
                   <div>
-                    <span className="text-slate-400 block font-semibold">Assigned Chauffeur</span>
+                    <span className="text-slate-400 block font-semibold">Pemandu Bertugas</span>
                     <span className="text-slate-900 dark:text-white font-bold text-sm">
                       {searchedTrip.assignedDriverName || 'Awaiting Driver Allocation'}
                     </span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block font-semibold">Gross Fare Quote</span>
+                    <span className="text-slate-400 block font-semibold">Sebutharga Tambang</span>
                     <span className="text-emerald-600 dark:text-emerald-400 font-extrabold text-base">
                       ${searchedTrip.paymentAmount.toFixed(2)}
                     </span>
@@ -442,9 +442,9 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
             </div>
           )}
 
-          {/* Recent Passenger Bookings List */}
+          {/* Recent Penumpang Bookings List */}
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-3">Recent System Dispatches</h3>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-3">Tugasan Sistem Terkini</h3>
             <div className="space-y-3">
               {trips.slice(0, 4).map((t) => (
                 <div

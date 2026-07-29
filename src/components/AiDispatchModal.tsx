@@ -5,14 +5,14 @@ import ReactMarkdown from 'react-markdown';
 
 interface AiDispatchModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onTutup: () => void;
   trips: Trip[];
   drivers: Driver[];
 }
 
 export const AiDispatchModal: React.FC<AiDispatchModalProps> = ({
   isOpen,
-  onClose,
+  onTutup,
   trips,
   drivers
 }) => {
@@ -94,7 +94,7 @@ export const AiDispatchModal: React.FC<AiDispatchModalProps> = ({
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 font-bold">
+          <button onClick={onTutup} className="p-2 text-slate-400 hover:text-slate-600 font-bold">
             <X className="w-5 h-5" />
           </button>
         </div>

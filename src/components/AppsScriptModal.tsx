@@ -364,7 +364,7 @@ function doGet(e) {
           
           <div>
             <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-              Google Apps Script Web App URL
+              Google Apps Script URL Aplikasi Web
             </label>
             <input
               type="url"
@@ -416,7 +416,7 @@ function doGet(e) {
                 disabled={isSaving}
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition-all shadow-sm"
               >
-                {isSaving ? 'Saving...' : 'Save Configuration'}
+                {isSaving ? 'Saving...' : 'Simpan Konfigurasi'}
               </button>
             </div>
           </div>
@@ -476,7 +476,7 @@ function doGet(e) {
               <li>Paste the script above into `Code.gs` and click Save.</li>
               <li>Click <strong>Deploy ➔ New deployment</strong> ➔ Select type: <em>Web App</em>.</li>
               <li>Set <strong>Execute as:</strong> <em>Me</em> and <strong>Who has access:</strong> <em>Anyone</em>.</li>
-              <li>Click <strong>Deploy</strong> and copy the generated Web App URL into the input field above.</li>
+              <li>Click <strong>Deploy</strong> and copy the generated URL Aplikasi Web into the input field above.</li>
             </ol>
           </div>
         </div>
