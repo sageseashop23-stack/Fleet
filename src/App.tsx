@@ -10,6 +10,7 @@ import { AdminDispatchView } from './components/AdminDispatchView';
 import { MonthlyEarningsReportModal } from './components/MonthlyEarningsReportModal';
 import { AppsScriptModal } from './components/AppsScriptModal';
 import { AiDispatchModal } from './components/AiDispatchModal';
+import { DiagnosticsModal } from './components/DiagnosticsModal';
 import { INITIAL_DRIVERS, INITIAL_TRIPS, INITIAL_ACTIVITY_LOGS, INITIAL_GAS_CONFIG } from './data/seedData';
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
   const [isGasModalOpen, setIsGasModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+  const [isDiagnosticsModalOpen, setIsDiagnosticsModalOpen] = useState(false);
   const [isAutoRefreshEnabled, setIsAutoRefreshEnabled] = useState(true);
   const [showSplash, setShowSplash] = useState(true);
 
@@ -41,24 +43,44 @@ export default function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  const apiBase = import.meta.env.VITE_API_BASE_URL || '';
+  // Force local API endpoints since we have a built-in Express server.
+  // If deploying frontend-only, you can restore: const apiBase = import.meta.env.VITE_API_BASE_URL || '';
+  const apiBase = '';
 
   // Fetch initial data from Express backend
   const refreshData = async () => {
     try {
+      const fetchWithLog = async (url: string) => {
+        try {
+          const r = await fetch(url);
+          if (!r.ok) {
+            console.error(`API Response Error for ${url}: ${r.status} ${r.statusText}`);
+            return null;
+          }
+          return await r.json();
+        } catch (e: any) {
+          throw new Error(`Network error fetching ${url}: ${e.message}`);
+        }
+      };
+
       const [tripsRes, driversRes, actRes, gasRes] = await Promise.all([
-        fetch(`${apiBase}/api/trips`).then((r) => (r.ok ? r.json() : null)),
-        fetch(`${apiBase}/api/drivers`).then((r) => (r.ok ? r.json() : null)),
-        fetch(`${apiBase}/api/activity`).then((r) => (r.ok ? r.json() : null)),
-        fetch(`${apiBase}/api/gas-config`).then((r) => (r.ok ? r.json() : null))
+        fetchWithLog(`${apiBase}/api/trips`),
+        fetchWithLog(`${apiBase}/api/drivers`),
+        fetchWithLog(`${apiBase}/api/activity`),
+        fetchWithLog(`${apiBase}/api/gas-config`)
       ]);
 
       if (tripsRes) setTrips(tripsRes);
       if (driversRes) setDrivers(driversRes);
       if (actRes) setActivities(actRes);
       if (gasRes) setGasConfig(gasRes);
-    } catch (err) {
-      console.warn('Amaran sambungan API Backend, menggunakan keadaan setempat:', err);
+    } catch (err: any) {
+      if (!(window as any).__apiWarningLogged) { 
+        console.error('API Fetch Failed Completely:', err);
+        console.error('Target API Base URL:', apiBase);
+        console.error('Please verify if VITE_API_BASE_URL is reachable and configured correctly (e.g. CORS, network policies).');
+        (window as any).__apiWarningLogged = true; 
+      }
     }
   };
 
@@ -307,7 +329,7 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="text-4xl md:text-6xl font-serif italic font-bold tracking-tight"
               >
-                City Dispatch
+                Lady Driver Dispatch
               </motion.h1>
               <motion.div
                 initial={{ opacity: 0 }}
@@ -321,7 +343,7 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 1 }}
                 className="text-secondary/70 uppercase tracking-widest text-xs font-bold"
               >
-                Premium Logistics
+                Safest & Affordable Logistic from Premium
               </motion.p>
             </div>
           </motion.div>
@@ -342,6 +364,7 @@ export default function App() {
           onOpenReportModal={() => setIsReportModalOpen(true)}
           onOpenGasModal={() => setIsGasModalOpen(true)}
           onOpenAiModal={() => setIsAiModalOpen(true)}
+          onOpenDiagnosticsModal={() => setIsDiagnosticsModalOpen(true)}
           isMobileOpen={isMobileSidebarOpen}
           setIsMobileOpen={setIsMobileSidebarOpen}
         />
@@ -360,6 +383,7 @@ export default function App() {
               onOpenReportModal={() => setIsReportModalOpen(true)}
               onOpenGasModal={() => setIsGasModalOpen(true)}
               onOpenAiModal={() => setIsAiModalOpen(true)}
+              onOpenDiagnosticsModal={() => setIsDiagnosticsModalOpen(true)}
               onToggleMobileSidebar={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
               isAutoRefreshEnabled={isAutoRefreshEnabled}
               onToggleAutoRefresh={() => setIsAutoRefreshEnabled(!isAutoRefreshEnabled)}
@@ -434,6 +458,11 @@ export default function App() {
         onTutup={() => setIsAiModalOpen(false)}
         trips={trips}
         drivers={drivers}
+      />
+      <DiagnosticsModal
+        isOpen={isDiagnosticsModalOpen}
+        onClose={() => setIsDiagnosticsModalOpen(false)}
+        apiBase={apiBase}
       />
       </div>
       )}

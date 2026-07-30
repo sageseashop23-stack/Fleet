@@ -109,7 +109,7 @@ export const MonthlyEarningsReportModal: React.FC<MonthlyEarningsReportModalProp
                 Monthly Driver Earnings & Revenue Statement
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                City Dispatch Logistics Inc. • Accounting Period: <span className="font-bold text-blue-600 dark:text-blue-400">{monthYearStr}</span>
+                Lady Driver Dispatch Logistics Inc. • Accounting Period: <span className="font-bold text-blue-600 dark:text-blue-400">{monthYearStr}</span>
               </p>
             </div>
           </div>
@@ -292,7 +292,7 @@ export const MonthlyEarningsReportModal: React.FC<MonthlyEarningsReportModalProp
 
         {/* Footer Statement Disclaimer */}
         <div className="text-[11px] text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-3 flex items-center justify-between">
-          <span>Generated automatically by City Dispatch Logistics System</span>
+          <span>Generated automatically by Lady Driver Dispatch Logistics System</span>
           <span>Confidential Accounting Document</span>
         </div>
 

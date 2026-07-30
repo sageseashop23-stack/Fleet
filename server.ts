@@ -478,7 +478,7 @@ async function startServer() {
       }
 
       const { prompt, contextType, tripData, driversData } = req.body;
-      const systemInstruction = `You are City Dispatch AI, an intelligent fleet operations and dispatch decision engine for City Dispatch Logistics Inc.
+      const systemInstruction = `You are Lady Driver Dispatch AI, an intelligent fleet operations and dispatch decision engine for Lady Driver Dispatch Logistics Inc.
 Your goal is to evaluate driver availability, route distances, peak hours, fare disputes, and rate calculations.
 Respond in clear, structured markdown with explicit actionable recommendations for dispatchers and fleet administrators.`;
 
@@ -525,7 +525,7 @@ ${JSON.stringify(driversData || [], null, 2)}`;
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 City Dispatch Server running at http://0.0.0.0:${PORT}`);
+    console.log(`🚀 Lady Driver Dispatch Server running at http://0.0.0.0:${PORT}`);
   });
 }
 

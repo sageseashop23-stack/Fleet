@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Plus, FileSpreadsheet, Bot, PauseCircle, PlayCircle } from 'lucide-react';
+import { Menu, Plus, FileSpreadsheet, Bot, PauseCircle, PlayCircle, Activity } from 'lucide-react';
 
 interface TopHeaderProps {
   activeTab: 'PASSENGER' | 'DRIVER' | 'ADMIN';
@@ -8,6 +8,7 @@ interface TopHeaderProps {
   onOpenReportModal: () => void;
   onOpenGasModal: () => void;
   onOpenAiModal: () => void;
+  onOpenDiagnosticsModal: () => void;
   onToggleMobileSidebar: () => void;
   isAutoRefreshEnabled?: boolean;
   onToggleAutoRefresh?: () => void;
@@ -18,6 +19,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   onOpenNewDispatch,
   onOpenGasModal,
   onOpenAiModal,
+  onOpenDiagnosticsModal,
   onToggleMobileSidebar,
   isAutoRefreshEnabled = true,
   onToggleAutoRefresh
@@ -95,6 +97,15 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
         >
           <Bot className="w-3.5 h-3.5 " />
           <span className="hidden xl:inline">AI Optimizer</span>
+        </button>
+
+        <button
+          onClick={onOpenDiagnosticsModal}
+          title="Diagnostik API"
+          className="p-1.5 text-primary/70 hover:text-primary hover:bg-black/5 rounded-2xl text-xs font-medium border border-primary/20 transition-colors hidden lg:flex items-center gap-1"
+        >
+          <Activity className="w-3.5 h-3.5 " />
+          <span className="hidden xl:inline">Diagnostics</span>
         </button>
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Truck, Car, ShieldCheck, FileText, AlertTriangle, Bot, FileSpreadsheet } from 'lucide-react';
+import { Truck, Car, ShieldCheck, FileText, AlertTriangle, Bot, FileSpreadsheet, Activity } from 'lucide-react';
 import { Driver } from '../types';
 
 interface SidebarProps {
@@ -11,6 +11,7 @@ interface SidebarProps {
   onOpenReportModal: () => void;
   onOpenGasModal: () => void;
   onOpenAiModal: () => void;
+  onOpenDiagnosticsModal: () => void;
   isMobileOpen?: boolean;
   setIsMobileOpen?: (open: boolean) => void;
 }
@@ -23,6 +24,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onOpenReportModal,
   onOpenGasModal,
   onOpenAiModal,
+  onOpenDiagnosticsModal,
   isMobileOpen,
   setIsMobileOpen
 }) => {
@@ -45,12 +47,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className="flex flex-col min-w-0 flex-1">
             <input 
               type="text" 
-              defaultValue="CITY DISPATCH"
+              defaultValue="LADY DRIVER DISPATCH"
               className="text-white font-bold tracking-tight text-base leading-tight bg-transparent border-none outline-none focus:ring-1 focus:ring-white/30 rounded px-1 -ml-1 w-full truncate"
             />
             <input 
               type="text"
-              defaultValue="Premium Logistics"
+              defaultValue="SAFEST & AFFORDABLE LOGISTIC"
               className="text-[10px] text-white/70 font-medium bg-transparent border-none outline-none focus:ring-1 focus:ring-white/30 rounded px-1 -ml-1 w-full truncate"
             />
           </div>
@@ -176,6 +178,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
             >
               <Bot className="w-4 h-4 shrink-0 " />
               <span>Pengoptimum Laluan AI</span>
+            </button>
+
+            <button
+              onClick={() => {
+                onOpenDiagnosticsModal();
+                setIsMobileOpen?.(false);
+              }}
+              className="w-full flex items-center gap-2.5 px-3 py-2 text-white/70 hover:bg-white/10 hover:text-white rounded-2xl font-medium transition-colors"
+            >
+              <Activity className="w-4 h-4 shrink-0 " />
+              <span>Diagnostik API</span>
             </button>
           </div>
         </div>

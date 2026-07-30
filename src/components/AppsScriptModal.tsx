@@ -350,7 +350,7 @@ function doGet(e) {
                 Google Sheets Synchronization (Google Apps Script)
               </h2>
               <p className="text-xs text-slate-500">
-                Connect your City Dispatch system directly to a live Google Sheet
+                Connect your Lady Driver Dispatch system directly to a live Google Sheet
               </p>
             </div>
           </div>
