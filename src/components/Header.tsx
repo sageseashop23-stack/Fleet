@@ -8,7 +8,7 @@ interface HeaderProps {
   activeDriver: Driver | null;
   onLogoutDriver: () => void;
   gasConfig: GasConfig;
-  onOpenGasModal: () => void;
+  
   onOpenAiModal: () => void;
 }
 
@@ -18,7 +18,7 @@ export const Header: React.FC<HeaderProps> = ({
   activeDriver,
   onLogoutDriver,
   gasConfig,
-  onOpenGasModal,
+  
   onOpenAiModal
 }) => {
   return (
@@ -46,79 +46,27 @@ export const Header: React.FC<HeaderProps> = ({
           <nav className="flex items-center gap-1 sm:gap-2 bg-slate-800/80 p-1 rounded-xl border border-slate-700/60">
             <button
               onClick={() => setActiveTab('PASSENGER')}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all ${
-                activeTab === 'PASSENGER'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
-              }`}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 flex items-center gap-1.5 ${activeTab === 'PASSENGER' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-inner shadow-indigo-500/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 border border-transparent'}`}
             >
-              <Car className="w-4 h-4" />
-              <span>Passenger</span>
+              Passenger Mode
             </button>
-
             <button
               onClick={() => setActiveTab('DRIVER')}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all relative ${
-                activeTab === 'DRIVER'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
-              }`}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 flex items-center gap-1.5 ${activeTab === 'DRIVER' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-inner shadow-emerald-500/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 border border-transparent'}`}
             >
-              <Truck className="w-4 h-4" />
-              <span>Driver Console</span>
-              {activeDriver && (
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              )}
+              <Car className="w-4 h-4 hidden sm:block" />
+              Driver Console
             </button>
-
             <button
               onClick={() => setActiveTab('ADMIN')}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all ${
-                activeTab === 'ADMIN'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
-              }`}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 flex items-center gap-1.5 ${activeTab === 'ADMIN' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-inner shadow-amber-500/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 border border-transparent'}`}
             >
-              <ShieldCheck className="w-4 h-4" />
-              <span>Admin Dispatch</span>
+              <ShieldCheck className="w-4 h-4 hidden sm:block" />
+              Admin Dispatch
             </button>
           </nav>
 
-          {/* Right Action Tools */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            
-            {/* AI Assistant Button */}
-            <button
-              onClick={onOpenAiModal}
-              title="AI Dispatch Optimization Assistant"
-              className="flex items-center gap-1.5 px-2.5 py-1.5 bg-indigo-950/80 hover:bg-indigo-900/90 text-indigo-300 border border-indigo-700/60 rounded-lg text-xs font-semibold transition-all shadow-sm"
-            >
-              <Bot className="w-4 h-4 text-indigo-400" />
-              <span className="hidden md:inline">AI Optimizer</span>
-            </button>
-
-            {/* Google Sheets Sync Indicator */}
-            <button
-              onClick={onOpenGasModal}
-              title="Google Sheets Synchronization Setup"
-              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-                gasConfig.webAppUrl
-                  ? gasConfig.syncStatus === 'ERROR'
-                    ? 'bg-rose-950/60 text-rose-300 border-rose-800'
-                    : 'bg-emerald-950/60 text-emerald-300 border-emerald-800/80'
-                  : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'
-              }`}
-            >
-              <FileSpreadsheet className="w-4 h-4" />
-              <span className="hidden sm:inline">
-                {gasConfig.webAppUrl ? (
-                  gasConfig.syncStatus === 'SYNCING' ? 'Syncing...' : 'Sheets Synced'
-                ) : (
-                  'Google Sheets'
-                )}
-              </span>
-            </button>
-
+          <div className="flex items-center gap-2">
             {/* Active Driver Profile indicator */}
             {activeDriver && (
               <div className="hidden lg:flex items-center gap-2 pl-2 border-l border-slate-700">

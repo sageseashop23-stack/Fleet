@@ -11,8 +11,8 @@ interface DriverConsoleViewProps {
   onToggleDuty: (driverId: string, isAvailable: boolean) => Promise<void>;
   trips: Trip[];
   onUpdateTripStatus: (tripId: string, statusOps: string, extraData?: any) => Promise<void>;
-  onImportGasData?: () => Promise<void>;
-  onOpenGasModal?: () => void;
+  
+  
   isAutoRefreshEnabled?: boolean;
   onToggleAutoRefresh?: () => void;
 }
@@ -25,15 +25,13 @@ export const DriverConsoleView: React.FC<DriverConsoleViewProps> = ({
   onToggleDuty,
   trips,
   onUpdateTripStatus,
-  onImportGasData,
-  onOpenGasModal,
+  
+  
   isAutoRefreshEnabled = true,
   onToggleAutoRefresh
 }) => {
   const [inputPin, setInputPin] = useState('');
   const [loginError, setLoginError] = useState<string | null>(null);
-  const [isSyncing, setIsSyncing] = useState(false);
-  const [syncMessage, setSyncMessage] = useState<string | null>(null);
 
   // Dispute Modal State
   const [disputeTrip, setDisputeTrip] = useState<Trip | null>(null);
@@ -72,26 +70,13 @@ export const DriverConsoleView: React.FC<DriverConsoleViewProps> = ({
 
     const ok = await onLoginPin(clean);
     if (!ok) {
-      setLoginError('Invalid 4-digit PIN code. Check registered PINs below or click "Sync Drivers from Google Sheet".');
+      setLoginError('Invalid 4-digit PIN code. Please check your PIN and try again.');
     } else {
       setInputPin('');
     }
   };
 
-  const handleSyncGSheet = async () => {
-    if (!onImportGasData) return;
-    setIsSyncing(true);
-    setSyncMessage(null);
-    setLoginError(null);
-    try {
-      await onImportGasData();
-      setSyncMessage('Successfully imported drivers & trips from Google Sheet!');
-    } catch (err: any) {
-      setLoginError('Failed to import from Google Sheet: ' + (err.message || 'Check Web App URL'));
-    } finally {
-      setIsSyncing(false);
-    }
-  };
+
 
   // If driver is NOT logged in, render PIN Authentication Console
   if (!activeDriver) {
@@ -124,26 +109,9 @@ export const DriverConsoleView: React.FC<DriverConsoleViewProps> = ({
             </div>
 
             {loginError && (
-              <div className="text-xs font-bold text-rose-500 bg-rose-50 dark:bg-rose-950/60 p-3 rounded-lg border border-rose-200 dark:border-rose-800 text-left space-y-2">
+              <div className="mb-4 bg-rose-500/10 text-rose-600 dark:text-rose-400 p-3 rounded-xl border border-rose-500/20 text-xs font-bold text-center animate-in fade-in zoom-in duration-300 space-y-2">
                 <p>{loginError}</p>
-                {onImportGasData && (
-                  <button
-                    type="button"
-                    onClick={handleSyncGSheet}
-                    disabled={isSyncing}
-                    className="w-full flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-bold py-1.5 px-3 rounded text-[11px] transition-all"
-                  >
-                    <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
-                    <span>Sync Drivers from Google Sheet Now</span>
-                  </button>
-                )}
               </div>
-            )}
-
-            {syncMessage && (
-              <p className="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 p-2 rounded-lg border border-emerald-200 dark:border-emerald-800">
-                {syncMessage}
-              </p>
             )}
 
             <button
@@ -158,17 +126,7 @@ export const DriverConsoleView: React.FC<DriverConsoleViewProps> = ({
           <div className="pt-4 border-t border-slate-100 dark:border-slate-800 text-left space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-bold text-slate-400">Registered Drivers ({drivers.length}):</span>
-              {onImportGasData && (
-                <button
-                  type="button"
-                  onClick={handleSyncGSheet}
-                  disabled={isSyncing}
-                  className="flex items-center gap-1.5 text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:underline disabled:opacity-50"
-                >
-                  <RefreshCw className={`w-3 h-3 ${isSyncing ? 'animate-spin' : ''}`} />
-                  <span>Pull from Google Sheet</span>
-                </button>
-              )}
+
             </div>
 
             <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
@@ -190,18 +148,7 @@ export const DriverConsoleView: React.FC<DriverConsoleViewProps> = ({
               ))}
             </div>
 
-            {onOpenGasModal && (
-              <div className="pt-2 text-center">
-                <button
-                  type="button"
-                  onClick={onOpenGasModal}
-                  className="inline-flex items-center gap-1.5 text-[11px] text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 font-medium"
-                >
-                  <Database className="w-3.5 h-3.5" />
-                  <span>Configure Google Sheet Sync Settings</span>
-                </button>
-              </div>
-            )}
+
           </div>
 
         </div>

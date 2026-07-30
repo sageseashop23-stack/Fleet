@@ -1,7 +1,9 @@
 const fs = require('fs');
 let code = fs.readFileSync('src/components/Sidebar.tsx', 'utf8');
+code = code.replace(/onOpenGasModal: \(\) => void;/g, '');
+code = code.replace(/onOpenGasModal,/g, '');
 
-code = code.replace(/CITY DISPATCH/g, 'LADY DRIVER DISPATCH');
-code = code.replace(/Premium Logistics/g, 'Premium Logistic');
+const btnMatch = /<button[\s\S]*?onOpenGasModal\(\);[\s\S]*?<\/button>/;
+code = code.replace(btnMatch, '');
 
 fs.writeFileSync('src/components/Sidebar.tsx', code);

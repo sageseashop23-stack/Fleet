@@ -1,4 +1,5 @@
 import express from 'express';
+import { Pool } from 'pg';
 import path from 'path';
 import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
@@ -32,7 +33,51 @@ interface LocalDb {
   };
 }
 
-function readDb(): LocalDb {
+
+const pool = process.env.DATABASE_URL ? new Pool({ connectionString: process.env.DATABASE_URL, max: 20 }) : null;
+
+async function ensureTable() {
+  if (pool) {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS app_state (
+        id SERIAL PRIMARY KEY,
+        data JSONB NOT NULL
+      )
+    `);
+    const { rowCount } = await pool.query('SELECT id FROM app_state WHERE id = 1');
+    if (rowCount === 0) {
+      // Initialize if empty
+      const initialData: LocalDb = {
+        drivers: [],
+        trips: [],
+        activityLogs: [],
+        gasConfig: { webAppUrl: '', autoSyncOnComplete: true, syncStatus: 'IDLE' }
+      };
+      // Try to read from local_db.json first
+      let data = initialData;
+      try {
+        if (fs.existsSync(DB_FILE)) {
+          data = JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'));
+        }
+      } catch (err) {}
+      await pool.query('INSERT INTO app_state (id, data) VALUES (1, $1)', [JSON.stringify(data)]);
+    }
+  }
+}
+
+let isTableInitialized = false;
+
+async function readDb(): Promise<LocalDb> {
+  if (pool) {
+    if (!isTableInitialized) {
+      await ensureTable();
+      isTableInitialized = true;
+    }
+    const { rows } = await pool.query('SELECT data FROM app_state WHERE id = 1');
+    return rows[0].data;
+  }
+
+  // Fallback to local_db.json
   try {
     if (fs.existsSync(DB_FILE)) {
       const raw = fs.readFileSync(DB_FILE, 'utf-8');
@@ -49,7 +94,17 @@ function readDb(): LocalDb {
   };
 }
 
-function writeDb(data: LocalDb) {
+async function writeDb(data: LocalDb) {
+  if (pool) {
+    if (!isTableInitialized) {
+      await ensureTable();
+      isTableInitialized = true;
+    }
+    await pool.query('UPDATE app_state SET data = $1 WHERE id = 1', [JSON.stringify(data)]);
+    return;
+  }
+
+  // Fallback to local_db.json
   try {
     fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
   } catch (err) {
@@ -71,13 +126,13 @@ async function triggerGasSyncIfEnabled(db: LocalDb, triggerReason: string) {
   if (url.includes('docs.google.com/spreadsheets') || url.includes('/edit')) {
     db.gasConfig.syncStatus = 'ERROR';
     db.gasConfig.lastErrorMessage = "URL Error: You entered a Google Sheet link. Please deploy your script (Deploy ➔ New deployment ➔ Web App) and paste the Web App URL ending in /exec.";
-    writeDb(db);
+    await writeDb(db);
     return;
   }
 
   try {
     db.gasConfig.syncStatus = 'SYNCING';
-    writeDb(db);
+    await writeDb(db);
 
     const payload = {
       action: 'SYNC_DISPATCH_DATA',
@@ -125,7 +180,7 @@ async function triggerGasSyncIfEnabled(db: LocalDb, triggerReason: string) {
     db.gasConfig.syncStatus = 'ERROR';
     db.gasConfig.lastErrorMessage = error?.message || 'Network error connecting to Apps Script Web App';
   }
-  writeDb(db);
+  await writeDb(db);
 }
 
 async function startServer() {
@@ -133,18 +188,18 @@ async function startServer() {
   app.use(express.json());
 
   // API Routes
-  app.get('/api/health', (_req, res) => {
+  app.get('/api/health', async (_req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
   });
 
   // Drivers Endpoints
-  app.get('/api/drivers', (_req, res) => {
-    const db = readDb();
+  app.get('/api/drivers', async (_req, res) => {
+    const db = await readDb();
     res.json(db.drivers);
   });
 
-  app.post('/api/drivers', (req, res) => {
-    const db = readDb();
+  app.post('/api/drivers', async (req, res) => {
+    const db = await readDb();
     const { name, phone, pin, vehicleModel, licensePlate, adminRole } = req.body;
     
     if (!name || !pin) {
@@ -166,13 +221,13 @@ async function startServer() {
     };
 
     db.drivers.push(newDriver);
-    writeDb(db);
+    await writeDb(db);
     triggerGasSyncIfEnabled(db, 'AUTO');
     res.status(201).json(newDriver);
   });
 
-  app.post('/api/drivers/login', (req, res) => {
-    const db = readDb();
+  app.post('/api/drivers/login', async (req, res) => {
+    const db = await readDb();
     const { pin } = req.body;
     const cleanPin = String(pin || '').trim();
     if (!cleanPin) {
@@ -191,8 +246,8 @@ async function startServer() {
     res.json(driver);
   });
 
-  app.patch('/api/drivers/:id', (req, res) => {
-    const db = readDb();
+  app.patch('/api/drivers/:id', async (req, res) => {
+    const db = await readDb();
     const { id } = req.params;
     const driverIndex = db.drivers.findIndex((d: any) => d.id === id);
     if (driverIndex === -1) {
@@ -202,19 +257,19 @@ async function startServer() {
 
     const updated = { ...db.drivers[driverIndex], ...req.body };
     db.drivers[driverIndex] = updated;
-    writeDb(db);
+    await writeDb(db);
     triggerGasSyncIfEnabled(db, 'AUTO');
     res.json(updated);
   });
 
   // Trips Endpoints
-  app.get('/api/trips', (_req, res) => {
-    const db = readDb();
+  app.get('/api/trips', async (_req, res) => {
+    const db = await readDb();
     res.json(db.trips);
   });
 
-  app.post('/api/trips', (req, res) => {
-    const db = readDb();
+  app.post('/api/trips', async (req, res) => {
+    const db = await readDb();
     const tripData = req.body;
 
     const tripId = `TRP-2026-${Math.floor(8800 + Math.random() * 1000)}`;
@@ -243,13 +298,13 @@ async function startServer() {
     };
 
     db.trips.unshift(newTrip);
-    writeDb(db);
+    await writeDb(db);
     triggerGasSyncIfEnabled(db, 'AUTO');
     res.status(201).json(newTrip);
   });
 
-  app.patch('/api/trips/:id', (req, res) => {
-    const db = readDb();
+  app.patch('/api/trips/:id', async (req, res) => {
+    const db = await readDb();
     const { id } = req.params;
     const tripIndex = db.trips.findIndex((t: any) => t.id === id);
     if (tripIndex === -1) {
@@ -301,41 +356,41 @@ async function startServer() {
 
     const updatedTrip = { ...prevTrip, ...patchData };
     db.trips[tripIndex] = updatedTrip;
-    writeDb(db);
+    await writeDb(db);
     triggerGasSyncIfEnabled(db, 'AUTO');
     res.json(updatedTrip);
   });
 
-  app.delete('/api/trips/:id', (req, res) => {
-    const db = readDb();
+  app.delete('/api/trips/:id', async (req, res) => {
+    const db = await readDb();
     const { id } = req.params;
     db.trips = db.trips.filter((t: any) => t.id !== id);
-    writeDb(db);
+    await writeDb(db);
     triggerGasSyncIfEnabled(db, 'AUTO');
     res.json({ success: true, message: 'Trip removed' });
   });
 
   // Activity Stream Endpoints
-  app.get('/api/activity', (_req, res) => {
-    const db = readDb();
+  app.get('/api/activity', async (_req, res) => {
+    const db = await readDb();
     res.json(db.activityLogs.slice(0, 5));
   });
 
   // Google Apps Script Config & Manual Sync
-  app.get('/api/gas-config', (_req, res) => {
-    const db = readDb();
+  app.get('/api/gas-config', async (_req, res) => {
+    const db = await readDb();
     res.json(db.gasConfig);
   });
 
-  app.post('/api/gas-config', (req, res) => {
-    const db = readDb();
+  app.post('/api/gas-config', async (req, res) => {
+    const db = await readDb();
     db.gasConfig = { ...db.gasConfig, ...req.body };
-    writeDb(db);
+    await writeDb(db);
     res.json(db.gasConfig);
   });
 
   app.post('/api/sync-gas', async (_req, res) => {
-    const db = readDb();
+    const db = await readDb();
     if (!db.gasConfig.webAppUrl) {
       res.status(400).json({ error: 'Google Apps Script Web App URL is not configured' });
       return;
@@ -345,7 +400,7 @@ async function startServer() {
   });
 
   app.post('/api/import-gas', async (_req, res) => {
-    const db = readDb();
+    const db = await readDb();
     if (!db.gasConfig.webAppUrl) {
       res.status(400).json({ error: 'Google Apps Script Web App URL is not configured' });
       return;
@@ -356,7 +411,7 @@ async function startServer() {
       const msg = "URL Error: You entered a Google Sheet or Script Editor link instead of the Web App Exec URL. In Google Sheets, click Extensions ➔ Apps Script ➔ Deploy ➔ New deployment ➔ Web App, and paste the URL ending in /exec.";
       db.gasConfig.syncStatus = 'ERROR';
       db.gasConfig.lastErrorMessage = msg;
-      writeDb(db);
+      await writeDb(db);
       res.status(400).json({ error: msg, gasConfig: db.gasConfig });
       return;
     }
@@ -454,7 +509,7 @@ async function startServer() {
         db.gasConfig.syncStatus = 'SUCCESS';
         db.gasConfig.lastSyncTimestamp = new Date().toISOString();
         db.gasConfig.lastErrorMessage = undefined;
-        writeDb(db);
+        await writeDb(db);
         res.json({ success: true, trips: db.trips, drivers: db.drivers, gasConfig: db.gasConfig });
       } else {
         throw new Error(data.message || 'Failed to read from Google Sheet');
@@ -462,7 +517,7 @@ async function startServer() {
     } catch (err: any) {
       db.gasConfig.syncStatus = 'ERROR';
       db.gasConfig.lastErrorMessage = err?.message || 'Error pulling data from Google Sheet';
-      writeDb(db);
+      await writeDb(db);
       res.status(500).json({ error: db.gasConfig.lastErrorMessage, gasConfig: db.gasConfig });
     }
   });
@@ -519,7 +574,7 @@ ${JSON.stringify(driversData || [], null, 2)}`;
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
-    app.get('*', (_req, res) => {
+    app.get('*', async (_req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }

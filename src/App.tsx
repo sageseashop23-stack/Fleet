@@ -8,7 +8,7 @@ import { PassengerBookingView } from './components/PassengerBookingView';
 import { DriverConsoleView } from './components/DriverConsoleView';
 import { AdminDispatchView } from './components/AdminDispatchView';
 import { MonthlyEarningsReportModal } from './components/MonthlyEarningsReportModal';
-import { AppsScriptModal } from './components/AppsScriptModal';
+
 import { AiDispatchModal } from './components/AiDispatchModal';
 import { DiagnosticsModal } from './components/DiagnosticsModal';
 import { INITIAL_DRIVERS, INITIAL_TRIPS, INITIAL_ACTIVITY_LOGS, INITIAL_GAS_CONFIG } from './data/seedData';
@@ -29,7 +29,7 @@ export default function App() {
   const [activeDriver, setActiveDriver] = useState<Driver | null>(null);
 
   // Modals Visibility State
-  const [isGasModalOpen, setIsGasModalOpen] = useState(false);
+  
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
   const [isDiagnosticsModalOpen, setIsDiagnosticsModalOpen] = useState(false);
@@ -362,7 +362,7 @@ export default function App() {
           activeDriver={activeDriver}
           onLogoutDriver={handleLogoutDriver}
           onOpenReportModal={() => setIsReportModalOpen(true)}
-          onOpenGasModal={() => setIsGasModalOpen(true)}
+          
           onOpenAiModal={() => setIsAiModalOpen(true)}
           onOpenDiagnosticsModal={() => setIsDiagnosticsModalOpen(true)}
           isMobileOpen={isMobileSidebarOpen}
@@ -381,7 +381,7 @@ export default function App() {
               disputedTripsCount={disputedTripsCount}
               onOpenNewDispatch={() => setActiveTab('PASSENGER')}
               onOpenReportModal={() => setIsReportModalOpen(true)}
-              onOpenGasModal={() => setIsGasModalOpen(true)}
+              
               onOpenAiModal={() => setIsAiModalOpen(true)}
               onOpenDiagnosticsModal={() => setIsDiagnosticsModalOpen(true)}
               onToggleMobileSidebar={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
@@ -411,8 +411,8 @@ export default function App() {
               onUpdateTripStatus={(tripId, statusOps, extraData) =>
                 handleUpdateTrip(tripId, { statusOps: statusOps as any, ...extraData })
               }
-              onImportGasData={handleImportGasData}
-              onOpenGasModal={() => setIsGasModalOpen(true)}
+              
+              
               isAutoRefreshEnabled={isAutoRefreshEnabled}
               onToggleAutoRefresh={() => setIsAutoRefreshEnabled(!isAutoRefreshEnabled)}
             />
@@ -427,7 +427,7 @@ export default function App() {
               onCreateDriver={handleCreateDriver}
               onUpdateDriver={handleUpdateDriver}
               onOpenReportModal={() => setIsReportModalOpen(true)}
-              onOpenGasModal={() => setIsGasModalOpen(true)}
+              
               onOpenAiModal={() => setIsAiModalOpen(true)}
             />
           )}
@@ -444,14 +444,7 @@ export default function App() {
         trips={trips}
       />
 
-      <AppsScriptModal
-        isOpen={isGasModalOpen}
-        onClose={() => setIsGasModalOpen(false)}
-        gasConfig={gasConfig}
-        onSaveConfig={handleSaveGasConfig}
-        onTriggerManualSync={handleTriggerManualGasSync}
-        onImportData={handleImportGasData}
-      />
+      
 
       <AiDispatchModal
         isOpen={isAiModalOpen}

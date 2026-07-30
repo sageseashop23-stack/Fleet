@@ -1,12 +1,11 @@
 import React from 'react';
-import { Menu, Plus, FileSpreadsheet, Bot, PauseCircle, PlayCircle, Activity } from 'lucide-react';
+import { Menu, Plus, Bot, PauseCircle, PlayCircle, Activity } from 'lucide-react';
 
 interface TopHeaderProps {
   activeTab: 'PASSENGER' | 'DRIVER' | 'ADMIN';
   disputedTripsCount: number;
   onOpenNewDispatch: () => void;
   onOpenReportModal: () => void;
-  onOpenGasModal: () => void;
   onOpenAiModal: () => void;
   onOpenDiagnosticsModal: () => void;
   onToggleMobileSidebar: () => void;
@@ -17,7 +16,6 @@ interface TopHeaderProps {
 export const TopHeader: React.FC<TopHeaderProps> = ({
   activeTab,
   onOpenNewDispatch,
-  onOpenGasModal,
   onOpenAiModal,
   onOpenDiagnosticsModal,
   onToggleMobileSidebar,
@@ -42,53 +40,30 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
       <div className="flex items-center gap-3">
         <button
           onClick={onToggleMobileSidebar}
-          className="md:hidden p-1.5 text-primary/70 hover:text-primary rounded-2xl hover:bg-black/5"
-          aria-label="Togol Navigasi"
+          className="md:hidden p-1.5 -ml-2 text-primary/70 hover:text-primary hover:bg-black/5 rounded-lg"
         >
           <Menu className="w-5 h-5" />
         </button>
-
-        <h2 className="text-sm sm:text-base font-bold text-primary tracking-tight flex items-center gap-2 truncate">
-          <span>{getTabTitle()}</span>
+        <h2 className="font-bold text-sm tracking-wide text-primary">
+          {getTabTitle()}
         </h2>
-
       </div>
 
-      {/* Right Action Bar */}
       <div className="flex items-center gap-2">
-        <button
-          onClick={onOpenNewDispatch}
-          className="bg-primary hover:bg-primary/90 text-secondary font-bold px-3 py-1.5 rounded-2xl text-xs transition-all shadow-sm flex items-center gap-1.5"
-        >
-          <Plus className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">Tugasan Baru</span>
-        </button>
-
-        <div className="h-4 w-px bg-primary/20 mx-1 hidden md:block"></div>
-
         {onToggleAutoRefresh && (
           <button
             onClick={onToggleAutoRefresh}
-            title={isAutoRefreshEnabled ? "Jeda Automatik (Jimat Bateri)" : "Sambung Automatik"}
-            className={`p-1.5 rounded-2xl text-xs font-medium border transition-colors flex items-center gap-1 ${
+            title={isAutoRefreshEnabled ? 'Jeda Auto-Refresh' : 'Sambung Auto-Refresh'}
+            className={`p-1.5 rounded-2xl text-xs font-medium border transition-colors hidden sm:flex items-center gap-1 ${
               isAutoRefreshEnabled 
-                ? 'text-primary/70 border-primary/30 hover:text-primary hover:bg-black/5' 
-                : ' border-amber-300 bg-amber-100 hover:bg-amber-200'
+                ? 'text-emerald-600 bg-emerald-50 border-emerald-200 hover:bg-emerald-100' 
+                : 'text-amber-600 bg-amber-50 border-amber-200 hover:bg-amber-100'
             }`}
           >
-            {isAutoRefreshEnabled ? <PauseCircle className="w-4 h-4" /> : <PlayCircle className="w-4 h-4" />}
+            {isAutoRefreshEnabled ? <PauseCircle className="w-3.5 h-3.5" /> : <PlayCircle className="w-3.5 h-3.5" />}
             <span className="hidden xl:inline">{isAutoRefreshEnabled ? 'Jeda' : 'Disambung'}</span>
           </button>
         )}
-
-        <button
-          onClick={onOpenGasModal}
-          title="Tetapan Google Sheets"
-          className="p-1.5 text-primary/70 hover:text-primary hover:bg-black/5 rounded-2xl text-xs font-medium border border-primary/20 transition-colors hidden lg:flex items-center gap-1"
-        >
-          <FileSpreadsheet className="w-3.5 h-3.5 " />
-          <span className="hidden xl:inline">Google Sheets</span>
-        </button>
 
         <button
           onClick={onOpenAiModal}
@@ -98,7 +73,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
           <Bot className="w-3.5 h-3.5 " />
           <span className="hidden xl:inline">AI Optimizer</span>
         </button>
-
+        
         <button
           onClick={onOpenDiagnosticsModal}
           title="Diagnostik API"
@@ -107,10 +82,18 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
           <Activity className="w-3.5 h-3.5 " />
           <span className="hidden xl:inline">Diagnostics</span>
         </button>
-
-
+        
+        {activeTab !== 'PASSENGER' && (
+          <button
+            onClick={onOpenNewDispatch}
+            className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-2xl text-xs font-bold transition-all shadow-sm shadow-blue-600/20 active:scale-95 ml-2"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Tugas Baru</span>
+            <span className="sm:hidden">Baru</span>
+          </button>
+        )}
       </div>
-
     </header>
   );
 };

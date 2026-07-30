@@ -11,7 +11,7 @@ interface AdminDispatchViewProps {
   onCreateDriver: (driverData: any) => Promise<void>;
   onUpdateDriver: (driverId: string, updates: Partial<Driver>) => Promise<void>;
   onOpenReportModal: () => void;
-  onOpenGasModal: () => void;
+  
   onOpenAiModal: () => void;
 }
 

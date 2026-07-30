@@ -1,5 +1,5 @@
 import React from 'react';
-import { Truck, Car, ShieldCheck, FileText, AlertTriangle, Bot, FileSpreadsheet, Activity } from 'lucide-react';
+import { Truck, Car, ShieldCheck, FileText, AlertTriangle, Bot, Activity, X } from 'lucide-react';
 import { Driver } from '../types';
 
 interface SidebarProps {
@@ -9,7 +9,6 @@ interface SidebarProps {
   activeDriver: Driver | null;
   onLogoutDriver: () => void;
   onOpenReportModal: () => void;
-  onOpenGasModal: () => void;
   onOpenAiModal: () => void;
   onOpenDiagnosticsModal: () => void;
   isMobileOpen?: boolean;
@@ -22,7 +21,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   disputedTripsCount,
   activeDriver,
   onOpenReportModal,
-  onOpenGasModal,
   onOpenAiModal,
   onOpenDiagnosticsModal,
   isMobileOpen,
@@ -38,7 +36,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="flex items-center gap-3 w-full">
           <label className="w-8 h-8 shrink-0 rounded-2xl flex items-center justify-center shadow-md overflow-hidden cursor-pointer relative group transition-colors border border-white/20 bg-rose-200">
             <input type="file" accept="image/*" className="hidden" />
-            {/* Using a placeholder girly aesthetic photo for now */}
             <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop" alt="Logo" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-black/40 hidden group-hover:flex items-center justify-center">
               <span className="text-[8px] font-bold text-white uppercase text-center leading-tight">Edit</span>
@@ -61,34 +58,31 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {setIsMobileOpen && (
           <button
             onClick={() => setIsMobileOpen(false)}
-            className="md:hidden text-white/50 hover:text-white text-xs font-bold"
+            className="md:hidden absolute top-4 right-4 p-1 rounded-lg text-white/50 hover:bg-white/10 hover:text-white"
           >
-            ✕
+            <X className="w-5 h-5" />
           </button>
         )}
       </div>
 
-      {/* Navigation Sections */}
-      <nav className="flex-1 px-3 py-4 space-y-6 overflow-y-auto text-xs">
-        
+      <nav className="flex-1 overflow-y-auto py-6 px-3 flex flex-col gap-6 scrollbar-hide">
+        {/* Core Dispatch Views */}
         <div>
-          <div className="text-white/50 text-[10px] font-bold uppercase tracking-widest px-2 mb-2">
-            Pusat Kawalan
-          </div>
+          <span className="px-3 text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2 block">Pusat Kawalan</span>
           <div className="space-y-1">
             <button
               onClick={() => {
                 setActiveTab('ADMIN');
                 setIsMobileOpen?.(false);
               }}
-              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-2xl font-medium transition-colors ${
-                activeTab === 'ADMIN'
-                  ? 'bg-secondary text-primary font-bold shadow-sm'
+              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-2xl font-medium transition-all ${
+                activeTab === 'ADMIN' 
+                  ? 'bg-blue-600/20 text-blue-400 border border-blue-500/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]' 
                   : 'text-white/70 hover:bg-white/10 hover:text-white'
               }`}
             >
-              <ShieldCheck className={`w-4 h-4 shrink-0 `} />
-              <span>Operasi Armada</span>
+              <ShieldCheck className={`w-4 h-4 shrink-0 ${activeTab === 'ADMIN' ? 'text-blue-400' : ''}`} />
+              <span>Admin Operasi</span>
             </button>
 
             <button
@@ -96,40 +90,43 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 setActiveTab('DRIVER');
                 setIsMobileOpen?.(false);
               }}
-              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-2xl font-medium transition-colors ${
-                activeTab === 'DRIVER'
-                  ? 'bg-secondary text-primary font-bold shadow-sm'
+              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-2xl font-medium transition-all ${
+                activeTab === 'DRIVER' 
+                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]' 
                   : 'text-white/70 hover:bg-white/10 hover:text-white'
               }`}
             >
-              <Truck className={`w-4 h-4 shrink-0 `} />
+              <Car className={`w-4 h-4 shrink-0 ${activeTab === 'DRIVER' ? 'text-emerald-400' : ''}`} />
               <span>Konsol Pemandu</span>
-              {activeDriver && (
-                <span className="ml-auto w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              )}
             </button>
-
+            
             <button
               onClick={() => {
                 setActiveTab('PASSENGER');
                 setIsMobileOpen?.(false);
               }}
-              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-2xl font-medium transition-colors ${
-                activeTab === 'PASSENGER'
-                  ? 'bg-secondary text-primary font-bold shadow-sm'
+              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-2xl font-medium transition-all ${
+                activeTab === 'PASSENGER' 
+                  ? 'bg-rose-500/20 text-rose-400 border border-rose-500/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]' 
                   : 'text-white/70 hover:bg-white/10 hover:text-white'
               }`}
             >
-              <Car className={`w-4 h-4 shrink-0 `} />
-              <span>Portal Penumpang</span>
+              <Truck className={`w-4 h-4 shrink-0 ${activeTab === 'PASSENGER' ? 'text-rose-400' : ''}`} />
+              <span>Borang Penumpang</span>
             </button>
           </div>
         </div>
 
+        {/* Action Center */}
         <div>
-          <div className="text-white/50 text-[10px] font-bold uppercase tracking-widest px-2 mb-2">
-            Kewangan & Alatan
-          </div>
+          <span className="px-3 text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2 flex items-center gap-2">
+            Pusat Tindakan
+            {disputedTripsCount > 0 && (
+              <span className="bg-rose-500 text-white text-[8px] px-1.5 py-0.5 rounded-full font-bold">
+                {disputedTripsCount}
+              </span>
+            )}
+          </span>
           <div className="space-y-1">
             <button
               onClick={() => {
@@ -139,36 +136,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
               className="w-full flex items-center gap-2.5 px-3 py-2 text-white/70 hover:bg-white/10 hover:text-white rounded-2xl font-medium transition-colors"
             >
               <FileText className="w-4 h-4 shrink-0 " />
-              <span>Laporan Pendapatan</span>
-            </button>
-
-            <button
-              onClick={() => {
-                setActiveTab('ADMIN');
-                setIsMobileOpen?.(false);
-              }}
-              className="w-full flex items-center gap-2.5 px-3 py-2 text-white/70 hover:bg-white/10 hover:text-white rounded-2xl font-medium transition-colors"
-            >
-              <AlertTriangle className="w-4 h-4 shrink-0 " />
-              <span>Pusat Pertikaian</span>
+              <span>Laporan Kewangan</span>
               {disputedTripsCount > 0 && (
-                <span className="ml-auto bg-rose-500 text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full">
-                  {disputedTripsCount}
-                </span>
+                <AlertTriangle className="w-3.5 h-3.5 text-rose-400 ml-auto shrink-0" />
               )}
             </button>
-
-            <button
-              onClick={() => {
-                onOpenGasModal();
-                setIsMobileOpen?.(false);
-              }}
-              className="w-full flex items-center gap-2.5 px-3 py-2 text-white/70 hover:bg-white/10 hover:text-white rounded-2xl font-medium transition-colors"
-            >
-              <FileSpreadsheet className="w-4 h-4 shrink-0 " />
-              <span>Penyegerakan Google Sheets</span>
-            </button>
-
             <button
               onClick={() => {
                 onOpenAiModal();
@@ -179,7 +151,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <Bot className="w-4 h-4 shrink-0 " />
               <span>Pengoptimum Laluan AI</span>
             </button>
-
             <button
               onClick={() => {
                 onOpenDiagnosticsModal();
@@ -216,7 +187,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
         )}
       </div>
-
     </aside>
   );
 };
