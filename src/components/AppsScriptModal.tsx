@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { GasConfig } from '../types';
-import { FileSpreadsheet, Copy, Check, ExternalLink, RefreshCw, X, ShieldAlert } from 'lucide-react';
+import { FileSpreadsheet, Copy, Check, RefreshCw, X, ShieldAlert } from 'lucide-react';
 
 interface AppsScriptModalProps {
   isOpen: boolean;

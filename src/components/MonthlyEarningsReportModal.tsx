@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Driver, Trip } from '../types';
-import { FileText, Printer, Download, Filter, X, DollarSign, TrendingUp, Users, CheckCircle2 } from 'lucide-react';
+import { FileText, Printer, Download, Filter, X } from 'lucide-react';
 
 interface MonthlyEarningsReportModalProps {
   isOpen: boolean;

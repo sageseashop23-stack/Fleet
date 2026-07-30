@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Driver, Trip } from '../types';
 import { StatusBadge } from './StatusBadge';
-import { Shield, KeyRound, Power, CheckCircle, Navigation, AlertTriangle, DollarSign, Calendar, MapPin, Truck, HelpCircle, RefreshCw, Database, Star, PauseCircle, PlayCircle } from 'lucide-react';
+import { KeyRound, Power, CheckCircle, Navigation, AlertTriangle, DollarSign, Calendar, MapPin, Truck, RefreshCw, Database, Star, PauseCircle, PlayCircle } from 'lucide-react';
 
 interface DriverConsoleViewProps {
   drivers: Driver[];

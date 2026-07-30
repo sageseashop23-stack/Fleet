@@ -1,6 +1,6 @@
 import React from 'react';
 import { Truck, Car, ShieldCheck, FileText, AlertTriangle, Bot, FileSpreadsheet } from 'lucide-react';
-import { Driver, Trip } from '../types';
+import { Driver } from '../types';
 
 interface SidebarProps {
   activeTab: 'PASSENGER' | 'DRIVER' | 'ADMIN';
@@ -20,7 +20,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setActiveTab,
   disputedTripsCount,
   activeDriver,
-  onLogoutDriver,
   onOpenReportModal,
   onOpenGasModal,
   onOpenAiModal,

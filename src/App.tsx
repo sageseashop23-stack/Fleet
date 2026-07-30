@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Driver, Trip, ActivityItem, GasConfig } from './types';
 import { Sidebar } from './components/Sidebar';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Trip, Driver } from '../types';
-import { Bot, Sparkles, Send, RefreshCw, X, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Bot, Sparkles, Send, RefreshCw, X, AlertTriangle } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 interface AiDispatchModalProps {

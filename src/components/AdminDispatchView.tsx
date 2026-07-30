@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Driver, Trip, OperationalStatus } from '../types';
 import { StatusBadge } from './StatusBadge';
-import { ShieldCheck, Truck, AlertTriangle, FileText, UserPlus, Search, Edit3, Trash2, Check, TrendingUp, Users, DollarSign, Clock } from 'lucide-react';
+import { ShieldCheck, AlertTriangle, UserPlus, Search, Edit3, Trash2, Check, TrendingUp, Users, DollarSign, Clock } from 'lucide-react';
 
 interface AdminDispatchViewProps {
   trips: Trip[];
@@ -22,9 +22,6 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
   onPadamTrip,
   onCreateDriver,
   onUpdateDriver,
-  onOpenReportModal,
-  onOpenGasModal,
-  onOpenAiModal
 }) => {
   const [activeAdminSubTab, setActiveAdminSubTab] = useState<'DISPATCH_BOARD' | 'DISPUTES' | 'REGISTRY'>('DISPATCH_BOARD');
   
@@ -49,7 +46,7 @@ export const AdminDispatchView: React.FC<AdminDispatchViewProps> = ({
   const [newDriverPin, setBaruDriverPin] = useState('1234');
   const [newDriverVehicle, setBaruDriverVehicle] = useState('Executive Sedan');
   const [newDriverPlate, setBaruDriverPlate] = useState('CPT-0000');
-  const [newDriverAdmin, setBaruDriverAdmin] = useState(false);
+  const [newDriverAdmin] = useState(false);
   const [isCreatingDriver, setIsCreatingDriver] = useState(false);
 
   // Bulk Actions State

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Plus, FileSpreadsheet, Bot, FileText, PauseCircle, PlayCircle } from 'lucide-react';
+import { Menu, Plus, FileSpreadsheet, Bot, PauseCircle, PlayCircle } from 'lucide-react';
 
 interface TopHeaderProps {
   activeTab: 'PASSENGER' | 'DRIVER' | 'ADMIN';
@@ -15,9 +15,7 @@ interface TopHeaderProps {
 
 export const TopHeader: React.FC<TopHeaderProps> = ({
   activeTab,
-  disputedTripsCount,
   onOpenNewDispatch,
-  onOpenReportModal,
   onOpenGasModal,
   onOpenAiModal,
   onToggleMobileSidebar,
