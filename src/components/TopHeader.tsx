@@ -52,25 +52,6 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
           <span>{getTabTitle()}</span>
         </h2>
 
-        {/* Live Status Chips */}
-        <div className="hidden sm:flex items-center gap-2 ml-2">
-          <span className="px-2 py-0.5 rounded-xl text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            SISTEM: DALAM TALIAN
-          </span>
-
-          <span className="px-2 py-0.5 rounded-xl text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-200 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-            SINKRONISASI AKTIF
-          </span>
-
-          {disputedTripsCount > 0 && (
-            <span className="px-2 py-0.5 rounded-xl text-[10px] font-bold bg-rose-100 text-rose-800 border border-rose-200 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping"></span>
-              {disputedTripsCount} PERTIKAIAN
-            </span>
-          )}
-        </div>
       </div>
 
       {/* Right Action Bar */}
@@ -118,14 +99,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
           <span className="hidden xl:inline">AI Optimizer</span>
         </button>
 
-        <button
-          onClick={onOpenReportModal}
-          title="Laporan Pendapatan Bulanan"
-          className="p-1.5 text-primary/70 hover:text-primary hover:bg-black/5 rounded-2xl text-xs font-medium border border-primary/20 transition-colors hidden sm:flex items-center gap-1"
-        >
-          <FileText className="w-3.5 h-3.5 " />
-          <span className="hidden xl:inline">Laporan Kewangan</span>
-        </button>
+
       </div>
 
     </header>

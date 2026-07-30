@@ -34,13 +34,26 @@ export const Sidebar: React.FC<SidebarProps> = ({
       
       {/* Brand & Logo Header */}
       <div className="p-5 flex items-center justify-between border-b border-primary/20">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-blue-600 rounded-2xl flex items-center justify-center shadow-md">
-            <div className="w-4 h-4 border-2 border-white transform rotate-45"></div>
-          </div>
-          <div>
-            <h1 className="text-white font-bold tracking-tight text-base leading-tight">CITY DISPATCH</h1>
-            <span className="text-[10px] text-white/70 font-medium">Konsol Logistik</span>
+        <div className="flex items-center gap-3 w-full">
+          <label className="w-8 h-8 shrink-0 rounded-2xl flex items-center justify-center shadow-md overflow-hidden cursor-pointer relative group transition-colors border border-white/20 bg-rose-200">
+            <input type="file" accept="image/*" className="hidden" />
+            {/* Using a placeholder girly aesthetic photo for now */}
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop" alt="Logo" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/40 hidden group-hover:flex items-center justify-center">
+              <span className="text-[8px] font-bold text-white uppercase text-center leading-tight">Edit</span>
+            </div>
+          </label>
+          <div className="flex flex-col min-w-0 flex-1">
+            <input 
+              type="text" 
+              defaultValue="CITY DISPATCH"
+              className="text-white font-bold tracking-tight text-base leading-tight bg-transparent border-none outline-none focus:ring-1 focus:ring-white/30 rounded px-1 -ml-1 w-full truncate"
+            />
+            <input 
+              type="text"
+              defaultValue="Premium Logistics"
+              className="text-[10px] text-white/70 font-medium bg-transparent border-none outline-none focus:ring-1 focus:ring-white/30 rounded px-1 -ml-1 w-full truncate"
+            />
           </div>
         </div>
         

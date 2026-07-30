@@ -380,15 +380,15 @@ export const PassengerBookingView: React.FC<PassengerBookingViewProps> = ({ trip
                     className="bg-blue-600 transition-all duration-500 rounded-full"
                     style={{
                       width:
-                        searchedTrip.statusOps === 'BELUM DITETAPKAN'
+                        searchedTrip.statusOps === 'UNASSIGNED'
                           ? '15%'
-                          : searchedTrip.statusOps === 'DITETAPKAN'
+                          : searchedTrip.statusOps === 'ASSIGNED'
                           ? '40%'
                           : searchedTrip.statusOps === 'EN_ROUTE'
                           ? '65%'
-                          : searchedTrip.statusOps === 'TIBA'
+                          : searchedTrip.statusOps === 'ARRIVED'
                           ? '85%'
-                          : searchedTrip.statusOps === 'SELESAI'
+                          : searchedTrip.statusOps === 'COMPLETED'
                           ? '100%'
                           : '10%'
                     }}

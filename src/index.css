@@ -4,20 +4,23 @@
   --font-sans: 'Plus Jakarta Sans', sans-serif;
   --font-serif: 'Playfair Display', serif;
 
-  --color-primary: #49243e;
-  --color-secondary: #f2e6b1;
+  --color-primary: #4f6f5a;
+  --color-secondary: #fdf6e3;
+  --color-accent-peach: #da8464;
+  --color-accent-yellow: #ffe39f;
+  --color-accent-pink: #e1ac99;
 
-  --color-slate-50: #faf6ea;
-  --color-slate-100: #f2e6b1;
-  --color-slate-200: #e5d398;
-  --color-slate-300: #d4bd7e;
-  --color-slate-400: #bc9c5f;
-  --color-slate-500: #9e7a46;
-  --color-slate-600: #7b5833;
-  --color-slate-700: #5d3d29;
-  --color-slate-800: #49243e;
-  --color-slate-900: #331528;
-  --color-slate-950: #1f0b17;
+  --color-slate-50: #fdf6e3;
+  --color-slate-100: #ece9d5;
+  --color-slate-200: #dadbc8;
+  --color-slate-300: #c9ceba;
+  --color-slate-400: #a6b39f;
+  --color-slate-500: #839883;
+  --color-slate-600: #69836f;
+  --color-slate-700: #4f6f5a;
+  --color-slate-800: #374e3f;
+  --color-slate-900: #202c24;
+  --color-slate-950: #101612;
 }
 
 @layer base {

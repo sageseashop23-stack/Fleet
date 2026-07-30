@@ -399,7 +399,7 @@ export default function App() {
               trips={trips}
               drivers={drivers}
               onUpdateTrip={handleUpdateTrip}
-              onDeleteTrip={handleDeleteTrip}
+              onPadamTrip={handleDeleteTrip}
               onCreateDriver={handleCreateDriver}
               onUpdateDriver={handleUpdateDriver}
               onOpenReportModal={() => setIsReportModalOpen(true)}
@@ -415,7 +415,7 @@ export default function App() {
       {/* Modals */}
       <MonthlyEarningsReportModal
         isOpen={isReportModalOpen}
-        onClose={() => setIsReportModalOpen(false)}
+        onTutup={() => setIsReportModalOpen(false)}
         drivers={drivers}
         trips={trips}
       />
@@ -431,7 +431,7 @@ export default function App() {
 
       <AiDispatchModal
         isOpen={isAiModalOpen}
-        onClose={() => setIsAiModalOpen(false)}
+        onTutup={() => setIsAiModalOpen(false)}
         trips={trips}
         drivers={drivers}
       />
