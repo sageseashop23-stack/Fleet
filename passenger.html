@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260810-05-2b86cd6","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/7949ff62d67710d5.telemetry_sdk.js" integrity="sha512-KIvXA82Di44YY/RH9/63A9MuTuavYgDFG8PfErJn7Wli4K0LAOk+coo/aPXk3+ZNL96nHh9VYD4PE+fLes+laQ=="></script>
+<html lang="en"><head><script src="/_sdk/7949ff62d67710d5.telemetry_sdk.js" integrity="sha512-KIvXA82Di44YY/RH9/63A9MuTuavYgDFG8PfErJn7Wli4K0LAOk+coo/aPXk3+ZNL96nHh9VYD4PE+fLes+laQ=="></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lady Driver — Passenger Booking</title>
@@ -174,80 +174,169 @@
    </main>
   </div>
   <script src="/_sdk/b8fc9aac2a1ee7fa.editing_sdk.js" integrity="sha512-0BDfjlda5WnGBb/gQP/bLynj6/01veZ9b+fYg78jNuknRGKsUHsXKtTCAOVAPQK2g457p9USMdsRyZFo8+UgRA=="></script>
-  <script>
-    const { motion, AnimatePresence } = window.Motion;
-    const trips = [
-      { id: "LD-2841", route: "KL Sentral → Bangsar South", date: "Today · 11:20", status: "Driver assigned", fare: "RM 28.50" },
-      { id: "LD-2838", route: "Pavilion KL → TTDI", date: "9 Aug · 10:42", status: "Completed", fare: "RM 25.50" }
-    ];
+  <script type="module">
 
-    const reservePanel = document.getElementById("reserve-panel");
-    const trackPanel = document.getElementById("track-panel");
-    const reserveTab = document.getElementById("reserve-tab");
-    const trackTab = document.getElementById("track-tab");
-    const trackingResult = document.getElementById("tracking-result");
-    const trackingEmpty = document.getElementById("tracking-empty");
-    const today = new Date().toISOString().split("T")[0];
-    document.getElementById("ride-date").value = today;
-    document.getElementById("ride-date").min = today;
+import { db } from '/src/firebase.js';
+import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc } from 'firebase/firestore';
 
-    function setView(view) {
-      const reserve = view === "reserve";
-      reservePanel.classList.toggle("hidden", !reserve);
-      trackPanel.classList.toggle("hidden", reserve);
-      reserveTab.setAttribute("aria-selected", String(reserve));
-      trackTab.setAttribute("aria-selected", String(!reserve));
-      reserveTab.className = "canva-button flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-[#d85173] " + (reserve ? "bg-[#171717] text-white" : "text-[#686963] hover:bg-[#f3f3ef]");
-      trackTab.className = "canva-button flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-[#d85173] " + (!reserve ? "bg-[#171717] text-white" : "text-[#686963] hover:bg-[#f3f3ef]");
-    }
+const { motion, AnimatePresence } = window.Motion;
 
-    function renderTrips() {
-      const list = document.getElementById("recent-list");
-      list.innerHTML = "";
-      trips.forEach((trip) => {
-        const card = document.createElement("button");
-        card.type = "button";
-        card.className = "surface group flex w-full items-center justify-between gap-4 rounded-3xl p-5 text-left transition duration-300 hover:-translate-y-0.5 hover:border-[#d4d4cc] focus:outline-none focus:ring-2 focus:ring-[#d85173]";
-        card.innerHTML = '<span class="flex min-w-0 items-center gap-4"><span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#f9e4e9] text-[#b92f55]"><i data-lucide="route" class="h-5 w-5"></i></span><span class="min-w-0"><span class="flex flex-wrap items-center gap-2"><span class="rounded-full bg-[#171717] px-2 py-1 text-[10px] font-bold tracking-[.1em] text-white">' + trip.id + '</span><span class="text-xs text-[#85867f]">' + trip.date + '</span></span><strong class="mt-2 block truncate text-sm">' + trip.route + '</strong><span class="mt-1 block text-xs text-[#777872]">' + trip.status + '</span></span></span><span class="shrink-0 text-right"><strong class="block text-sm">' + trip.fare + '</strong><i data-lucide="arrow-up-right" class="ml-auto mt-2 h-4 w-4 text-[#85867f] transition group-hover:text-[#171717]"></i></span>';
-        card.addEventListener("click", () => showTracking(trip.id));
-        list.appendChild(card);
+let trips = [];
+
+const reservePanel = document.getElementById("reserve-panel");
+const trackPanel = document.getElementById("track-panel");
+const reserveTab = document.getElementById("reserve-tab");
+const trackTab = document.getElementById("track-tab");
+const trackingResult = document.getElementById("tracking-result");
+const trackingEmpty = document.getElementById("tracking-empty");
+const today = new Date().toISOString().split("T")[0];
+document.getElementById("ride-date").value = today;
+document.getElementById("ride-date").min = today;
+
+function setView(view) {
+  const reserve = view === "reserve";
+  reservePanel.classList.toggle("hidden", !reserve);
+  trackPanel.classList.toggle("hidden", reserve);
+  reserveTab.setAttribute("aria-selected", String(reserve));
+  trackTab.setAttribute("aria-selected", String(!reserve));
+  reserveTab.className = "canva-button flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-[#d85173] " + (reserve ? "bg-[#171717] text-white" : "text-[#686963] hover:bg-[#f3f3ef]");
+  trackTab.className = "canva-button flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-[#d85173] " + (!reserve ? "bg-[#171717] text-white" : "text-[#686963] hover:bg-[#f3f3ef]");
+}
+
+function renderTrips() {
+  const list = document.getElementById("recent-list");
+  list.innerHTML = "";
+  trips.forEach((trip) => {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "surface group flex w-full items-center justify-between gap-4 rounded-3xl p-5 text-left transition duration-300 hover:-translate-y-0.5 hover:border-[#d4d4cc] focus:outline-none focus:ring-2 focus:ring-[#d85173]";
+    const shortId = trip.id.substring(0, 7).toUpperCase();
+    
+    // Status text logic
+    let statusText = trip.status;
+    if (statusText === 'pending') statusText = 'Looking for driver...';
+    if (statusText === 'assigned') statusText = 'Driver assigned';
+    if (statusText === 'in_progress') statusText = 'On the way';
+    
+    card.innerHTML = `<span class="flex min-w-0 items-center gap-4"><span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#f9e4e9] text-[#b92f55]"><i data-lucide="route" class="h-5 w-5"></i></span><span class="min-w-0"><span class="flex flex-wrap items-center gap-2"><span class="rounded-full bg-[#171717] px-2 py-1 text-[10px] font-bold tracking-[.1em] text-white">${shortId}</span><span class="text-xs text-[#85867f]">${trip.time}</span></span><strong class="mt-2 block truncate text-sm">${trip.route}</strong><span class="mt-1 block text-xs text-[#777872]">${statusText}</span></span></span><span class="shrink-0 text-right"><strong class="block text-sm">RM ${trip.fare.toFixed(2)}</strong><i data-lucide="arrow-up-right" class="ml-auto mt-2 h-4 w-4 text-[#85867f] transition group-hover:text-[#171717]"></i></span>`;
+    card.addEventListener("click", () => showTracking(trip.id));
+    list.appendChild(card);
+  });
+  lucide.createIcons();
+}
+
+let activeTrackingUnsubscribe = null;
+
+function showTracking(reference) {
+  document.getElementById("booking-reference").value = reference;
+  const shortId = reference.substring(0, 7).toUpperCase();
+  document.getElementById("live-reference").textContent = shortId;
+  trackingEmpty.classList.add("hidden");
+  trackingResult.classList.remove("hidden");
+  setView("track");
+  
+  if (activeTrackingUnsubscribe) activeTrackingUnsubscribe();
+  
+  // Real-time tracking of this specific trip
+  const tripRef = doc(db, "trips", reference);
+  activeTrackingUnsubscribe = onSnapshot(tripRef, (docSnap) => {
+      if (docSnap.exists()) {
+          const data = docSnap.data();
+          const driverNameEl = document.querySelector('[data-template-id="driver-name"]');
+          const driverCarEl = document.querySelector('[data-template-id="driver-car"]');
+          const liveStatusEl = document.querySelector('[data-template-id="live-status"]');
+          const liveTitleEl = document.querySelector('[data-template-id="live-title"]');
+          
+          if (data.status === 'pending') {
+              liveStatusEl.textContent = 'SEARCHING...';
+              liveTitleEl.textContent = 'Looking for a driver.';
+              driverNameEl.textContent = 'Waiting for driver';
+              driverCarEl.textContent = '...';
+          } else if (data.status === 'assigned') {
+              liveStatusEl.textContent = 'EN ROUTE TO PICKUP';
+              liveTitleEl.textContent = 'Your driver is on the way.';
+          } else if (data.status === 'in_progress') {
+              liveStatusEl.textContent = 'IN TRANSIT';
+              liveTitleEl.textContent = 'Heading to destination.';
+          } else if (data.status === 'completed') {
+              liveStatusEl.textContent = 'COMPLETED';
+              liveTitleEl.textContent = 'You have arrived.';
+          }
+          
+          if (data.driverId) {
+             // In a real app we would join with drivers collection, 
+             // but for simplicity we'll just show the driver ID or fetch it.
+             const dRef = doc(db, "drivers", data.driverId);
+             onSnapshot(dRef, (dSnap) => {
+                 if (dSnap.exists()) {
+                     const dData = dSnap.data();
+                     driverNameEl.textContent = dData.name;
+                     driverCarEl.textContent = dData.vehicle;
+                 }
+             });
+          }
+      }
+  });
+}
+
+reserveTab.addEventListener("click", () => setView("reserve"));
+trackTab.addEventListener("click", () => setView("track"));
+
+document.getElementById("estimate-button").addEventListener("click", () => {
+  const passengerCount = Number(document.getElementById("passengers").selectedIndex) + 1;
+  const estimate = 22 + passengerCount * 2;
+  document.getElementById("estimate-value").textContent = "RM " + estimate + "–" + (estimate + 6);
+  // Store estimate secretly in dataset
+  document.getElementById("estimate-button").dataset.baseFare = estimate;
+});
+
+document.getElementById("booking-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  
+  const pickup = document.getElementById("pickup").value;
+  const dropoff = document.getElementById("dropoff").value;
+  const baseFare = Number(document.getElementById("estimate-button").dataset.baseFare || 25);
+  
+  try {
+      const docRef = await addDoc(collection(db, "trips"), {
+          route: `${pickup} → ${dropoff}`,
+          fare: baseFare,
+          status: "pending",
+          time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
+          createdAt: serverTimestamp()
       });
-      lucide.createIcons();
-    }
-
-    function showTracking(reference) {
-      document.getElementById("booking-reference").value = reference;
-      document.getElementById("live-reference").textContent = reference.toUpperCase();
-      trackingEmpty.classList.add("hidden");
-      trackingResult.classList.remove("hidden");
-      setView("track");
-    }
-
-    reserveTab.addEventListener("click", () => setView("reserve"));
-    trackTab.addEventListener("click", () => setView("track"));
-
-    document.getElementById("estimate-button").addEventListener("click", () => {
-      const passengerCount = Number(document.getElementById("passengers").selectedIndex) + 1;
-      const estimate = 22 + passengerCount * 2;
-      document.getElementById("estimate-value").textContent = "RM " + estimate + "–" + (estimate + 6);
-    });
-
-    document.getElementById("booking-form").addEventListener("submit", (event) => {
-      event.preventDefault();
+      
       document.getElementById("booking-success").classList.remove("hidden");
       document.getElementById("booking-success").scrollIntoView({ behavior: "smooth", block: "nearest" });
-    });
+      
+      // Setup the track button to track this new ride
+      const trackBtn = document.getElementById("success-track-button");
+      trackBtn.onclick = () => showTracking(docRef.id);
+      
+      // Reset form
+      document.getElementById("booking-form").reset();
+  } catch(e) {
+      console.error("Error booking ride", e);
+      alert("Failed to book ride.");
+  }
+});
 
-    document.getElementById("success-track-button").addEventListener("click", () => showTracking("LD-2841"));
+document.getElementById("tracking-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const reference = document.getElementById("booking-reference").value.trim();
+  if (reference) showTracking(reference);
+});
 
-    document.getElementById("tracking-form").addEventListener("submit", (event) => {
-      event.preventDefault();
-      const reference = document.getElementById("booking-reference").value.trim().toUpperCase();
-      if (reference) showTracking(reference);
-    });
-
+// Setup Real-time Listener for all passenger trips
+// For demo, we just get the latest 10 trips
+const q = query(collection(db, "trips"), orderBy("createdAt", "desc"));
+onSnapshot(q, (snapshot) => {
+    trips = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})).slice(0, 10);
     renderTrips();
-    lucide.createIcons();
-  </script>
+});
+
+lucide.createIcons();
+
+</script>
  
 </body></html>

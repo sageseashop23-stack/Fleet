@@ -1,0 +1,66 @@
+{
+  "collections": [
+    {
+      "name": "trips",
+      "description": "Records of rides",
+      "documentId": "auto-generated",
+      "fields": [
+        {
+          "name": "route",
+          "type": "string"
+        },
+        {
+          "name": "fare",
+          "type": "number"
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "pending, assigned, in_progress, completed, disputed"
+        },
+        {
+          "name": "driverId",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "passengerId",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "time",
+          "type": "string"
+        },
+        {
+          "name": "createdAt",
+          "type": "timestamp"
+        }
+      ]
+    },
+    {
+      "name": "drivers",
+      "description": "List of drivers and their status",
+      "documentId": "custom_id",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "vehicle",
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "on_duty, off_duty"
+        }
+      ]
+    }
+  ]
+}

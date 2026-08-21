@@ -581,18 +581,41 @@ ${JSON.stringify(driversData || [], null, 2)}`;
     }
   });
 
+  // Determine which entry point to serve based on VITE_APP_MODE
+  const appMode = process.env.VITE_APP_MODE?.toLowerCase();
+  const defaultHtml = appMode && ['passenger', 'admin', 'driver'].includes(appMode) 
+    ? `${appMode}.html` 
+    : 'index.html';
+
   // Mount Vite Middleware in Development, or Static files in Production
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },
-      appType: 'spa'
+      appType: 'custom'
     });
     app.use(vite.middlewares);
+    
+    // Custom catch-all to serve the correct HTML
+    app.use('*', async (req, res, next) => {
+      try {
+        const url = req.originalUrl;
+        if (url === '/' || !url.includes('.')) {
+          let template = await fs.promises.readFile(path.resolve(process.cwd(), defaultHtml), 'utf-8');
+          template = await vite.transformIndexHtml(url, template);
+          res.status(200).set({ 'Content-Type': 'text/html' }).end(template);
+        } else {
+          next();
+        }
+      } catch (e: any) {
+        vite.ssrFixStacktrace(e);
+        next(e);
+      }
+    });
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
     app.get('*', async (_req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+      res.sendFile(path.join(distPath, defaultHtml));
     });
   }
 
