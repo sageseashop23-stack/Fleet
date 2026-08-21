@@ -1,38 +1,7 @@
-@import "tailwindcss";
+const fs = require('fs');
+let code = fs.readFileSync('src/index.css', 'utf8');
 
-@theme {
-  --font-sans: 'Plus Jakarta Sans', sans-serif;
-  --font-serif: 'Playfair Display', serif;
-
-  --color-primary: #4f6f5a;
-  --color-secondary: #fdf6e3;
-  --color-accent-peach: #da8464;
-  --color-accent-yellow: #ffe39f;
-  --color-accent-pink: #e1ac99;
-
-  --color-slate-50: #fdf6e3;
-  --color-slate-100: #ece9d5;
-  --color-slate-200: #dadbc8;
-  --color-slate-300: #c9ceba;
-  --color-slate-400: #a6b39f;
-  --color-slate-500: #839883;
-  --color-slate-600: #69836f;
-  --color-slate-700: #4f6f5a;
-  --color-slate-800: #374e3f;
-  --color-slate-900: #202c24;
-  --color-slate-950: #101612;
-}
-
-@layer base {
-  body {
-    @apply font-sans;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
-  }
-}
-
-
+const newCSS = `
 :root { 
   --ink:#171717; 
   --paper:#f7f7f5; 
@@ -90,3 +59,8 @@
 .subtle-card { transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
 .subtle-card:hover { transform: translateY(-2px); border-color: #bed0d9; box-shadow: 0 14px 28px rgba(47, 70, 81, .07); }
 .status-pulse { box-shadow: 0 0 0 4px rgba(78, 128, 109, .10); }
+`;
+
+if (!code.includes('.display-font')) {
+  fs.writeFileSync('src/index.css', code + '\n' + newCSS);
+}

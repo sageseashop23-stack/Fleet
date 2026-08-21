@@ -1,0 +1,2250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      window["__codeletBootstrap__"] = JSON.parse(
+        '{"A":"A","B":"20260810-05-2b86cd6","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}',
+      );
+    </script>
+    <script
+      src="/_sdk/7949ff62d67710d5.telemetry_sdk.js"
+      integrity="sha512-KIvXA82Di44YY/RH9/63A9MuTuavYgDFG8PfErJn7Wli4K0LAOk+coo/aPXk3+ZNL96nHh9VYD4PE+fLes+laQ=="
+    ></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lady Driver Dispatch</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="/_sdk/b8fc9aac2a1ee7fa.editing_sdk.js"
+      integrity="sha512-0BDfjlda5WnGBb/gQP/bLynj6/01veZ9b+fYg78jNuknRGKsUHsXKtTCAOVAPQK2g457p9USMdsRyZFo8+UgRA=="
+    ></script>
+    <style>
+      :root {
+        --ink: #2a2928;
+        --muted: #72706e;
+        --paper: #f6f5f3;
+        --surface: #ffffff;
+        --slate: #e9e8e5;
+        --amber: #b27c38;
+        --amber-soft: #fcf6ef;
+        --teal: #3d7a78;
+        --teal-soft: #edf4f4;
+        --rose: #b1525a;
+      }
+
+      body {
+        margin: 0;
+        font-family: "DM Sans", sans-serif;
+      }
+      .editorial {
+        font-family: "Fraunces", serif;
+      }
+
+      .app-shell {
+        background:
+          radial-gradient(
+            circle at 10% 90%,
+            rgba(206, 219, 219, 0.4),
+            transparent 28rem
+          ),
+          radial-gradient(
+            circle at 94% 6%,
+            rgba(226, 203, 172, 0.35),
+            transparent 28rem
+          ),
+          #f6f5f3;
+      }
+
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(24px);
+      }
+
+      .stat-card {
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 28px rgba(42, 41, 40, 0.08);
+      }
+
+      .metric-value {
+        font-variant-numeric: tabular-nums;
+      }
+      .status-pulse {
+        box-shadow: 0 0 0 4px rgba(61, 122, 120, 0.12);
+      }
+      .list-row {
+        transition: background-color 160ms ease;
+      }
+      .list-row:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+
+      .nav-button[aria-current="page"] {
+        background-color: #3d7a78;
+        color: #ffffff;
+        border-color: #3d7a78;
+      }
+
+      .modal-open {
+        overflow: hidden;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+    <script
+      src="/_sdk/0e8d3a91e1c6f495.data_sdk.js"
+      type="text/javascript"
+      integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="
+    ></script>
+    <script
+      src="/_sdk/04cc6185e046f597.resizing_sdk.js"
+      type="text/javascript"
+      integrity="sha512-CiE/G92aQF0nxneFg1kdOvXih8sQ1Z2a2QI3+r/WvzJwQqH6+IyB3iL07OkJmpm3ABAaf07+FnqWny98f5sR6w=="
+    ></script>
+  </head>
+  <body
+    data-template-id="__page-root"
+    class="w-full"
+    style="background: rgb(246, 245, 243)"
+  >
+    <div
+      class="app-shell flex min-h-[calc(100*min(var(--vh,1vh),1vh))] w-full flex-col text-[#2a2928] xl:flex-row"
+    >
+      <nav
+        data-template-id="sidebar"
+        class="canva-panel glass-panel border-b border-[#e1dfdc] px-5 py-5 xl:w-[280px] xl:shrink-0 xl:border-b-0 xl:border-r xl:px-6 xl:py-8"
+        aria-label="Main navigation"
+        style="background: rgb(255, 255, 255)"
+      >
+        <div class="flex items-center justify-between xl:block">
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-11 w-11 items-center justify-center rounded-2xl border border-[#c4d1d1] bg-[#edf4f4] text-[#3d7a78]"
+            >
+              <i data-lucide="map" class="h-5 w-5" aria-hidden="true"></i>
+            </div>
+            <div>
+              <p
+                data-template-id="brand-name"
+                class="canva-text font-bold"
+                style="
+                  color: rgb(42, 41, 40);
+                  font-weight: 700;
+                  font-style: normal;
+                  font-size: 16px;
+                "
+              >
+                Lady Driver
+              </p>
+              <p
+                data-template-id="brand-role"
+                class="canva-text text-[10px] font-bold uppercase tracking-[0.14em] text-[#72706e]"
+                style="
+                  color: rgb(114, 112, 110);
+                  font-weight: 700;
+                  font-style: normal;
+                  font-size: 14px;
+                  letter-spacing: 0.12rem;
+                "
+              >
+                Admin Dispatch
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-8 hidden xl:block">
+          <p
+            data-template-id="nav-heading"
+            class="canva-text mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.12em] text-[#8e8d8b]"
+            style="
+              color: rgb(142, 141, 139);
+              font-weight: 700;
+              font-style: normal;
+              font-size: 14px;
+              letter-spacing: 0.1rem;
+            "
+          >
+            Workspace
+          </p>
+          <div class="flex flex-col gap-1">
+            <button
+              data-view="dispatch"
+              class="nav-button canva-button flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 text-sm font-bold text-[#5c5b59] transition hover:bg-[#efefed] focus:outline-none focus:ring-4 focus:ring-[#e2e8e8]"
+              aria-current="page"
+              style="
+                color: rgb(92, 91, 89);
+                font-weight: 700;
+                font-style: normal;
+                font-size: 14px;
+              "
+            >
+              <i
+                data-lucide="radio-tower"
+                class="h-4 w-4"
+                aria-hidden="true"
+              ></i
+              >Live Dispatch
+            </button>
+            <button
+              data-view="directory"
+              class="nav-button canva-button flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 text-sm font-bold text-[#5c5b59] transition hover:bg-[#efefed] focus:outline-none focus:ring-4 focus:ring-[#e2e8e8]"
+              style="
+                color: rgb(92, 91, 89);
+                font-weight: 700;
+                font-style: normal;
+                font-size: 14px;
+              "
+            >
+              <i data-lucide="contact" class="h-4 w-4" aria-hidden="true"></i
+              >Driver Directory
+            </button>
+            <button
+              data-view="history"
+              class="nav-button canva-button flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 text-sm font-bold text-[#5c5b59] transition hover:bg-[#efefed] focus:outline-none focus:ring-4 focus:ring-[#e2e8e8]"
+              style="
+                color: rgb(92, 91, 89);
+                font-weight: 700;
+                font-style: normal;
+                font-size: 14px;
+              "
+            >
+              <i data-lucide="clock-4" class="h-4 w-4" aria-hidden="true"></i
+              >Trip History
+            </button>
+
+            <button
+              data-view="report"
+              class="nav-button canva-button flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 text-sm font-bold text-[#5c5b59] transition hover:bg-[#efefed] focus:outline-none focus:ring-4 focus:ring-[#e2e8e8]"
+              style="
+                color: rgb(92, 91, 89);
+                font-weight: 700;
+                font-style: normal;
+                font-size: 14px;
+              "
+            >
+              <i data-lucide="bar-chart-3" class="h-4 w-4" aria-hidden="true"></i
+              >Monthly Report
+            </button>
+          </div>
+
+        </div>
+      </nav>
+      <main class="flex-1 p-4 sm:p-7 lg:p-10">
+        <div id="view-dispatch" class="view-section">
+          <header
+            class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+          >
+            <div>
+              <p
+                data-template-id="dispatch-kicker"
+                class="canva-text text-[10px] font-bold uppercase tracking-[0.16em] text-[#b27c38]"
+                style="
+                  color: rgb(178, 124, 56);
+                  font-weight: 700;
+                  font-style: normal;
+                  font-size: 14px;
+                  letter-spacing: 0.14rem;
+                "
+              >
+                Live operations
+              </p>
+              <h1
+                data-template-id="dispatch-title"
+                class="canva-text editorial mt-1 text-3xl font-bold tracking-[-0.04em]"
+                style="
+                  color: rgb(42, 41, 40);
+                  font-weight: 700;
+                  font-style: normal;
+                  font-size: 28px;
+                "
+              >
+                Dispatch Command
+              </h1>
+            </div>
+            <div class="flex gap-2">
+              <button
+                id="manual-refresh"
+                type="button"
+                class="inline-flex items-center gap-2 rounded-xl border border-[#d8d6d4] bg-white px-3 py-2 text-xs font-bold text-[#5c5b59] transition hover:bg-[#efefed] focus:outline-none focus:ring-4 focus:ring-[#e2e8e8]"
+                aria-label="Refresh data"
+              >
+                <i
+                  data-lucide="refresh-cw"
+                  class="h-3.5 w-3.5"
+                  aria-hidden="true"
+                ></i
+                >Refresh
+              </button>
+              <button
+                id="assign-trip-button"
+                data-template-id="assign-button"
+                type="button"
+                class="canva-button inline-flex items-center gap-2 rounded-xl bg-[#2a2928] px-3.5 py-2 text-xs font-bold text-white transition hover:bg-[#434241] focus:outline-none focus:ring-4 focus:ring-[#e2e8e8]"
+                style="
+                  background: rgb(42, 41, 40);
+                  color: rgb(255, 255, 255);
+                  font-weight: 700;
+                  font-style: normal;
+                  font-size: 14px;
+                "
+              >
+                Assign New Trip
+              </button>
+            </div>
+          </header>
+          <p
+            id="global-message"
+            class="mt-4 min-h-5 text-xs font-bold text-[#3d7a78]"
+            aria-live="polite"
+          ></p>
+          <section
+            aria-labelledby="metrics-heading"
+            class="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4"
+          >
+            <h2 id="metrics-heading" class="sr-only">Operational Metrics</h2>
+            <article
+              data-template-id="metric-on-duty"
+              class="stat-card canva-card rounded-[1.25rem] border border-[#e1dfdc] bg-white p-4"
+              style="background: rgb(255, 255, 255)"
+            >
+              <div class="flex items-start justify-between gap-2">
+                <p
+                  data-template-id="metric-on-duty-label"
+                  class="canva-text text-[10px] font-bold uppercase tracking-[0.12em] text-[#72706e]"
+                  style="
+                    color: rgb(114, 112, 110);
+                    font-weight: 700;
+                    font-style: normal;
+                    font-size: 14px;
+                    letter-spacing: 0.1rem;
+                  "
+                >
+                  On-Duty Drivers
+                </p>
+                <i
+                  data-lucide="car-front"
+                  class="h-4 w-4 text-[#3d7a78]"
+                  aria-hidden="true"
+                ></i>
+              </div>
+              <p
+                id="count-on-duty"
+                class="metric-value mt-4 text-2xl font-bold tracking-[-0.04em] text-[#2a2928]"
+              >
+                0
+              </p>
+            </article>
+            <article
+              data-template-id="metric-in-flight"
+              class="stat-card canva-card rounded-[1.25rem] border border-[#dbe6e6] bg-[#edf4f4] p-4"
+              style="background: rgb(237, 244, 244)"
+            >
+              <div class="flex items-start justify-between gap-2">
+                <p
+                  data-template-id="metric-in-flight-label"
+                  class="canva-text text-[10px] font-bold uppercase tracking-[0.12em] text-[#3d7a78]"
+                  style="
+                    color: rgb(61, 122, 120);
+                    font-weight: 700;
+                    font-style: normal;
+                    font-size: 14px;
+                    letter-spacing: 0.1rem;
+                  "
+                >
+                  In-Flight Trips
+                </p>
+                <i
+                  data-lucide="route"
+                  class="h-4 w-4 text-[#3d7a78]"
+                  aria-hidden="true"
+                ></i>
+              </div>
+              <p
+                id="count-in-flight"
+                class="metric-value mt-4 text-2xl font-bold tracking-[-0.04em] text-[#2a2928]"
+              >
+                0
+              </p>
+            </article>
+            <article
+              data-template-id="metric-disputed"
+              class="stat-card canva-card rounded-[1.25rem] border border-[#e1dfdc] bg-white p-4"
+              style="background: rgb(255, 255, 255)"
+            >
+              <div class="flex items-start justify-between gap-2">
+                <p
+                  data-template-id="metric-disputed-label"
+                  class="canva-text text-[10px] font-bold uppercase tracking-[0.12em] text-[#72706e]"
+                  style="
+                    color: rgb(114, 112, 110);
+                    font-weight: 700;
+                    font-style: normal;
+                    font-size: 14px;
+                    letter-spacing: 0.1rem;
+                  "
+                >
+                  Active Disputes
+                </p>
+                <i
+                  data-lucide="shield-alert"
+                  class="h-4 w-4 text-[#b1525a]"
+                  aria-hidden="true"
+                ></i>
+              </div>
+              <p
+                id="count-disputes"
+                class="metric-value mt-4 text-2xl font-bold tracking-[-0.04em] text-[#2a2928]"
+              >
+                0
+              </p>
+            </article>
+            <article
+              data-template-id="metric-gross"
+              class="stat-card canva-card rounded-[1.25rem] border border-[#e1dfdc] bg-white p-4"
+              style="background: rgb(255, 255, 255)"
+            >
+              <div class="flex items-start justify-between gap-2">
+                <p
+                  data-template-id="metric-gross-label"
+                  class="canva-text text-[10px] font-bold uppercase tracking-[0.12em] text-[#72706e]"
+                  style="
+                    color: rgb(114, 112, 110);
+                    font-weight: 700;
+                    font-style: normal;
+                    font-size: 14px;
+                    letter-spacing: 0.1rem;
+                  "
+                >
+                  Gross Fare Value
+                </p>
+                <i
+                  data-lucide="circle-dollar-sign"
+                  class="h-4 w-4 text-[#b27c38]"
+                  aria-hidden="true"
+                ></i>
+              </div>
+              <p
+                id="sum-gross"
+                class="metric-value mt-4 text-2xl font-bold tracking-[-0.04em] text-[#2a2928]"
+              >
+                RM0.00
+              </p>
+            </article>
+          </section>
+          <section aria-labelledby="live-queue-heading" class="mt-8">
+            <div
+              class="glass-panel overflow-hidden rounded-[1.5rem] border border-[#e1dfdc]"
+            >
+              <div class="border-b border-[#e9e8e5] px-5 py-5 sm:px-6">
+                <p
+                  data-template-id="queue-kicker"
+                  class="canva-text text-[10px] font-bold uppercase tracking-[0.15em] text-[#72706e]"
+                  style="
+                    color: rgb(114, 112, 110);
+                    font-weight: 700;
+                    font-style: normal;
+                    font-size: 14px;
+                    letter-spacing: 0.13rem;
+                  "
+                >
+                  Active queue
+                </p>
+                <h2
+                  id="live-queue-heading"
+                  data-template-id="queue-title"
+                  class="canva-text editorial mt-1 text-xl font-bold tracking-[-0.03em]"
+                  style="
+                    color: rgb(42, 41, 40);
+                    font-weight: 700;
+                    font-style: normal;
+                    font-size: 20px;
+                  "
+                >
+                  Trips in Progress
+                </h2>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full min-w-[700px] text-left">
+                  <thead class="bg-[#fcfbf9]">
+                    <tr>
+                      <th
+                        data-template-id="col-trip"
+                        class="canva-text px-5 py-3 text-[10px] font-bold uppercase tracking-[0.11em] text-[#72706e] sm:px-6"
+                        style="
+                          color: rgb(114, 112, 110);
+                          font-weight: 700;
+                          font-style: normal;
+                          font-size: 14px;
+                          letter-spacing: 0.1rem;
+                        "
+                      >
+                        Trip ID
+                      </th>
+                      <th
+                        data-template-id="col-driver"
+                        class="canva-text px-3 py-3 text-[10px] font-bold uppercase tracking-[0.11em] text-[#72706e]"
+                        style="
+                          color: rgb(114, 112, 110);
+                          font-weight: 700;
+                          font-style: normal;
+                          font-size: 14px;
+                          letter-spacing: 0.1rem;
+                        "
+                      >
+                        Driver
+                      </th>
+                      <th
+                        data-template-id="col-route"
+                        class="canva-text px-3 py-3 text-[10px] font-bold uppercase tracking-[0.11em] text-[#72706e]"
+                        style="
+                          color: rgb(114, 112, 110);
+                          font-weight: 700;
+                          font-style: normal;
+                          font-size: 14px;
+                          letter-spacing: 0.1rem;
+                        "
+                      >
+                        Route
+                      </th>
+                      <th
+                        data-template-id="col-fare"
+                        class="canva-text px-3 py-3 text-right text-[10px] font-bold uppercase tracking-[0.11em] text-[#72706e]"
+                        style="
+                          color: rgb(114, 112, 110);
+                          font-weight: 700;
+                          font-style: normal;
+                          font-size: 14px;
+                          letter-spacing: 0.1rem;
+                        "
+                      >
+                        Fare
+                      </th>
+                      <th
+                        data-template-id="col-status"
+                        class="canva-text px-5 py-3 text-right text-[10px] font-bold uppercase tracking-[0.11em] text-[#72706e] sm:px-6"
+                        style="
+                          color: rgb(114, 112, 110);
+                          font-weight: 700;
+                          font-style: normal;
+                          font-size: 14px;
+                          letter-spacing: 0.1rem;
+                        "
+                      >
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="live-queue-body"></tbody>
+                </table>
+              </div>
+              <p
+                id="empty-queue"
+                data-template-id="empty-queue"
+                class="canva-text hidden px-6 py-12 text-center text-sm text-[#72706e]"
+                style="
+                  color: rgb(114, 112, 110);
+                  font-weight: 400;
+                  font-style: normal;
+                  font-size: 14px;
+                "
+              >
+                The live queue is currently clear.
+              </p>
+            </div>
+          </section>
+        </div>
+        <div id="view-directory" class="view-section hidden">
+          <div
+            class="glass-panel overflow-hidden rounded-[1.5rem] border border-[#e1dfdc]"
+          >
+            <div class="border-b border-[#e9e8e5] px-5 py-5 sm:px-6">
+              <p
+                data-template-id="dir-kicker"
+                class="canva-text text-[10px] font-bold uppercase tracking-[0.15em] text-[#3d7a78]"
+                style="
+                  color: rgb(61, 122, 120);
+                  font-weight: 700;
+                  font-style: normal;
+                  font-size: 14px;
+                  letter-spacing: 0.13rem;
+                "
+              >
+                Roster
+              </p>
+              <h2
+                data-template-id="dir-title"
+                class="canva-text editorial mt-1 text-xl font-bold tracking-[-0.03em]"
+                style="
+                  color: rgb(42, 41, 40);
+                  font-weight: 700;
+                  font-style: normal;
+                  font-size: 20px;
+                "
+              >
+                Driver Directory
+              </h2>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full min-w-[700px] text-left">
+                <thead class="bg-[#fcfbf9]">
+                  <tr>
+                    <th
+                      data-template-id="dir-col-id"
+                      class="canva-text px-5 py-3 text-[10px] font-bold uppercase tracking-[0.11em] text-[#72706e] sm:px-6"
+                      style="
+                        color: rgb(114, 112, 110);
+                        font-weight: 700;
+                        font-style: normal;
+                        font-size: 14px;
+                        letter-spacing: 0.1rem;
+                      "
+                    >
+                      Driver ID
+                    </th>
+                    <th
+                      data-template-id="dir-col-name"
+                      class="canva-text px-3 py-3 text-[10px] font-bold uppercase tracking-[0.11em] text-[#72706e]"
+                      style="
+                        color: rgb(114, 112, 110);
+                        font-weight: 700;
+                        font-style: normal;
+                        font-size: 14px;
+                        letter-spacing: 0.1rem;
+                      "
+                    >
+                      Name
+                    </th>
+                    <th
+                      data-template-id="dir-col-vehicle"
+                      class="canva-text px-3 py-3 text-[10px] font-bold uppercase tracking-[0.11em] text-[#72706e]"
+                      style="
+                        color: rgb(114, 112, 110);
+                        font-weight: 700;
+                        font-style: normal;
+                        font-size: 14px;
+                        letter-spacing: 0.1rem;
+                      "
+                    >
+                      Vehicle
+                    </th>
+                    <th
+                      data-template-id="dir-col-status"
+                      class="canva-text px-5 py-3 text-right text-[10px] font-bold uppercase tracking-[0.11em] text-[#72706e] sm:px-6"
+                      style="
+                        color: rgb(114, 112, 110);
+                        font-weight: 700;
+                        font-style: normal;
+                        font-size: 14px;
+                        letter-spacing: 0.1rem;
+                      "
+                    >
+                      Status
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="directory-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div id="view-history" class="view-section hidden">
+          <div
+            class="glass-panel overflow-hidden rounded-[1.5rem] border border-[#e1dfdc]"
+          >
+            <div class="border-b border-[#e9e8e5] px-5 py-5 sm:px-6">
+              <p
+                data-template-id="history-kicker"
+                class="canva-text text-[10px] font-bold uppercase tracking-[0.15em] text-[#72706e]"
+                style="
+                  color: rgb(114, 112, 110);
+                  font-weight: 700;
+                  font-style: normal;
+                  font-size: 14px;
+                  letter-spacing: 0.13rem;
+                "
+              >
+                Ledger
+              </p>
+              <h2
+                data-template-id="history-title"
+                class="canva-text editorial mt-1 text-xl font-bold tracking-[-0.03em]"
+                style="
+                  color: rgb(42, 41, 40);
+                  font-weight: 700;
+                  font-style: normal;
+                  font-size: 20px;
+                "
+              >
+                Trip History
+              </h2>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full min-w-[700px] text-left">
+                <thead class="bg-[#fcfbf9]">
+                  <tr>
+                    <th
+                      data-template-id="hist-col-trip"
+                      class="canva-text px-5 py-3 text-[10px] font-bold uppercase tracking-[0.11em] text-[#72706e] sm:px-6"
+                      style="
+                        color: rgb(114, 112, 110);
+                        font-weight: 700;
+                        font-style: normal;
+                        font-size: 14px;
+                        letter-spacing: 0.1rem;
+                      "
+                    >
+                      Trip ID
+                    </th>
+                    <th
+                      data-template-id="hist-col-driver"
+                      class="canva-text px-3 py-3 text-[10px] font-bold uppercase tracking-[0.11em] text-[#72706e]"
+                      style="
+                        color: rgb(114, 112, 110);
+                        font-weight: 700;
+                        font-style: normal;
+                        font-size: 14px;
+                        letter-spacing: 0.1rem;
+                      "
+                    >
+                      Driver
+                    </th>
+                    <th
+                      data-template-id="hist-col-route"
+                      class="canva-text px-3 py-3 text-[10px] font-bold uppercase tracking-[0.11em] text-[#72706e]"
+                      style="
+                        color: rgb(114, 112, 110);
+                        font-weight: 700;
+                        font-style: normal;
+                        font-size: 14px;
+                        letter-spacing: 0.1rem;
+                      "
+                    >
+                      Route
+                    </th>
+                    <th
+                      data-template-id="hist-col-fare"
+                      class="canva-text px-3 py-3 text-right text-[10px] font-bold uppercase tracking-[0.11em] text-[#72706e]"
+                      style="
+                        color: rgb(114, 112, 110);
+                        font-weight: 700;
+                        font-style: normal;
+                        font-size: 14px;
+                        letter-spacing: 0.1rem;
+                      "
+                    >
+                      Fare
+                    </th>
+                    <th
+                      data-template-id="hist-col-status"
+                      class="canva-text px-5 py-3 text-right text-[10px] font-bold uppercase tracking-[0.11em] text-[#72706e] sm:px-6"
+                      style="
+                        color: rgb(114, 112, 110);
+                        font-weight: 700;
+                        font-style: normal;
+                        font-size: 14px;
+                        letter-spacing: 0.1rem;
+                      "
+                    >
+                      Status
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="history-body"></tbody>
+              </table>
+            </div>
+            <p
+              id="empty-history"
+              data-template-id="empty-history"
+              class="canva-text hidden px-6 py-12 text-center text-sm text-[#72706e]"
+              style="
+                color: rgb(114, 112, 110);
+                font-weight: 400;
+                font-style: normal;
+                font-size: 14px;
+              "
+            >
+              No completed trips found in the ledger.
+            </p>
+          </div>
+        </div>
+      
+<div id="view-report" class="view-section hidden flex-1 min-w-0 overflow-y-auto bg-[#fbfaef]"><main class="w-full max-w-[1440px] mx-auto px-4 py-5 sm:px-7 sm:py-8 lg:px-12 lg:py-10">
+          <header
+            data-template-id="report-header"
+            class="canva-header rounded-[1.75rem] border border-[#dce1da] bg-white/90 px-5 py-5 shadow-[0_18px_44px_rgba(49,58,48,.08)] backdrop-blur sm:px-7 sm:py-6"
+            style="background: rgb(255, 255, 255)"
+          >
+            <div
+              class="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between"
+            >
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <span
+                    data-template-id="report-kicker"
+                    class="canva-tag inline-flex items-center gap-2 rounded-full border border-[#b8ccba] bg-[#e7f0e4] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.15em]"
+                    style="
+                      background: rgb(231, 240, 228);
+                      color: rgb(85, 114, 90);
+                      font-weight: 700;
+                      font-style: normal;
+                      font-size: 14px;
+                      letter-spacing: 0.12rem;
+                    "
+                    >Financial close</span
+                  >
+                  <span
+                    data-template-id="report-period"
+                    class="canva-text text-[11px] font-bold uppercase tracking-[0.13em] text-[#637968]"
+                    style="
+                      color: rgb(99, 121, 104);
+                      font-weight: 700;
+                      font-style: normal;
+                      font-size: 14px;
+                      letter-spacing: 0.1rem;
+                    "
+                    >August 2026 · Monthly statement</span
+                  >
+                </div>
+                <h1
+                  data-template-id="report-title"
+                  class="canva-text editorial mt-4 max-w-3xl font-bold tracking-[-0.045em]"
+                  style="
+                    color: rgb(41, 48, 42);
+                    font-weight: 700;
+                    font-style: normal;
+                    font-size: 28px;
+                  "
+                >
+                  Monthly Earnings Report
+                </h1>
+                <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <p
+                    data-template-id="organization-name"
+                    class="canva-text text-sm font-bold text-[#29302a]"
+                    style="
+                      color: rgb(41, 48, 42);
+                      font-weight: 700;
+                      font-style: normal;
+                      font-size: 14px;
+                    "
+                  >
+                    Lady Driver Dispatch
+                  </p>
+                  <span class="h-1 w-1 rounded-full bg-[#aab2ab]"></span>
+                  <p
+                    data-template-id="report-description"
+                    class="canva-text text-sm text-[#69716b]"
+                    style="
+                      color: rgb(105, 113, 107);
+                      font-weight: 400;
+                      font-style: normal;
+                      font-size: 14px;
+                    "
+                  >
+                    Driver revenue, payouts and margin summary
+                  </p>
+                </div>
+              </div>
+              <div
+                class="screen-only no-print flex flex-wrap items-center gap-2"
+              >
+                <button
+                  id="print-button"
+                  data-template-id="print-button"
+                  type="button"
+                  class="canva-button inline-flex items-center gap-2 rounded-xl border border-[#d6ddd5] bg-[#f5f7f3] px-3.5 py-2.5 text-xs font-bold text-[#394139] hover:border-[#9eb4a1] hover:bg-[#ebf1e8] focus:outline-none focus:ring-2 focus:ring-[#6f8c73] focus:ring-offset-2 focus:ring-offset-white"
+                  style="
+                    background: rgb(245, 247, 243);
+                    color: rgb(57, 65, 57);
+                    font-weight: 700;
+                    font-style: normal;
+                    font-size: 14px;
+                  "
+                >
+                  Print / PDF
+                </button>
+                <button
+                  id="csv-button"
+                  data-template-id="csv-button"
+                  type="button"
+                  class="canva-button inline-flex items-center gap-2 rounded-xl border border-[#55725a] bg-[#55725a] px-3.5 py-2.5 text-xs font-bold text-white hover:bg-[#46634b] focus:outline-none focus:ring-2 focus:ring-[#6f8c73] focus:ring-offset-2 focus:ring-offset-white"
+                  style="
+                    background: rgb(85, 114, 90);
+                    color: rgb(255, 255, 255);
+                    font-weight: 700;
+                    font-style: normal;
+                    font-size: 14px;
+                  "
+                >
+                  Export CSV
+                </button>
+                
+              </div>
+            </div>
+          </header>
+          <section class="screen-only no-print mt-5">
+            <div
+              data-template-id="filter-toolbar"
+              class="canva-panel flex flex-col gap-4 rounded-2xl border border-[#dce1da] bg-[#f7f8f5]/90 p-3.5 sm:flex-row sm:items-center sm:justify-between"
+              style="background: rgb(247, 248, 245)"
+            >
+              <div
+                class="flex flex-wrap gap-2"
+                role="group"
+                aria-label="Driver scope filters"
+              >
+                <button
+                  id="all-filter"
+                  data-template-id="all-filter"
+                  type="button"
+                  class="filter-button canva-button is-active rounded-xl border border-[#55725a] px-3.5 py-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#6f8c73] focus:ring-offset-2 focus:ring-offset-[#f7f8f5]"
+                  aria-pressed="true"
+                  style="
+                    background: rgb(85, 114, 90);
+                    color: rgb(255, 255, 255);
+                    font-weight: 700;
+                    font-style: normal;
+                    font-size: 14px;
+                  "
+                >
+                  All drivers
+                </button>
+                <button
+                  id="duty-filter"
+                  data-template-id="duty-filter"
+                  type="button"
+                  class="filter-button canva-button rounded-xl border border-[#d5dcd4] bg-white px-3.5 py-2 text-xs font-bold text-[#58615a] hover:bg-[#eef3ed] hover:text-[#29302a] focus:outline-none focus:ring-2 focus:ring-[#6f8c73] focus:ring-offset-2 focus:ring-offset-[#f7f8f5]"
+                  aria-pressed="false"
+                  style="
+                    background: rgb(255, 255, 255);
+                    color: rgb(88, 97, 90);
+                    font-weight: 700;
+                    font-style: normal;
+                    font-size: 14px;
+                  "
+                >
+                  On-duty only
+                </button>
+              </div>
+              <div class="flex items-center gap-3">
+                <label
+                  data-template-id="specific-driver-label"
+                  for="driver-select"
+                  class="canva-text whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.12em] text-[#717a72]"
+                  style="
+                    color: rgb(113, 122, 114);
+                    font-weight: 700;
+                    font-style: normal;
+                    font-size: 14px;
+                    letter-spacing: 0.1rem;
+                  "
+                  >Specific driver</label
+                >
+                <select
+                  id="driver-select"
+                  class="canva-input min-w-0 flex-1 rounded-xl border border-[#d5dcd4] bg-white px-3 py-2 text-xs font-bold text-[#394139] outline-none focus:border-[#6f8c73] focus:ring-2 focus:ring-[#cadbc9] sm:w-48"
+                >
+                  <option value="">All drivers</option>
+                </select>
+              </div>
+            </div>
+          </main></div>
+          <section aria-labelledby="metrics-heading" class="mt-6">
+            <div class="mb-3 flex items-end justify-between gap-4">
+              <div>
+                <p
+                  data-template-id="metrics-kicker"
+                  class="canva-text text-[10px] font-bold uppercase tracking-[0.15em] text-[#637968]"
+                  style="
+                    color: rgb(99, 121, 104);
+                    font-weight: 700;
+                    font-style: normal;
+                    font-size: 14px;
+                    letter-spacing: 0.13rem;
+                  "
+                >
+                  Executive overview
+                </p>
+                <h2
+                  id="metrics-heading"
+                  data-template-id="metrics-heading"
+                  class="canva-text editorial mt-1 font-bold tracking-[-0.03em] text-[#29302a]"
+                  style="
+                    color: rgb(41, 48, 42);
+                    font-weight: 700;
+                    font-style: normal;
+                    font-size: 21px;
+                  "
+                >
+                  At a glance
+                </h2>
+              </div>
+              <p
+                id="scope-summary"
+                class="text-right text-[11px] font-medium text-[#717a72]"
+                aria-live="polite"
+              ></p>
+            </div>
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+              <article
+                data-template-id="gross-card"
+                class="report-card canva-card rounded-2xl border border-[#dfe4de] bg-white p-4"
+                style="background: rgb(255, 255, 255)"
+              >
+                <div class="flex items-start justify-between gap-3">
+                  <p
+                    data-template-id="gross-label"
+                    class="canva-text text-[10px] font-bold uppercase tracking-[0.12em] text-[#69716b]"
+                    style="
+                      color: rgb(105, 113, 107);
+                      font-weight: 700;
+                      font-style: normal;
+                      font-size: 14px;
+                      letter-spacing: 0.1rem;
+                    "
+                  >
+                    Gross revenue
+                  </p>
+                  <i
+                    data-lucide="circle-dollar-sign"
+                    class="h-4 w-4 text-[#55725a]"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+                <p
+                  id="gross-value"
+                  class="metric-value mt-5 text-2xl font-bold tracking-[-0.04em] text-[#29302a]"
+                >
+                  RM0.00
+                </p>
+                <p
+                  data-template-id="gross-note"
+                  class="canva-text mt-1.5 text-[11px] text-[#7a837b]"
+                  style="
+                    color: rgb(122, 131, 123);
+                    font-weight: 400;
+                    font-style: normal;
+                    font-size: 14px;
+                  "
+                >
+                  Total fare value
+                </p>
+              </article>
+              <article
+                data-template-id="payout-card"
+                class="report-card canva-card rounded-2xl border border-[#dfe4de] bg-white p-4"
+                style="background: rgb(255, 255, 255)"
+              >
+                <div class="flex items-start justify-between gap-3">
+                  <p
+                    data-template-id="payout-label"
+                    class="canva-text text-[10px] font-bold uppercase tracking-[0.12em] text-[#69716b]"
+                    style="
+                      color: rgb(105, 113, 107);
+                      font-weight: 700;
+                      font-style: normal;
+                      font-size: 14px;
+                      letter-spacing: 0.1rem;
+                    "
+                  >
+                    Driver payouts
+                  </p>
+                  <i
+                    data-lucide="wallet-cards"
+                    class="h-4 w-4 text-[#a55a68]"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+                <p
+                  id="payout-value"
+                  class="metric-value mt-5 text-2xl font-bold tracking-[-0.04em] text-[#29302a]"
+                >
+                  RM0.00
+                </p>
+                <p
+                  data-template-id="payout-note"
+                  class="canva-text mt-1.5 text-[11px] text-[#7a837b]"
+                  style="
+                    color: rgb(122, 131, 123);
+                    font-weight: 400;
+                    font-style: normal;
+                    font-size: 14px;
+                  "
+                >
+                  Settled and pending
+                </p>
+              </article>
+              <article
+                data-template-id="margin-card"
+                class="report-card canva-card rounded-2xl border border-[#c8d9c6] bg-[#f1f6ee] p-4"
+                style="background: rgb(241, 246, 238)"
+              >
+                <div class="flex items-start justify-between gap-3">
+                  <p
+                    data-template-id="margin-label"
+                    class="canva-text text-[10px] font-bold uppercase tracking-[0.12em] text-[#55725a]"
+                    style="
+                      color: rgb(85, 114, 90);
+                      font-weight: 700;
+                      font-style: normal;
+                      font-size: 14px;
+                      letter-spacing: 0.1rem;
+                    "
+                  >
+                    Company margin
+                  </p>
+                  <i
+                    data-lucide="chart-no-axes-combined"
+                    class="h-4 w-4 text-[#55725a]"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+                <p
+                  id="margin-value"
+                  class="metric-value mt-5 text-2xl font-bold tracking-[-0.04em] text-[#29302a]"
+                >
+                  RM0.00
+                </p>
+                <p id="margin-rate" class="mt-1.5 text-[11px] text-[#637968]">
+                  0.0% margin
+                </p>
+              </article>
+              <article
+                data-template-id="completed-card"
+                class="report-card canva-card rounded-2xl border border-[#dfe4de] bg-white p-4"
+                style="background: rgb(255, 255, 255)"
+              >
+                <div class="flex items-start justify-between gap-3">
+                  <p
+                    data-template-id="completed-label"
+                    class="canva-text text-[10px] font-bold uppercase tracking-[0.12em] text-[#69716b]"
+                    style="
+                      color: rgb(105, 113, 107);
+                      font-weight: 700;
+                      font-style: normal;
+                      font-size: 14px;
+                      letter-spacing: 0.1rem;
+                    "
+                  >
+                    Completed trips
+                  </p>
+                  <i
+                    data-lucide="circle-check-big"
+                    class="h-4 w-4 text-[#748b77]"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+                <p
+                  id="completed-value"
+                  class="metric-value mt-5 text-2xl font-bold tracking-[-0.04em] text-[#29302a]"
+                >
+                  0
+                </p>
+                <p
+                  data-template-id="completed-note"
+                  class="canva-text mt-1.5 text-[11px] text-[#7a837b]"
+                  style="
+                    color: rgb(122, 131, 123);
+                    font-weight: 400;
+                    font-style: normal;
+                    font-size: 14px;
+                  "
+                >
+                  Closed this month
+                </p>
+              </article>
+              <article
+                data-template-id="inflight-card"
+                class="report-card canva-card rounded-2xl border border-[#dfe4de] bg-white p-4"
+                style="background: rgb(255, 255, 255)"
+              >
+                <div class="flex items-start justify-between gap-3">
+                  <p
+                    data-template-id="inflight-label"
+                    class="canva-text text-[10px] font-bold uppercase tracking-[0.12em] text-[#69716b]"
+                    style="
+                      color: rgb(105, 113, 107);
+                      font-weight: 700;
+                      font-style: normal;
+                      font-size: 14px;
+                      letter-spacing: 0.1rem;
+                    "
+                  >
+                    In-flight trips
+                  </p>
+                  <i
+                    data-lucide="route"
+                    class="h-4 w-4 text-[#ad8953]"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+                <p
+                  id="inflight-value"
+                  class="metric-value mt-5 text-2xl font-bold tracking-[-0.04em] text-[#29302a]"
+                >
+                  0
+                </p>
+                <p
+                  data-template-id="inflight-note"
+                  class="canva-text mt-1.5 text-[11px] text-[#7a837b]"
+                  style="
+                    color: rgb(122, 131, 123);
+                    font-weight: 400;
+                    font-style: normal;
+                    font-size: 14px;
+                  "
+                >
+                  Still in progress
+                </p>
+              </article>
+            </div>
+          </section>
+          <section aria-labelledby="ledger-heading" class="mt-6">
+            <div
+              data-template-id="ledger-panel"
+              class="ledger-panel canva-panel overflow-hidden rounded-[1.5rem] border border-[#dce1da] bg-white shadow-[0_18px_44px_rgba(49,58,48,.07)]"
+              style="background: rgb(255, 255, 255)"
+            >
+              <div
+                class="flex flex-col gap-4 border-b border-[#e2e6e1] px-5 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-6"
+              >
+                <div>
+                  <p
+                    data-template-id="ledger-kicker"
+                    class="canva-text text-[10px] font-bold uppercase tracking-[0.15em] text-[#637968]"
+                    style="
+                      color: rgb(99, 121, 104);
+                      font-weight: 700;
+                      font-style: normal;
+                      font-size: 14px;
+                      letter-spacing: 0.13rem;
+                    "
+                  >
+                    Driver accounting
+                  </p>
+                  <h2
+                    id="ledger-heading"
+                    data-template-id="ledger-heading"
+                    class="canva-text editorial mt-1 font-bold tracking-[-0.035em] text-[#29302a]"
+                    style="
+                      color: rgb(41, 48, 42);
+                      font-weight: 700;
+                      font-style: normal;
+                      font-size: 21px;
+                    "
+                  >
+                    Earnings ledger
+                  </h2>
+                </div>
+                <p
+                  id="ledger-count"
+                  class="text-[11px] font-bold uppercase tracking-[0.1em] text-[#717a72]"
+                  aria-live="polite"
+                ></p>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="ledger-table w-full border-collapse text-left">
+                  <thead class="border-b border-[#e2e6e1] bg-[#f4f6f3]">
+                    <tr>
+                      <th
+                        data-template-id="column-driver"
+                        class="canva-text px-5 py-3 text-[10px] font-bold uppercase tracking-[0.12em] text-[#717a72] sm:px-6"
+                        style="
+                          color: rgb(113, 122, 114);
+                          font-weight: 700;
+                          font-style: normal;
+                          font-size: 14px;
+                          letter-spacing: 0.1rem;
+                        "
+                      >
+                        Driver
+                      </th>
+                      <th
+                        data-template-id="column-vehicle"
+                        class="canva-text px-3 py-3 text-[10px] font-bold uppercase tracking-[0.12em] text-[#717a72]"
+                        style="
+                          color: rgb(113, 122, 114);
+                          font-weight: 700;
+                          font-style: normal;
+                          font-size: 14px;
+                          letter-spacing: 0.1rem;
+                        "
+                      >
+                        Vehicle
+                      </th>
+                      <th
+                        data-template-id="column-trips"
+                        class="canva-text px-3 py-3 text-right text-[10px] font-bold uppercase tracking-[0.12em] text-[#717a72]"
+                        style="
+                          color: rgb(113, 122, 114);
+                          font-weight: 700;
+                          font-style: normal;
+                          font-size: 14px;
+                          letter-spacing: 0.1rem;
+                        "
+                      >
+                        Trips
+                      </th>
+                      <th
+                        data-template-id="column-gross"
+                        class="canva-text px-3 py-3 text-right text-[10px] font-bold uppercase tracking-[0.12em] text-[#717a72]"
+                        style="
+                          color: rgb(113, 122, 114);
+                          font-weight: 700;
+                          font-style: normal;
+                          font-size: 14px;
+                          letter-spacing: 0.1rem;
+                        "
+                      >
+                        Gross
+                      </th>
+                      <th
+                        data-template-id="column-payout"
+                        class="canva-text px-3 py-3 text-right text-[10px] font-bold uppercase tracking-[0.12em] text-[#717a72]"
+                        style="
+                          color: rgb(113, 122, 114);
+                          font-weight: 700;
+                          font-style: normal;
+                          font-size: 14px;
+                          letter-spacing: 0.1rem;
+                        "
+                      >
+                        Payout
+                      </th>
+                      <th
+                        data-template-id="column-margin"
+                        class="canva-text px-3 py-3 text-right text-[10px] font-bold uppercase tracking-[0.12em] text-[#717a72]"
+                        style="
+                          color: rgb(113, 122, 114);
+                          font-weight: 700;
+                          font-style: normal;
+                          font-size: 14px;
+                          letter-spacing: 0.1rem;
+                        "
+                      >
+                        Margin
+                      </th>
+                      <th
+                        data-template-id="column-status"
+                        class="canva-text px-5 py-3 text-right text-[10px] font-bold uppercase tracking-[0.12em] text-[#717a72] sm:px-6"
+                        style="
+                          color: rgb(113, 122, 114);
+                          font-weight: 700;
+                          font-style: normal;
+                          font-size: 14px;
+                          letter-spacing: 0.1rem;
+                        "
+                      >
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="ledger-body"></tbody>
+                  <tfoot
+                    id="ledger-total"
+                    class="border-t border-[#c9d9c7] bg-[#f1f6ee]"
+                  ></tfoot>
+                </table>
+              </div>
+              <p
+                id="empty-ledger"
+                data-template-id="empty-ledger"
+                class="canva-text hidden px-6 py-12 text-center text-sm text-[#69716b]"
+                style="
+                  color: rgb(105, 113, 107);
+                  font-weight: 400;
+                  font-style: normal;
+                  font-size: 14px;
+                "
+              >
+                No driver records match this accounting scope.
+              </p>
+            </div>
+          </section>
+          <footer
+            class="mt-5 flex flex-col gap-2 border-t border-[#dce1da] px-1 pt-5 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <p
+              data-template-id="footer-note"
+              class="canva-text text-[10px] font-bold uppercase tracking-[0.11em] text-[#7a837b]"
+              style="
+                color: rgb(122, 131, 123);
+                font-weight: 700;
+                font-style: normal;
+                font-size: 14px;
+                letter-spacing: 0.09rem;
+              "
+            >
+              Automatically generated from August dispatch activity
+            </p>
+            <p
+              data-template-id="footer-confidential"
+              class="canva-text text-[10px] font-bold uppercase tracking-[0.11em] text-[#7a837b]"
+              style="
+                color: rgb(122, 131, 123);
+                font-weight: 700;
+                font-style: normal;
+                font-size: 14px;
+                letter-spacing: 0.09rem;
+              "
+            >
+              Internal accounting · Confidential
+            </p>
+          </footer>
+        </section>
+</main>
+    </div>
+    <div
+      id="assign-modal"
+      class="hidden fixed inset-0 z-50 items-center justify-center bg-[#2a292866] p-4 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="assign-title"
+    >
+      <div
+        data-template-id="assign-panel"
+        class="canva-panel w-full max-w-md rounded-[1.75rem] border border-[#e1dfdc] bg-white p-6 shadow-[0_24px_60px_rgba(42,41,40,0.14)] sm:p-7"
+        style="background: rgb(255, 255, 255)"
+      >
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <p
+              data-template-id="modal-kicker"
+              class="canva-text text-[10px] font-bold uppercase tracking-[0.15em] text-[#b27c38]"
+              style="
+                color: rgb(178, 124, 56);
+                font-weight: 700;
+                font-style: normal;
+                font-size: 14px;
+                letter-spacing: 0.14rem;
+              "
+            >
+              New assignment
+            </p>
+            <h2
+              id="assign-title"
+              data-template-id="modal-title"
+              class="canva-text editorial mt-2 font-bold tracking-[-0.035em] text-[#2a2928]"
+              style="
+                color: rgb(42, 41, 40);
+                font-weight: 700;
+                font-style: normal;
+                font-size: 23px;
+              "
+            >
+              Dispatch a Trip
+            </h2>
+          </div>
+          <button
+            id="assign-close"
+            type="button"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[#e1dfdc] text-[#72706e] focus:outline-none focus:ring-4 focus:ring-[#e2e8e8]"
+            aria-label="Close form"
+          >
+            <i data-lucide="x" class="h-4 w-4" aria-hidden="true"></i>
+          </button>
+        </div>
+        <form id="assign-form" class="mt-6 space-y-4">
+          <div>
+            <label
+              data-template-id="label-driver"
+              class="canva-text mb-2 block text-[10px] font-bold uppercase tracking-[0.12em] text-[#5c5b59]"
+              for="input-driver"
+              style="
+                color: rgb(92, 91, 89);
+                font-weight: 700;
+                font-style: normal;
+                font-size: 14px;
+                letter-spacing: 0.1rem;
+              "
+              >Select Driver</label
+            >
+            <select
+              id="input-driver"
+              class="w-full rounded-xl border border-[#d8d6d4] bg-[#fcfbf9] px-3 py-2.5 text-sm font-semibold text-[#2a2928] outline-none focus:border-[#3d7a78] focus:ring-4 focus:ring-[#edf4f4]"
+              required=""
+            ></select>
+          </div>
+          <div>
+            <label
+              data-template-id="label-route"
+              class="canva-text mb-2 block text-[10px] font-bold uppercase tracking-[0.12em] text-[#5c5b59]"
+              for="input-route"
+              style="
+                color: rgb(92, 91, 89);
+                font-weight: 700;
+                font-style: normal;
+                font-size: 14px;
+                letter-spacing: 0.1rem;
+              "
+              >Route details</label
+            >
+            <input
+              id="input-route"
+              class="w-full rounded-xl border border-[#d8d6d4] bg-[#fcfbf9] px-3 py-2.5 text-sm font-semibold text-[#2a2928] outline-none focus:border-[#3d7a78] focus:ring-4 focus:ring-[#edf4f4]"
+              required=""
+              placeholder="e.g., KL Sentral → Bangsar South"
+            />
+          </div>
+          <div>
+            <label
+              data-template-id="label-fare"
+              class="canva-text mb-2 block text-[10px] font-bold uppercase tracking-[0.12em] text-[#5c5b59]"
+              for="input-fare"
+              style="
+                color: rgb(92, 91, 89);
+                font-weight: 700;
+                font-style: normal;
+                font-size: 14px;
+                letter-spacing: 0.1rem;
+              "
+              >Fare (RM)</label
+            >
+            <input
+              id="input-fare"
+              type="number"
+              step="0.01"
+              min="0"
+              class="w-full rounded-xl border border-[#d8d6d4] bg-[#fcfbf9] px-3 py-2.5 text-sm font-semibold text-[#2a2928] outline-none focus:border-[#3d7a78] focus:ring-4 focus:ring-[#edf4f4]"
+              required=""
+              placeholder="0.00"
+            />
+          </div>
+          <div class="mt-6 flex justify-end gap-2">
+            <button
+              id="assign-cancel"
+              data-template-id="assign-cancel"
+              type="button"
+              class="canva-button rounded-xl border border-[#d8d6d4] bg-white px-4 py-2.5 text-xs font-bold text-[#5c5b59] focus:outline-none focus:ring-4 focus:ring-[#efefed]"
+              style="
+                background: rgb(255, 255, 255);
+                color: rgb(92, 91, 89);
+                font-weight: 700;
+                font-style: normal;
+                font-size: 14px;
+              "
+            >
+              Cancel
+            </button>
+            <button
+              data-template-id="assign-submit"
+              type="submit"
+              class="canva-button rounded-xl bg-[#2a2928] px-4 py-2.5 text-xs font-bold text-white focus:outline-none focus:ring-4 focus:ring-[#e2e8e8]"
+              style="
+                background: rgb(42, 41, 40);
+                color: rgb(255, 255, 255);
+                font-weight: 700;
+                font-style: normal;
+                font-size: 14px;
+              "
+            >
+              Dispatch Trip
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <template id="trip-row-template">
+      <tr class="list-row border-b border-[#e9e8e5] last:border-0">
+        <td class="px-5 py-4 sm:px-6">
+          <div
+            class="text-[11px] font-bold uppercase tracking-[0.08em] text-[#2a2928] trip-id"
+          ></div>
+          <div class="trip-time mt-0.5 text-[10px] text-[#72706e]"></div>
+        </td>
+        <td class="px-3 py-4">
+          <div class="trip-driver text-xs font-bold text-[#2a2928]"></div>
+          <div class="trip-vehicle mt-0.5 text-[10px] text-[#72706e]"></div>
+        </td>
+        <td
+          class="trip-route px-3 py-4 text-xs font-medium text-[#434241]"
+        ></td>
+        <td
+          class="trip-fare px-3 py-4 text-right text-xs font-bold text-[#2a2928]"
+        ></td>
+        <td class="px-5 py-4 text-right sm:px-6">
+          <span
+            class="trip-status inline-flex rounded-full border px-2 py-1 text-[9px] font-bold uppercase tracking-[0.08em]"
+          ></span>
+        </td>
+      </tr>
+    </template>
+    <template id="driver-row-template">
+      <tr class="list-row border-b border-[#e9e8e5] last:border-0">
+        <td
+          class="driver-id px-5 py-4 text-[11px] font-bold uppercase tracking-[0.08em] text-[#2a2928] sm:px-6"
+        ></td>
+        <td class="driver-name px-3 py-4 text-xs font-bold text-[#2a2928]"></td>
+        <td
+          class="driver-vehicle px-3 py-4 text-xs font-medium text-[#434241]"
+        ></td>
+        <td class="px-5 py-4 text-right sm:px-6">
+          <span
+            class="driver-status inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.09em]"
+          ></span>
+        </td>
+      </tr>
+    </template>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const drivers = [
+          {
+            id: "LD-204",
+            name: "Jordan Daniels",
+            vehicle: "Perodua Aruz",
+            status: "on_duty",
+          },
+          {
+            id: "LD-118",
+            name: "Nadia Rahman",
+            vehicle: "Honda City",
+            status: "on_duty",
+          },
+          {
+            id: "LD-311",
+            name: "Sofia Lim",
+            vehicle: "Nissan Almera",
+            status: "on_duty",
+          },
+          {
+            id: "LD-087",
+            name: "Aisha Karim",
+            vehicle: "Toyota Vios",
+            status: "off_duty",
+          },
+        ];
+
+        const trips = [
+          {
+            id: "TRP-9814",
+            driverId: "LD-204",
+            route: "Bangsar South → KL Sentral",
+            fare: 28.4,
+            status: "assigned",
+            time: "12:15 PM",
+          },
+          {
+            id: "TRP-9821",
+            driverId: "LD-311",
+            route: "Mont Kiara → Pavilion KL",
+            fare: 42.8,
+            status: "in_progress",
+            time: "11:50 AM",
+          },
+          {
+            id: "TRP-9772",
+            driverId: "LD-204",
+            route: "TTDI → Mid Valley",
+            fare: 31.2,
+            status: "completed",
+            time: "09:40 AM",
+          },
+          {
+            id: "TRP-9749",
+            driverId: "LD-118",
+            route: "KLCC → Damansara Heights",
+            fare: 36.6,
+            status: "disputed",
+            time: "08:55 AM",
+          },
+        ];
+
+        const currency = new Intl.NumberFormat("en-MY", {
+          style: "currency",
+          currency: "MYR",
+          minimumFractionDigits: 2,
+        });
+        let generateId = 9822;
+
+        function getDriver(id) {
+          return drivers.find((d) => d.id === id);
+        }
+
+        function statusLabel(status) {
+          return (
+            {
+              assigned: "Assigned",
+              in_progress: "In progress",
+              completed: "Completed",
+              disputed: "Disputed",
+            }[status] || status
+          );
+        }
+
+        function statusStyle(status) {
+          if (status === "assigned")
+            return "border-[#d1dbdb] bg-[#edf4f4] text-[#3d7a78]";
+          if (status === "in_progress")
+            return "border-[#eadfc1] bg-[#fdfaf2] text-[#b27c38]";
+          if (status === "disputed")
+            return "border-[#ead5d9] bg-[#fffcfd] text-[#b1525a]";
+          return "border-[#d8d6d4] bg-[#f6f5f3] text-[#72706e]";
+        }
+
+        function renderMetrics() {
+          const onDuty = drivers.filter((d) => d.status === "on_duty").length;
+          const inFlight = trips.filter(
+            (t) => t.status === "assigned" || t.status === "in_progress",
+          ).length;
+          const disputed = trips.filter((t) => t.status === "disputed").length;
+          const gross = trips
+            .filter((t) => t.status === "completed")
+            .reduce((sum, t) => sum + t.fare, 0);
+
+          document.getElementById("count-on-duty").textContent = onDuty;
+          document.getElementById("count-in-flight").textContent = inFlight;
+          document.getElementById("count-disputes").textContent = disputed;
+          document.getElementById("sum-gross").textContent =
+            currency.format(gross);
+        }
+
+        function renderTrips(containerId, emptyId, filterFn) {
+          const container = document.getElementById(containerId);
+          const emptyState = document.getElementById(emptyId);
+          const filtered = trips.filter(filterFn);
+
+          container.replaceChildren();
+          emptyState.classList.toggle("hidden", filtered.length !== 0);
+
+          filtered.forEach((trip) => {
+            const driver = getDriver(trip.driverId);
+            const row = document
+              .getElementById("trip-row-template")
+              .content.cloneNode(true);
+            row.querySelector(".trip-id").textContent = trip.id;
+            row.querySelector(".trip-time").textContent = trip.time;
+            row.querySelector(".trip-driver").textContent = driver
+              ? driver.name
+              : trip.driverId;
+            row.querySelector(".trip-vehicle").textContent = driver
+              ? driver.vehicle
+              : "";
+            row.querySelector(".trip-route").textContent = trip.route;
+            row.querySelector(".trip-fare").textContent = currency.format(
+              trip.fare,
+            );
+
+            const statusSpan = row.querySelector(".trip-status");
+            statusSpan.textContent = statusLabel(trip.status);
+            statusSpan.className = `trip-status inline-flex rounded-full border px-2 py-1 text-[9px] font-bold uppercase tracking-[0.08em] ${statusStyle(trip.status)}`;
+
+            container.appendChild(row);
+          });
+        }
+
+        function renderDirectory() {
+          const container = document.getElementById("directory-body");
+          container.replaceChildren();
+
+          drivers.forEach((driver) => {
+            const row = document
+              .getElementById("driver-row-template")
+              .content.cloneNode(true);
+            row.querySelector(".driver-id").textContent = driver.id;
+            row.querySelector(".driver-name").textContent = driver.name;
+            row.querySelector(".driver-vehicle").textContent = driver.vehicle;
+
+            const statusSpan = row.querySelector(".driver-status");
+            const isDuty = driver.status === "on_duty";
+            statusSpan.style.color = isDuty ? "#3d7a78" : "#8e8d8b";
+            statusSpan.innerHTML = `<span class="h-1.5 w-1.5 rounded-full ${isDuty ? "bg-[#3d7a78] status-pulse" : "bg-[#c8c7c5]"}"></span>${isDuty ? "On duty" : "Off duty"}`;
+
+            container.appendChild(row);
+          });
+        }
+
+        function updateDashboard() {
+          renderMetrics();
+          renderTrips(
+            "live-queue-body",
+            "empty-queue",
+            (t) => t.status !== "completed",
+          );
+          renderTrips(
+            "history-body",
+            "empty-history",
+            (t) => t.status === "completed",
+          );
+          renderDirectory();
+        }
+
+        function showMessage(msg) {
+          const el = document.getElementById("global-message");
+          el.textContent = msg;
+          setTimeout(() => (el.textContent = ""), 4000);
+        }
+
+        document.querySelectorAll(".nav-button").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            document.querySelectorAll(".nav-button").forEach((b) => {
+              b.removeAttribute("aria-current");
+              b.style.backgroundColor = "";
+              b.style.color = "rgb(92, 91, 89)";
+            });
+            btn.setAttribute("aria-current", "page");
+            btn.style.backgroundColor = "#3d7a78";
+            btn.style.color = "#ffffff";
+
+            document
+              .querySelectorAll(".view-section")
+              .forEach((v) => v.classList.add("hidden"));
+            document
+              .getElementById(`view-${btn.dataset.view}`)
+              .classList.remove("hidden");
+          });
+        });
+
+        const assignModal = document.getElementById("assign-modal");
+        const driverSelect = document.getElementById("input-driver");
+
+        function openModal() {
+          driverSelect.replaceChildren();
+          drivers
+            .filter((d) => d.status === "on_duty")
+            .forEach((d) => {
+              const opt = document.createElement("option");
+              opt.value = d.id;
+              opt.textContent = `${d.name} (${d.id})`;
+              driverSelect.appendChild(opt);
+            });
+          assignModal.classList.remove("hidden");
+          assignModal.classList.add("flex");
+          document.body.classList.add("modal-open");
+        }
+
+        function closeModal() {
+          assignModal.classList.add("hidden");
+          assignModal.classList.remove("flex");
+          document.body.classList.remove("modal-open");
+          document.getElementById("assign-form").reset();
+        }
+
+        document
+          .getElementById("assign-trip-button")
+          .addEventListener("click", openModal);
+        document
+          .getElementById("assign-close")
+          .addEventListener("click", closeModal);
+        document
+          .getElementById("assign-cancel")
+          .addEventListener("click", closeModal);
+
+        document
+          .getElementById("assign-form")
+          .addEventListener("submit", (e) => {
+            e.preventDefault();
+            const driverId = document.getElementById("input-driver").value;
+            const route = document.getElementById("input-route").value;
+            const fare = parseFloat(
+              document.getElementById("input-fare").value,
+            );
+
+            if (driverId && route && fare) {
+              trips.unshift({
+                id: `TRP-${generateId++}`,
+                driverId,
+                route,
+                fare,
+                status: "assigned",
+                time: new Date().toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }),
+              });
+              closeModal();
+              updateDashboard();
+              showMessage("Trip dispatched successfully.");
+            }
+          });
+
+        document
+          .getElementById("manual-refresh")
+          .addEventListener("click", () => {
+            updateDashboard();
+            showMessage("Dashboard synchronized.");
+          });
+
+        updateDashboard();
+        
+// --- Report Script ---
+(function() {
+
+      
+        const drivers = [
+          {
+            id: "LD-204",
+            name: "Jordan Daniels",
+            vehicle: "Perodua Aruz",
+            onDuty: true,
+            status: "On duty",
+          },
+          {
+            id: "LD-118",
+            name: "Nadia Rahman",
+            vehicle: "Honda City",
+            onDuty: true,
+            status: "On duty",
+          },
+          {
+            id: "LD-087",
+            name: "Aisha Karim",
+            vehicle: "Toyota Vios",
+            onDuty: false,
+            status: "Off duty",
+          },
+          {
+            id: "LD-311",
+            name: "Sofia Lim",
+            vehicle: "Nissan Almera",
+            onDuty: true,
+            status: "On duty",
+          },
+        ];
+
+        const trips = [
+          {
+            driverId: "LD-204",
+            fare: 8420.5,
+            payout: 5894.35,
+            status: "completed",
+          },
+          {
+            driverId: "LD-204",
+            fare: 1180.0,
+            payout: 826.0,
+            status: "inflight",
+          },
+          {
+            driverId: "LD-118",
+            fare: 7650.25,
+            payout: 5355.18,
+            status: "completed",
+          },
+          {
+            driverId: "LD-118",
+            fare: 2214.4,
+            payout: 1550.08,
+            status: "completed",
+          },
+          {
+            driverId: "LD-087",
+            fare: 6385.7,
+            payout: 4469.99,
+            status: "completed",
+          },
+          {
+            driverId: "LD-311",
+            fare: 9120.0,
+            payout: 6384.0,
+            status: "completed",
+          },
+          {
+            driverId: "LD-311",
+            fare: 980.0,
+            payout: 686.0,
+            status: "inflight",
+          },
+        ];
+
+        const currency = new Intl.NumberFormat("en-MY", {
+          style: "currency",
+          currency: "MYR",
+          minimumFractionDigits: 2,
+        });
+
+        let activeScope = "all";
+        let selectedDriverId = "";
+
+        const allButton = document.getElementById("all-filter");
+        const dutyButton = document.getElementById("duty-filter");
+        const driverSelect = document.getElementById("driver-select");
+        const ledgerBody = document.getElementById("ledger-body");
+        const ledgerTotal = document.getElementById("ledger-total");
+        const emptyLedger = document.getElementById("empty-ledger");
+
+        drivers.forEach((driver) => {
+          const option = document.createElement("option");
+          option.value = driver.id;
+          option.textContent = `${driver.name} · ${driver.id}`;
+          driverSelect.appendChild(option);
+        });
+
+        function initials(name) {
+          return name
+            .split(" ")
+            .map((part) => part[0])
+            .join("")
+            .slice(0, 2)
+            .toUpperCase();
+        }
+
+        function setButtonState() {
+          const isAll = activeScope === "all" && !selectedDriverId;
+          const isDuty = activeScope === "duty" && !selectedDriverId;
+
+          [
+            [allButton, isAll],
+            [dutyButton, isDuty],
+          ].forEach(([button, active]) => {
+            button.classList.toggle("is-active", active);
+            button.classList.toggle("bg-white", !active);
+            button.classList.toggle("text-[#58615a]", !active);
+            button.setAttribute("aria-pressed", String(active));
+          });
+        }
+
+        function getVisibleDrivers() {
+          if (selectedDriverId)
+            return drivers.filter((driver) => driver.id === selectedDriverId);
+          if (activeScope === "duty")
+            return drivers.filter((driver) => driver.onDuty);
+          return drivers;
+        }
+
+        function getDriverSummary(driver) {
+          const driverTrips = trips.filter(
+            (trip) => trip.driverId === driver.id,
+          );
+          const gross = driverTrips.reduce((sum, trip) => sum + trip.fare, 0);
+          const payout = driverTrips.reduce(
+            (sum, trip) => sum + trip.payout,
+            0,
+          );
+
+          return {
+            driver,
+            trips: driverTrips.length,
+            gross,
+            payout,
+            margin: gross - payout,
+            completed: driverTrips.filter((trip) => trip.status === "completed")
+              .length,
+            inflight: driverTrips.filter((trip) => trip.status === "inflight")
+              .length,
+          };
+        }
+
+        function updateText(id, value) {
+          document.getElementById(id).textContent = value;
+        }
+
+        function render() {
+          const visibleDrivers = getVisibleDrivers();
+          const summaries = visibleDrivers.map(getDriverSummary);
+          const gross = summaries.reduce((sum, item) => sum + item.gross, 0);
+          const payout = summaries.reduce((sum, item) => sum + item.payout, 0);
+          const margin = gross - payout;
+          const completed = summaries.reduce(
+            (sum, item) => sum + item.completed,
+            0,
+          );
+          const inflight = summaries.reduce(
+            (sum, item) => sum + item.inflight,
+            0,
+          );
+          const totalTrips = summaries.reduce(
+            (sum, item) => sum + item.trips,
+            0,
+          );
+
+          updateText("gross-value", currency.format(gross));
+          updateText("payout-value", currency.format(payout));
+          updateText("margin-value", currency.format(margin));
+          updateText(
+            "margin-rate",
+            `${gross ? ((margin / gross) * 100).toFixed(1) : "0.0"}% margin retained`,
+          );
+          updateText("completed-value", completed.toLocaleString("en-GB"));
+          updateText("inflight-value", inflight.toLocaleString("en-GB"));
+          updateText(
+            "scope-summary",
+            `${visibleDrivers.length} driver${visibleDrivers.length === 1 ? "" : "s"} in scope`,
+          );
+          updateText(
+            "ledger-count",
+            `${totalTrips} trip${totalTrips === 1 ? "" : "s"} accounted`,
+          );
+
+          ledgerBody.replaceChildren();
+          emptyLedger.classList.toggle("hidden", summaries.length !== 0);
+
+          summaries.forEach((summary) => {
+            const fragment = document
+              .getElementById("ledger-row-template")
+              .content.cloneNode(true);
+            fragment.querySelector(".driver-initials").textContent = initials(
+              summary.driver.name,
+            );
+            fragment.querySelector(".driver-name").textContent =
+              summary.driver.name;
+            fragment.querySelector(".driver-id").textContent =
+              summary.driver.id;
+            fragment.querySelector(".vehicle-cell").textContent =
+              summary.driver.vehicle;
+            fragment.querySelector(".trip-cell").textContent = summary.trips;
+            fragment.querySelector(".gross-cell").textContent = currency.format(
+              summary.gross,
+            );
+            fragment.querySelector(".payout-cell").textContent =
+              currency.format(summary.payout);
+            fragment.querySelector(".margin-cell").textContent =
+              currency.format(summary.margin);
+
+            const status = fragment.querySelector(".status-cell");
+            const statusColor = summary.driver.onDuty ? "#55725a" : "#8a938b";
+            status.style.color = statusColor;
+            status.innerHTML = `<span class="status-dot h-1.5 w-1.5 rounded-full" style="background:${statusColor}"></span>${summary.driver.status}`;
+            ledgerBody.appendChild(fragment);
+          });
+
+          ledgerTotal.innerHTML = `
+          <tr>
+            <td colspan="2" class="px-5 py-4 text-xs font-bold uppercase tracking-[0.12em] text-[#55725a] sm:px-6">Portfolio total</td>
+            <td class="px-3 py-4 text-right text-xs font-bold text-[#29302a]">${totalTrips}</td>
+            <td class="px-3 py-4 text-right text-xs font-bold text-[#29302a]">${currency.format(gross)}</td>
+            <td class="px-3 py-4 text-right text-xs font-bold text-[#a55a68]">${currency.format(payout)}</td>
+            <td class="px-3 py-4 text-right text-xs font-bold text-[#55725a]">${currency.format(margin)}</td>
+            <td class="px-5 py-4 sm:px-6"></td>
+          </tr>`;
+
+          setButtonState();
+        }
+
+        function exportCsv() {
+          const summaries = getVisibleDrivers().map(getDriverSummary);
+          const rows = [
+            [
+              "Driver",
+              "Driver ID",
+              "Vehicle",
+              "Status",
+              "Trips",
+              "Gross Revenue (RM)",
+              "Driver Payout (RM)",
+              "Company Margin (RM)",
+            ],
+            ...summaries.map((item) => [
+              item.driver.name,
+              item.driver.id,
+              item.driver.vehicle,
+              item.driver.status,
+              item.trips,
+              item.gross.toFixed(2),
+              item.payout.toFixed(2),
+              item.margin.toFixed(2),
+            ]),
+          ];
+
+          const csv = rows
+            .map((row) =>
+              row
+                .map((value) => `"${String(value).replaceAll('"', '""')}"`)
+                .join(","),
+            )
+            .join("\n");
+          const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "lady-driver-monthly-earnings-august-2026.csv";
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(url);
+        }
+
+        allButton.addEventListener("click", () => {
+          activeScope = "all";
+          selectedDriverId = "";
+          driverSelect.value = "";
+          render();
+        });
+
+        dutyButton.addEventListener("click", () => {
+          activeScope = "duty";
+          selectedDriverId = "";
+          driverSelect.value = "";
+          render();
+        });
+
+        driverSelect.addEventListener("change", () => {
+          selectedDriverId = driverSelect.value;
+          activeScope = "all";
+          render();
+        });
+
+        document
+          .getElementById("print-button")
+          .addEventListener("click", () => window.print());
+        document
+          .getElementById("csv-button")
+          .addEventListener("click", exportCsv);
+
+        
+
+        
+
+        render();
+        lucide.createIcons();
+      
+})();
+
+        lucide.createIcons();
+      });
+    </script>
+  <template id="ledger-row-template">
+      <tr class="ledger-row border-b border-[#e7ebe6] last:border-0">
+        <td class="px-5 py-4 sm:px-6">
+          <div class="flex items-center gap-3">
+            <span
+              class="driver-initials flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#f5e8eb] text-[10px] font-bold text-[#a55a68]"
+            ></span>
+            <div>
+              <p class="driver-name text-sm font-bold text-[#29302a]"></p>
+              <p
+                class="driver-id mt-0.5 text-[10px] font-medium uppercase tracking-[0.1em] text-[#7a837b]"
+              ></p>
+            </div>
+          </div>
+        </td>
+        <td
+          class="vehicle-cell px-3 py-4 text-xs font-semibold text-[#58615a]"
+        ></td>
+        <td
+          class="trip-cell px-3 py-4 text-right text-xs font-semibold text-[#29302a]"
+        ></td>
+        <td
+          class="gross-cell px-3 py-4 text-right text-xs font-bold text-[#29302a]"
+        ></td>
+        <td
+          class="payout-cell px-3 py-4 text-right text-xs font-semibold text-[#a55a68]"
+        ></td>
+        <td
+          class="margin-cell px-3 py-4 text-right text-xs font-bold text-[#55725a]"
+        ></td>
+        <td class="px-5 py-4 text-right sm:px-6">
+          <span
+            class="status-cell inline-flex items-center gap-1.5 whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.09em]"
+          ></span>
+        </td>
+      </tr>
+    </template>
+</body>
+</html>

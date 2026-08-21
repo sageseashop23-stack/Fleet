@@ -34,40 +34,47 @@ interface LocalDb {
 }
 
 
-const pool = process.env.DATABASE_URL ? new Pool({ connectionString: process.env.DATABASE_URL, max: 20 }) : null;
+const pool = process.env.POSTGRES_URL ? new Pool({ connectionString: process.env.POSTGRES_URL.trim(), max: 20 }) : null;
+console.log("DATABASE_URL length:", process.env.POSTGRES_URL ? process.env.POSTGRES_URL.length : 0);
+if (pool) pool.on("error", (err) => console.error("Pool error:", err));
 
+
+let ensureTablePromise: Promise<void> | null = null;
 async function ensureTable() {
-  if (pool) {
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS app_state (
-        id SERIAL PRIMARY KEY,
-        data JSONB NOT NULL
-      )
-    `);
-    const { rowCount } = await pool.query('SELECT id FROM app_state WHERE id = 1');
-    if (rowCount === 0) {
-      // Initialize if empty
-      const initialData: LocalDb = {
-        drivers: [],
-        trips: [],
-        activityLogs: [],
-        gasConfig: { webAppUrl: '', autoSyncOnComplete: true, syncStatus: 'IDLE' }
-      };
-      // Try to read from local_db.json first
-      let data = initialData;
-      try {
-        if (fs.existsSync(DB_FILE)) {
-          data = JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'));
-        }
-      } catch (err) {}
-      await pool.query('INSERT INTO app_state (id, data) VALUES (1, $1)', [JSON.stringify(data)]);
-    }
+  if (!pool) return;
+  if (!ensureTablePromise) {
+    ensureTablePromise = (async () => {
+      await pool.query(`
+        CREATE TABLE IF NOT EXISTS app_state (
+          id SERIAL PRIMARY KEY,
+          data JSONB NOT NULL
+        )
+      `);
+      const { rowCount } = await pool.query('SELECT id FROM app_state WHERE id = 1');
+      if (rowCount === 0) {
+        const initialData: LocalDb = {
+          drivers: [],
+          trips: [],
+          activityLogs: [],
+          gasConfig: { webAppUrl: '', autoSyncOnComplete: true, syncStatus: 'IDLE' }
+        };
+        let data = initialData;
+        try {
+          if (fs.existsSync(DB_FILE)) {
+            data = JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'));
+          }
+        } catch (err) {}
+        await pool.query('INSERT INTO app_state (id, data) VALUES (1, $1) ON CONFLICT (id) DO NOTHING', [JSON.stringify(data)]);
+      }
+    })();
   }
+  return ensureTablePromise;
 }
 
 let isTableInitialized = false;
 
 async function readDb(): Promise<LocalDb> {
+console.log("readDb start, pool:", !!pool, "isTableInitialized:", isTableInitialized);
   if (pool) {
     if (!isTableInitialized) {
       await ensureTable();
@@ -264,11 +271,21 @@ async function startServer() {
 
   // Trips Endpoints
   app.get('/api/trips', async (_req, res) => {
+    try {
+    const db = await readDb();
+        res.json(db.trips);
+  } catch (err) {
+    console.error("trips error", err);
+    res.status(500).json({ error: err ? String(err) : "Unknown error", stack: err && err.stack });
+  }
+});
+/*
     const db = await readDb();
     res.json(db.trips);
   });
 
-  app.post('/api/trips', async (req, res) => {
+  */
+app.post('/api/trips', async (req, res) => {
     const db = await readDb();
     const tripData = req.body;
 

@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260810-05-2b86cd6","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/7949ff62d67710d5.telemetry_sdk.js" integrity="sha512-KIvXA82Di44YY/RH9/63A9MuTuavYgDFG8PfErJn7Wli4K0LAOk+coo/aPXk3+ZNL96nHh9VYD4PE+fLes+laQ=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lady Driver — Passenger Booking</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="https://unpkg.com/framer-motion@11.11.17/dist/framer-motion.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#171717; --paper:#f7f7f5; --line:#e5e5df; --rose:#d85173; --lime:#c8f264; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"DM Sans",sans-serif; color:var(--ink); }
+    .display-font { font-family:"Fraunces",serif; }
+    .app-shell { min-height:calc(100 * min(var(--vh, 1vh), 1vh)); background:radial-gradient(circle at 92% 0%,rgba(200,242,100,.34),transparent 25rem),radial-gradient(circle at 2% 24%,rgba(216,81,115,.10),transparent 28rem),#f7f7f5; }
+    .surface { background:rgba(255,255,255,.83); border:1px solid rgba(255,255,255,.98); box-shadow:0 18px 50px rgba(24,24,21,.08); backdrop-filter:blur(16px); }
+    .field { width:100%; border:1px solid #deded8; background:#fff; border-radius:1rem; padding:.875rem 1rem; outline:none; transition:.2s; }
+    .field:focus { border-color:#d85173; box-shadow:0 0 0 4px rgba(216,81,115,.10); }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+  </style>
+  <script src="/_sdk/0e8d3a91e1c6f495.data_sdk.js" type="text/javascript" integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="></script>
+  <script src="/_sdk/04cc6185e046f597.resizing_sdk.js" type="text/javascript" integrity="sha512-CiE/G92aQF0nxneFg1kdOvXih8sQ1Z2a2QI3+r/WvzJwQqH6+IyB3iL07OkJmpm3ABAaf07+FnqWny98f5sR6w=="></script>
+ </head>
+ <body data-template-id="__page-root" style="background: rgb(247, 247, 245);">
+  <div class="app-shell w-full">
+   <header class="w-full px-4 py-5 sm:px-7 lg:px-10">
+    <div class="mx-auto flex w-full max-w-7xl items-center justify-between gap-4">
+     <div class="flex items-center gap-3"><span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#171717] text-[#c8f264]"><i data-lucide="car-front" class="h-5 w-5"></i></span>
+      <div>
+       <p data-template-id="brand-name" class="canva-text display-font text-lg font-bold" style="color: rgb(23, 23, 23); font-weight: 700; font-style: normal; font-size: 14px;">Lady Driver</p>
+       <p data-template-id="brand-caption" class="canva-text text-[10px] font-bold uppercase tracking-[.14em] text-[#777872]" style="color: rgb(119, 120, 114); font-weight: 700; font-style: normal; font-size: 14px;">Passenger service</p>
+      </div>
+     </div>
+     <div data-template-id="header-assurance" class="canva-tag hidden rounded-full border border-[#deded8] bg-white px-3 py-2 text-xs font-semibold text-[#555650] sm:flex" style="background: rgb(255, 255, 255); color: rgb(85, 86, 80); font-weight: 600; font-style: normal; font-size: 14px;">Comfort, on your terms</div>
+    </div>
+   </header>
+   <main class="mx-auto w-full max-w-7xl px-4 pb-10 sm:px-7 lg:px-10">
+    <section class="pt-5 sm:pt-10">
+     <p data-template-id="hero-kicker" class="canva-text text-[11px] font-bold uppercase tracking-[.18em] text-[#b92f55]" style="color: rgb(185, 47, 85); font-weight: 700; font-style: normal; font-size: 14px;">Private rides, considered</p>
+     <div class="mt-3 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+      <div class="max-w-2xl">
+       <h1 data-template-id="hero-title" class="canva-text display-font text-4xl font-bold leading-[1.04] tracking-tight sm:text-5xl" style="color: rgb(23, 23, 23); font-weight: 700; font-style: normal; font-size: 28px;">Move through your day with quiet confidence.</h1>
+       <p data-template-id="hero-copy" class="canva-text mt-4 max-w-xl text-sm leading-6 text-[#686963] sm:text-base" style="color: rgb(104, 105, 99); font-weight: 400; font-style: normal; font-size: 14px;">Reserve a thoughtful ride, review your fare, and stay close to every moment of the journey.</p>
+      </div>
+      <div class="flex rounded-2xl border border-[#dfdfd9] bg-white/70 p-1.5 shadow-sm" role="tablist" aria-label="Passenger workspace"><button id="reserve-tab" data-template-id="reserve-tab" class="canva-button flex items-center gap-2 rounded-xl bg-[#171717] px-4 py-3 text-sm font-bold text-white transition focus:outline-none focus:ring-2 focus:ring-[#d85173]" type="button" role="tab" aria-selected="true" style="background: rgb(23, 23, 23); color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 14px;">Reserve</button> <button id="track-tab" data-template-id="track-tab" class="canva-button flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-[#686963] transition hover:bg-[#f3f3ef] focus:outline-none focus:ring-2 focus:ring-[#d85173]" type="button" role="tab" aria-selected="false" style="color: rgb(104, 105, 99); font-weight: 700; font-style: normal; font-size: 14px;">Track a ride</button>
+      </div>
+     </div>
+    </section>
+    <section id="reserve-panel" class="mt-8" role="tabpanel">
+     <div class="grid gap-4 xl:grid-cols-12">
+      <form id="booking-form" class="surface rounded-[2rem] p-5 sm:p-7 xl:col-span-8">
+       <div class="flex flex-col gap-4 border-b border-[#ecece7] pb-6 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+         <p data-template-id="booking-kicker" class="canva-text text-[10px] font-bold uppercase tracking-[.16em] text-[#b92f55]" style="color: rgb(185, 47, 85); font-weight: 700; font-style: normal; font-size: 14px;">Your reservation</p>
+         <h2 data-template-id="booking-title" class="canva-text display-font mt-2 text-2xl font-bold" style="color: rgb(23, 23, 23); font-weight: 700; font-style: normal; font-size: 21px;">Where would you like to go?</h2>
+        </div><span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#f9e4e9] text-[#b92f55]"><i data-lucide="sparkles" class="h-5 w-5"></i></span>
+       </div>
+       <div class="mt-6 grid gap-4 md:grid-cols-2">
+        <div class="md:col-span-2"><label data-template-id="pickup-label" class="canva-text mb-2 block text-xs font-bold uppercase tracking-[.12em] text-[#666760]" for="pickup" style="color: rgb(102, 103, 96); font-weight: 700; font-style: normal; font-size: 14px;">Pickup location</label>
+         <div class="relative">
+          <i data-lucide="circle-dot" class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#b92f55]"></i><input id="pickup" class="field pl-11 text-sm font-medium" required="" value="KL Sentral">
+         </div>
+        </div>
+        <div class="md:col-span-2"><label data-template-id="destination-label" class="canva-text mb-2 block text-xs font-bold uppercase tracking-[.12em] text-[#666760]" for="destination" style="color: rgb(102, 103, 96); font-weight: 700; font-style: normal; font-size: 14px;">Destination</label>
+         <div class="relative">
+          <i data-lucide="map-pin" class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#171717]"></i><input id="destination" class="field pl-11 text-sm font-medium" required="" value="Bangsar South">
+         </div>
+        </div>
+        <div><label data-template-id="date-label" class="canva-text mb-2 block text-xs font-bold uppercase tracking-[.12em] text-[#666760]" for="ride-date" style="color: rgb(102, 103, 96); font-weight: 700; font-style: normal; font-size: 14px;">Travel date</label> <input id="ride-date" class="field text-sm font-medium" type="date" required="">
+        </div>
+        <div><label data-template-id="passengers-label" class="canva-text mb-2 block text-xs font-bold uppercase tracking-[.12em] text-[#666760]" for="passengers" style="color: rgb(102, 103, 96); font-weight: 700; font-style: normal; font-size: 14px;">Passengers</label> <select id="passengers" class="field text-sm font-medium"><option>1 passenger</option><option>2 passengers</option><option>3 passengers</option><option>4 passengers</option></select>
+        </div>
+       </div>
+       <div class="mt-6 flex flex-col gap-3 border-t border-[#ecece7] pt-6 sm:flex-row"><button data-template-id="estimate-button" id="estimate-button" class="canva-button flex flex-1 items-center justify-center gap-2 rounded-2xl border border-[#deded8] bg-white px-4 py-3.5 text-sm font-bold text-[#44453f] transition hover:border-[#171717] hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[#d85173]" type="button" style="background: rgb(255, 255, 255); color: rgb(68, 69, 63); font-weight: 700; font-style: normal; font-size: 14px;">Refresh estimate</button> <button data-template-id="booking-submit" class="canva-button flex flex-[1.35] items-center justify-center gap-2 rounded-2xl bg-[#171717] px-4 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#373737] focus:outline-none focus:ring-2 focus:ring-[#d85173]" type="submit" style="background: rgb(23, 23, 23); color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 14px;">Request this ride</button>
+       </div>
+      </form>
+      <aside data-template-id="estimate-card" class="canva-card rounded-[2rem] bg-[#171717] p-6 text-white shadow-[0_18px_50px_rgba(24,24,21,.13)] xl:col-span-4" style="background: rgb(23, 23, 23);">
+       <div class="flex items-start justify-between gap-4">
+        <div>
+         <p data-template-id="estimate-kicker" class="canva-text text-[10px] font-bold uppercase tracking-[.16em] text-white/55" style="color: rgb(200, 200, 194); font-weight: 700; font-style: normal; font-size: 14px;">A considered estimate</p>
+         <h2 data-template-id="estimate-title" class="canva-text display-font mt-2 text-2xl font-bold" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 21px;">Your fare, clearly.</h2>
+        </div><span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#c8f264] text-[#171717]"><i data-lucide="badge-dollar-sign" class="h-5 w-5"></i></span>
+       </div>
+       <p id="estimate-value" class="mt-10 text-5xl font-bold tracking-tight text-[#c8f264]" aria-live="polite">RM 24–30</p>
+       <p data-template-id="estimate-note" class="canva-text mt-3 text-sm leading-6 text-white/62" style="color: rgb(208, 208, 201); font-weight: 400; font-style: normal; font-size: 14px;">A calm, upfront guide before you confirm. Final fares reflect the live route.</p>
+       <div class="mt-7 border-t border-white/10 pt-5">
+        <div class="flex items-center gap-3 text-sm text-white/80">
+         <i data-lucide="shield-check" class="h-4 w-4 text-[#c8f264]"></i><span data-template-id="estimate-assurance" class="canva-text" style="color: rgb(255, 255, 255); font-weight: 600; font-style: normal; font-size: 14px;">No surprises before pickup</span>
+        </div>
+       </div>
+      </aside>
+     </div>
+     <div id="booking-success" class="hidden mt-4 rounded-[2rem] border border-[#dcecb7] bg-[#f1f9dd] p-5 sm:p-6" aria-live="polite">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center"><span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#171717] text-[#c8f264]"><i data-lucide="circle-check-big" class="h-6 w-6"></i></span>
+       <div class="flex-1">
+        <p data-template-id="success-kicker" class="canva-text text-[10px] font-bold uppercase tracking-[.15em] text-[#56742d]" style="color: rgb(86, 116, 45); font-weight: 700; font-style: normal; font-size: 14px;">Reservation received</p>
+        <h2 data-template-id="success-title" class="canva-text display-font mt-1 text-xl font-bold" style="color: rgb(37, 52, 17); font-weight: 700; font-style: normal; font-size: 21px;">Your driver is being thoughtfully matched.</h2>
+        <p data-template-id="success-copy" class="canva-text mt-1 text-sm text-[#52633a]" style="color: rgb(82, 99, 58); font-weight: 400; font-style: normal; font-size: 14px;">We’ll keep your journey details ready in live tracking.</p>
+       </div><button id="success-track-button" data-template-id="success-track-button" type="button" class="canva-button rounded-xl bg-[#171717] px-4 py-3 text-sm font-bold text-white transition hover:bg-[#373737] focus:outline-none focus:ring-2 focus:ring-[#d85173]" style="background: rgb(23, 23, 23); color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 14px;">Track ride</button>
+      </div>
+     </div>
+     <section class="mt-9" aria-labelledby="recent-title">
+      <div class="flex items-end justify-between gap-4">
+       <div>
+        <p data-template-id="recent-kicker" class="canva-text text-[10px] font-bold uppercase tracking-[.16em] text-[#b92f55]" style="color: rgb(185, 47, 85); font-weight: 700; font-style: normal; font-size: 14px;">Your journey journal</p>
+        <h2 id="recent-title" data-template-id="recent-title" class="canva-text display-font mt-2 text-2xl font-bold" style="color: rgb(23, 23, 23); font-weight: 700; font-style: normal; font-size: 21px;">Recent bookings</h2>
+       </div><span data-template-id="recent-caption" class="canva-text text-xs font-semibold text-[#777872]" style="color: rgb(119, 120, 114); font-weight: 600; font-style: normal; font-size: 14px;">Select a ride to view details</span>
+      </div>
+      <div id="recent-list" class="mt-4 grid gap-3 lg:grid-cols-2"></div>
+     </section>
+    </section>
+    <section id="track-panel" class="hidden mt-8" role="tabpanel">
+     <div class="grid gap-4 xl:grid-cols-12">
+      <section class="surface rounded-[2rem] p-5 sm:p-7 xl:col-span-5">
+       <p data-template-id="tracking-kicker" class="canva-text text-[10px] font-bold uppercase tracking-[.16em] text-[#b92f55]" style="color: rgb(185, 47, 85); font-weight: 700; font-style: normal; font-size: 14px;">Live ride tracking</p>
+       <h2 data-template-id="tracking-title" class="canva-text display-font mt-2 text-3xl font-bold" style="color: rgb(23, 23, 23); font-weight: 700; font-style: normal; font-size: 21px;">Every detail, right on time.</h2>
+       <p data-template-id="tracking-copy" class="canva-text mt-3 text-sm leading-6 text-[#686963]" style="color: rgb(104, 105, 99); font-weight: 400; font-style: normal; font-size: 14px;">Enter your booking reference to see the latest trip progress and driver details.</p>
+       <form id="tracking-form" class="mt-7"><label data-template-id="tracking-label" class="canva-text mb-2 block text-xs font-bold uppercase tracking-[.12em] text-[#666760]" for="booking-reference" style="color: rgb(102, 103, 96); font-weight: 700; font-style: normal; font-size: 14px;">Booking reference</label>
+        <div class="flex flex-col gap-3 sm:flex-row">
+         <input id="booking-reference" class="field flex-1 text-sm font-bold uppercase tracking-[.08em]" required="" placeholder="LD-2841"><button data-template-id="tracking-submit" class="canva-button flex items-center justify-center gap-2 rounded-2xl bg-[#171717] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-[#373737] focus:outline-none focus:ring-2 focus:ring-[#d85173]" type="submit" style="background: rgb(23, 23, 23); color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 14px;">Find ride</button>
+        </div>
+       </form>
+       <div id="tracking-empty" class="mt-7 rounded-2xl border border-dashed border-[#deded8] bg-[#fafaf8] p-5 text-center">
+        <i data-lucide="route" class="mx-auto h-5 w-5 text-[#a1a29b]"></i>
+        <p data-template-id="tracking-empty-title" class="canva-text mt-3 text-sm font-bold" style="color: rgb(23, 23, 23); font-weight: 700; font-style: normal; font-size: 14px;">Your journey is waiting</p>
+        <p data-template-id="tracking-empty-copy" class="canva-text mt-1 text-xs leading-5 text-[#777872]" style="color: rgb(119, 120, 114); font-weight: 400; font-style: normal; font-size: 14px;">Search with a booking reference, or select one of your recent rides.</p>
+       </div>
+      </section>
+      <section id="tracking-result" class="hidden rounded-[2rem] bg-[#171717] p-5 text-white shadow-[0_18px_50px_rgba(24,24,21,.13)] sm:p-7 xl:col-span-7">
+       <div class="flex flex-col justify-between gap-5 sm:flex-row sm:items-start">
+        <div>
+         <p data-template-id="live-kicker" class="canva-text text-[10px] font-bold uppercase tracking-[.16em] text-[#c8f264]" style="color: rgb(200, 242, 100); font-weight: 700; font-style: normal; font-size: 14px;">Live status</p>
+         <h2 data-template-id="live-title" class="canva-text display-font mt-2 text-3xl font-bold" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 21px;">Your driver is on the way.</h2>
+         <p id="live-reference" class="mt-2 text-xs font-bold uppercase tracking-[.14em] text-white/48">LD-2841</p>
+        </div><span data-template-id="live-status" class="canva-tag rounded-full bg-[#c8f264] px-3 py-2 text-[10px] font-bold uppercase tracking-[.12em] text-[#263414]" style="background: rgb(200, 242, 100); color: rgb(38, 52, 20); font-weight: 700; font-style: normal; font-size: 14px;">En route to pickup</span>
+       </div>
+       <div class="mt-7 grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+         <p data-template-id="driver-label" class="canva-text text-[10px] font-bold uppercase tracking-[.13em] text-white/48" style="color: rgb(189, 190, 183); font-weight: 700; font-style: normal; font-size: 14px;">Your driver</p>
+         <div class="mt-3 flex items-center gap-3">
+          <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-sm font-bold text-[#171717]">ID</span>
+          <div>
+           <p data-template-id="driver-name" class="canva-text text-sm font-bold" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 14px;">DRV-101</p>
+           <p data-template-id="driver-car" class="canva-text mt-0.5 text-xs text-white/55" style="color: rgb(189, 190, 183); font-weight: 400; font-style: normal; font-size: 14px;">Perodua Alza · VCF 1086</p>
+          </div>
+         </div>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+         <p data-template-id="eta-label" class="canva-text text-[10px] font-bold uppercase tracking-[.13em] text-white/48" style="color: rgb(189, 190, 183); font-weight: 700; font-style: normal; font-size: 14px;">Arrival in</p>
+         <p data-template-id="eta-value" class="canva-text mt-3 text-3xl font-bold text-[#c8f264]" style="color: rgb(200, 242, 100); font-weight: 700; font-style: normal; font-size: 14px;">8 min</p>
+         <p data-template-id="eta-note" class="canva-text mt-1 text-xs text-white/55" style="color: rgb(189, 190, 183); font-weight: 400; font-style: normal; font-size: 14px;">Heading to KL Sentral</p>
+        </div>
+       </div>
+       <div class="mt-6 border-t border-white/10 pt-6">
+        <p data-template-id="timeline-label" class="canva-text text-[10px] font-bold uppercase tracking-[.13em] text-white/48" style="color: rgb(189, 190, 183); font-weight: 700; font-style: normal; font-size: 14px;">Journey progress</p>
+        <div class="mt-5 grid grid-cols-3 gap-2">
+         <div class="text-center">
+          <span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[#c8f264] text-[#171717]"><i data-lucide="check" class="h-4 w-4"></i></span>
+          <p data-template-id="timeline-one" class="canva-text mt-2 text-xs font-semibold text-white" style="color: rgb(255, 255, 255); font-weight: 600; font-style: normal; font-size: 14px;">Confirmed</p>
+         </div>
+         <div class="text-center">
+          <span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[#c8f264] text-[#171717]"><i data-lucide="car-front" class="h-4 w-4"></i></span>
+          <p data-template-id="timeline-two" class="canva-text mt-2 text-xs font-semibold text-white" style="color: rgb(255, 255, 255); font-weight: 600; font-style: normal; font-size: 14px;">On the way</p>
+         </div>
+         <div class="text-center">
+          <span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full border border-white/25 text-white/50"><i data-lucide="flag" class="h-4 w-4"></i></span>
+          <p data-template-id="timeline-three" class="canva-text mt-2 text-xs font-semibold text-white/50" style="color: rgb(189, 190, 183); font-weight: 600; font-style: normal; font-size: 14px;">Arrive</p>
+         </div>
+        </div>
+       </div>
+      </section>
+     </div>
+    </section>
+   </main>
+  </div>
+  <script src="/_sdk/b8fc9aac2a1ee7fa.editing_sdk.js" integrity="sha512-0BDfjlda5WnGBb/gQP/bLynj6/01veZ9b+fYg78jNuknRGKsUHsXKtTCAOVAPQK2g457p9USMdsRyZFo8+UgRA=="></script>
+  <script>
+    const { motion, AnimatePresence } = window.Motion;
+    const trips = [
+      { id: "LD-2841", route: "KL Sentral → Bangsar South", date: "Today · 11:20", status: "Driver assigned", fare: "RM 28.50" },
+      { id: "LD-2838", route: "Pavilion KL → TTDI", date: "9 Aug · 10:42", status: "Completed", fare: "RM 25.50" }
+    ];
+
+    const reservePanel = document.getElementById("reserve-panel");
+    const trackPanel = document.getElementById("track-panel");
+    const reserveTab = document.getElementById("reserve-tab");
+    const trackTab = document.getElementById("track-tab");
+    const trackingResult = document.getElementById("tracking-result");
+    const trackingEmpty = document.getElementById("tracking-empty");
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("ride-date").value = today;
+    document.getElementById("ride-date").min = today;
+
+    function setView(view) {
+      const reserve = view === "reserve";
+      reservePanel.classList.toggle("hidden", !reserve);
+      trackPanel.classList.toggle("hidden", reserve);
+      reserveTab.setAttribute("aria-selected", String(reserve));
+      trackTab.setAttribute("aria-selected", String(!reserve));
+      reserveTab.className = "canva-button flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-[#d85173] " + (reserve ? "bg-[#171717] text-white" : "text-[#686963] hover:bg-[#f3f3ef]");
+      trackTab.className = "canva-button flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-[#d85173] " + (!reserve ? "bg-[#171717] text-white" : "text-[#686963] hover:bg-[#f3f3ef]");
+    }
+
+    function renderTrips() {
+      const list = document.getElementById("recent-list");
+      list.innerHTML = "";
+      trips.forEach((trip) => {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "surface group flex w-full items-center justify-between gap-4 rounded-3xl p-5 text-left transition duration-300 hover:-translate-y-0.5 hover:border-[#d4d4cc] focus:outline-none focus:ring-2 focus:ring-[#d85173]";
+        card.innerHTML = '<span class="flex min-w-0 items-center gap-4"><span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#f9e4e9] text-[#b92f55]"><i data-lucide="route" class="h-5 w-5"></i></span><span class="min-w-0"><span class="flex flex-wrap items-center gap-2"><span class="rounded-full bg-[#171717] px-2 py-1 text-[10px] font-bold tracking-[.1em] text-white">' + trip.id + '</span><span class="text-xs text-[#85867f]">' + trip.date + '</span></span><strong class="mt-2 block truncate text-sm">' + trip.route + '</strong><span class="mt-1 block text-xs text-[#777872]">' + trip.status + '</span></span></span><span class="shrink-0 text-right"><strong class="block text-sm">' + trip.fare + '</strong><i data-lucide="arrow-up-right" class="ml-auto mt-2 h-4 w-4 text-[#85867f] transition group-hover:text-[#171717]"></i></span>';
+        card.addEventListener("click", () => showTracking(trip.id));
+        list.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function showTracking(reference) {
+      document.getElementById("booking-reference").value = reference;
+      document.getElementById("live-reference").textContent = reference.toUpperCase();
+      trackingEmpty.classList.add("hidden");
+      trackingResult.classList.remove("hidden");
+      setView("track");
+    }
+
+    reserveTab.addEventListener("click", () => setView("reserve"));
+    trackTab.addEventListener("click", () => setView("track"));
+
+    document.getElementById("estimate-button").addEventListener("click", () => {
+      const passengerCount = Number(document.getElementById("passengers").selectedIndex) + 1;
+      const estimate = 22 + passengerCount * 2;
+      document.getElementById("estimate-value").textContent = "RM " + estimate + "–" + (estimate + 6);
+    });
+
+    document.getElementById("booking-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      document.getElementById("booking-success").classList.remove("hidden");
+      document.getElementById("booking-success").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    document.getElementById("success-track-button").addEventListener("click", () => showTracking("LD-2841"));
+
+    document.getElementById("tracking-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const reference = document.getElementById("booking-reference").value.trim().toUpperCase();
+      if (reference) showTracking(reference);
+    });
+
+    renderTrips();
+    lucide.createIcons();
+  </script>
+ 
+</body></html>
