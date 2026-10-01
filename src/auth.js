@@ -7,8 +7,14 @@ provider.addScope('https://www.googleapis.com/auth/calendar.events');
 provider.addScope('https://www.googleapis.com/auth/calendar');
 
 let cachedAccessToken = null;
+let isSigningIn = false;
 
 export async function signInWithGoogle() {
+  if (isSigningIn) {
+    console.info("Sign-in is already in progress. Ignoring duplicate click.");
+    return null;
+  }
+  isSigningIn = true;
   try {
     const result = await signInWithPopup(auth, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -17,8 +23,20 @@ export async function signInWithGoogle() {
     }
     return result.user;
   } catch (error) {
+    const code = error?.code || '';
+    if (code === 'auth/cancelled-popup-request' || code === 'auth/popup-closed-by-user') {
+      console.info("Sign-in popup closed or cancelled by user.");
+      return null;
+    }
+    if (code === 'auth/popup-blocked') {
+      const msg = "Sign-in popup was blocked by your browser. Please allow popups for this site and try again.";
+      console.warn(msg);
+      throw new Error(msg);
+    }
     console.error("Error signing in: ", error);
     throw error;
+  } finally {
+    isSigningIn = false;
   }
 }
 
@@ -43,3 +61,4 @@ export function subscribeToAuth(callback) {
 export function getAccessToken() {
   return cachedAccessToken;
 }
+

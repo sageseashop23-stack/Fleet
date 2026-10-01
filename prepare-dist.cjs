@@ -1,25 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const appMode = process.env.VITE_APP_MODE ? process.env.VITE_APP_MODE.toLowerCase() : null;
-if (appMode && ['passenger', 'admin', 'driver'].includes(appMode)) {
-    console.log(`Setting up dist/ for VITE_APP_MODE=${appMode}`);
-    const sourceFile = path.join(__dirname, 'dist', `${appMode}.html`);
-    const destFile = path.join(__dirname, 'dist', 'index.html');
-    if (fs.existsSync(sourceFile)) {
-        
-        let htmlContent = fs.readFileSync(sourceFile, 'utf-8');
-        htmlContent = htmlContent.replace(/%VITE_GOOGLE_MAPS_API_KEY%/g, process.env.VITE_GOOGLE_MAPS_API_KEY || '');
-        fs.writeFileSync(destFile, htmlContent);
-
-        console.log(`Copied ${appMode}.html to index.html for deployment.`);
-    } else {
-        console.warn(`Warning: ${sourceFile} not found.`);
-    }
-} else {
-    console.log('No specific VITE_APP_MODE found. Using default portal index.');
-}
-
 const distDir = path.join(__dirname, 'dist');
 if (fs.existsSync(distDir)) {
     fs.readdirSync(distDir).forEach(file => {
@@ -30,4 +11,6 @@ if (fs.existsSync(distDir)) {
             fs.writeFileSync(filePath, html);
         }
     });
+    console.log('Prepared dist/ HTML files successfully.');
 }
+

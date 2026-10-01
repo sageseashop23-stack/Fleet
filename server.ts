@@ -5,7 +5,7 @@ import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI, ThinkingLevel } from '@google/genai';
 
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 const DB_FILE = path.join(process.cwd(), 'local_db.json');
 
 // Initialize Gemini Client
@@ -587,8 +587,19 @@ ${JSON.stringify(driversData || [], null, 2)}`;
     ? `${appMode}.html` 
     : 'index.html';
 
+  function resolveHtmlFile(urlPath: string): string {
+    const clean = urlPath.split('?')[0].replace(/^\/+/, '').toLowerCase();
+    if (clean === 'admin' || clean === 'admin.html') return 'admin.html';
+    if (clean === 'driver' || clean === 'driver.html') return 'driver.html';
+    if (clean === 'passenger' || clean === 'passenger.html') return 'passenger.html';
+    if (clean === '' || clean === 'index.html') return defaultHtml;
+    return defaultHtml;
+  }
+
   // Mount Vite Middleware in Development, or Static files in Production
-  if (process.env.NODE_ENV !== 'production') {
+  const isProduction = process.env.NODE_ENV === 'production' || process.env.npm_lifecycle_event === 'start';
+
+  if (!isProduction) {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'custom'
@@ -599,13 +610,28 @@ ${JSON.stringify(driversData || [], null, 2)}`;
     app.use('*', async (req, res, next) => {
       try {
         const url = req.originalUrl;
-        if (url === '/' || !url.includes('.')) {
-          let template = await fs.promises.readFile(path.resolve(process.cwd(), defaultHtml), 'utf-8');
-          template = await vite.transformIndexHtml(url, template);
-          res.status(200).set({ 'Content-Type': 'text/html' }).end(template);
-        } else {
-          next();
+        const cleanPath = url.split('?')[0];
+
+        // Skip API routes
+        if (cleanPath.startsWith('/api/')) {
+          return next();
         }
+
+        // If requesting a static asset file with an extension (other than .html), pass to next
+        const ext = path.extname(cleanPath);
+        if (ext && ext !== '.html') {
+          return next();
+        }
+
+        const htmlFilename = resolveHtmlFile(cleanPath);
+        const filePath = path.resolve(process.cwd(), htmlFilename);
+        if (!fs.existsSync(filePath)) {
+          return next();
+        }
+
+        let template = await fs.promises.readFile(filePath, 'utf-8');
+        template = await vite.transformIndexHtml(url, template);
+        res.status(200).set({ 'Content-Type': 'text/html' }).end(template);
       } catch (e: any) {
         vite.ssrFixStacktrace(e);
         next(e);
@@ -614,7 +640,22 @@ ${JSON.stringify(driversData || [], null, 2)}`;
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
-    app.get('*', async (_req, res) => {
+
+    app.get('*', (req, res, next) => {
+      const cleanPath = req.path;
+      if (cleanPath.startsWith('/api/')) {
+        return next();
+      }
+      const ext = path.extname(cleanPath);
+      if (ext && ext !== '.html') {
+        return next();
+      }
+
+      const htmlFilename = resolveHtmlFile(cleanPath);
+      const filePath = path.join(distPath, htmlFilename);
+      if (fs.existsSync(filePath)) {
+        return res.sendFile(filePath);
+      }
       res.sendFile(path.join(distPath, defaultHtml));
     });
   }

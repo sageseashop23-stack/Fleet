@@ -93,10 +93,28 @@ const loginBtn = document.getElementById('google-login-btn');
 
 if (loginBtn) {
     loginBtn.addEventListener('click', async () => {
+        const errorEl = document.getElementById('admin-auth-error');
+        if (errorEl) errorEl.classList.add('hidden');
         try {
-            await signInWithGoogle();
+            loginBtn.disabled = true;
+            loginBtn.style.opacity = '0.7';
+            loginBtn.textContent = 'Connecting...';
+            const user = await signInWithGoogle();
+            if (user && authOverlay) {
+                authOverlay.classList.add('hidden');
+            }
         } catch (e) {
-            alert('Login failed: ' + e.message);
+            if (errorEl) {
+                errorEl.textContent = e.message || 'Unable to open Google sign-in. Please ensure popups are allowed for this site and try again.';
+                errorEl.classList.remove('hidden');
+            }
+        } finally {
+            loginBtn.disabled = false;
+            loginBtn.style.opacity = '1';
+            loginBtn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Sign in with Google
+            `;
         }
     });
 }

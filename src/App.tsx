@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useAuth } from './context/AuthContext';
-import { LogIn, LogOut, Car, LayoutDashboard, Route, HelpCircle, X, Mail, Phone } from 'lucide-react';
+import { LogIn, LogOut, Car, LayoutDashboard, Route, HelpCircle, X, Mail, Phone, AlertCircle, RefreshCw } from 'lucide-react';
 
 export default function App() {
-  const { user, loading, login, logout } = useAuth();
+  const { user, loading, isLoggingIn, authError, clearAuthError, login, logout } = useAuth();
   const [isSupportOpen, setIsSupportOpen] = useState(false);
 
   return (
@@ -19,17 +19,62 @@ export default function App() {
                   <div className="text-xs text-gray-500">{user.email}</div>
                 </div>
                 {user.photoURL && <img src={user.photoURL} alt="Avatar" className="w-8 h-8 rounded-full border border-gray-200" />}
-                <button onClick={logout} className="p-2 bg-white rounded-full border border-gray-200 hover:bg-red-50 text-red-500 transition-colors shadow-sm">
+                <button onClick={logout} className="p-2 bg-white rounded-full border border-gray-200 hover:bg-red-50 text-red-500 transition-colors shadow-sm" title="Sign Out">
                   <LogOut className="w-4 h-4" />
                 </button>
               </div>
             ) : (
-              <button onClick={login} className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-200 hover:border-gray-300 font-semibold text-sm transition-colors shadow-sm">
-                <LogIn className="w-4 h-4" /> Sign In
+              <button 
+                onClick={login} 
+                disabled={isLoggingIn}
+                className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-200 hover:border-gray-300 font-semibold text-sm transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {isLoggingIn ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 animate-spin text-[#3d7a78]" /> Connecting...
+                  </>
+                ) : (
+                  <>
+                    <LogIn className="w-4 h-4" /> Sign In
+                  </>
+                )}
               </button>
             )
           )}
         </div>
+
+        {/* Centralized Error Notification Banner */}
+        {authError && (
+          <div className="w-full mb-6 p-4 rounded-2xl bg-amber-50/90 border border-amber-200/90 text-amber-900 shadow-sm flex items-start gap-3 text-left">
+            <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <div className="flex-1 text-sm">
+              <p className="font-bold text-amber-900">Sign-In Notice</p>
+              <p className="text-xs text-amber-800 mt-1 leading-relaxed">{authError}</p>
+              <div className="mt-2.5 flex items-center gap-3">
+                <button
+                  onClick={login}
+                  disabled={isLoggingIn}
+                  className="text-xs font-bold text-white bg-[#3d7a78] hover:bg-[#2f615f] px-3 py-1.5 rounded-lg transition-colors shadow-xs disabled:opacity-50"
+                >
+                  {isLoggingIn ? 'Opening popup...' : 'Try Again'}
+                </button>
+                <button
+                  onClick={clearAuthError}
+                  className="text-xs font-semibold text-amber-800 hover:text-amber-950 transition-colors px-2 py-1"
+                >
+                  Dismiss
+                </button>
+              </div>
+            </div>
+            <button 
+              onClick={clearAuthError} 
+              className="text-amber-500 hover:text-amber-800 p-1 transition-colors rounded-lg"
+              aria-label="Dismiss error"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        )}
 
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl border border-[#c4d1d1] bg-[#edf4f4] text-[#3d7a78] mb-8 shadow-sm">
           <Car className="w-7 h-7" />

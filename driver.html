@@ -45,8 +45,8 @@
   <script src="/_sdk/04cc6185e046f597.resizing_sdk.js" type="text/javascript" integrity="sha512-CiE/G92aQF0nxneFg1kdOvXih8sQ1Z2a2QI3+r/WvzJwQqH6+IyB3iL07OkJmpm3ABAaf07+FnqWny98f5sR6w=="></script>
  </head>
  <body data-template-id="__page-root" class="w-full" style="background: rgb(248, 247, 243);">
-    <!-- Auth Overlay -->
-    <div id="auth-overlay" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#fcfbf9]">
+    <!-- Auth Overlay (Optional for fleet drivers who use PIN access) -->
+    <div id="auth-overlay" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#fcfbf9] hidden">
         <h1 class="text-3xl font-bold font-serif mb-6 text-[#29302a]">Authentication Required</h1>
         <button id="google-login-btn" class="flex items-center gap-3 px-6 py-3 bg-white border border-[#c4d1d1] shadow-sm rounded-xl text-[#2a2928] font-bold hover:shadow-md hover:border-[#b92f55] transition-all">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -272,11 +272,26 @@
       let selectedRatingTripId = null;
 
       let trips = [
-        { id: "TRP-9814", driverId: "LD-204", route: "Bangsar South → KL Sentral", detail: "A. Han · 2 passengers · Standard", fare: 28.40, status: "assigned", time: "Pickup by 12:15" },
-        { id: "TRP-9821", driverId: "LD-204", route: "Mont Kiara → Pavilion KL", detail: "M. Lee · 1 passenger · Premium", fare: 42.80, status: "in_progress", time: "Started 8 min ago" },
-        { id: "TRP-9772", driverId: "LD-204", route: "TTDI → Mid Valley", detail: "N. Yusuf · Standard", fare: 31.20, status: "completed", time: "Completed 09:40", rating: 5 },
-        { id: "TRP-9749", driverId: "LD-204", route: "KLCC → Damansara Heights", detail: "S. Tan · Premium", fare: 36.60, status: "completed", time: "Completed 08:55", rating: 5 },
-        { id: "TRP-9707", driverId: "LD-204", route: "Brickfields → Bukit Bintang", detail: "R. Kumar · Standard", fare: 24.90, status: "completed", time: "Completed 08:10", rating: 4 }
+        { id: "TRP-2026-9001", driverId: "LD-204", route: "The Horizon, Bangsar South → KL Sentral", detail: "Nur Aishah · 1 passenger · Standard", fare: 28.50, status: "completed", time: "Completed 08:50", rating: 5 },
+        { id: "TRP-2026-9002", driverId: "LD-118", route: "KLCC Suria → Pavilion Damansara Heights", detail: "Siti Zulaikha · 2 passengers · Executive", fare: 38.00, status: "completed", time: "Completed 09:20", rating: 5 },
+        { id: "TRP-2026-9003", driverId: "LD-204", route: "Mid Valley Megamall → Mont Kiara Pines", detail: "Amanda Lin · 1 passenger · Standard", fare: 32.50, status: "completed", time: "Completed 09:45", rating: 5 },
+        { id: "TRP-2026-9004", driverId: "LD-311", route: "1 Utama Shopping Centre → TTDI Park", detail: "Melissa Wong · 3 passengers · Standard", fare: 22.00, status: "completed", time: "Completed 10:05", rating: 4 },
+        { id: "TRP-2026-9005", driverId: "LD-118", route: "Sunway Pyramid → Subang Jaya SS15", detail: "Priya Nair · 1 passenger · Standard", fare: 24.00, status: "completed", time: "Completed 10:35", rating: 5 },
+        { id: "TRP-2026-9006", driverId: "LD-204", route: "Bukit Bintang Lot 10 → Bangsar Village II", detail: "Farah Diana · 2 passengers · Standard", fare: 31.00, status: "completed", time: "Completed 11:05", rating: 5 },
+        { id: "TRP-2026-9007", driverId: "LD-118", route: "Plaza Damas → Menara Citibank, Jalan Ampang", detail: "Rachel Tan · 1 passenger · Executive", fare: 35.00, status: "completed", time: "Completed 11:35", rating: 5 },
+        { id: "TRP-2026-9008", driverId: "LD-204", route: "Publika Shopping Gallery → Desa ParkCity", detail: "Jasmine Kaur · 2 passengers · Standard", fare: 26.50, status: "completed", time: "Completed 12:00", rating: 4 },
+        { id: "TRP-2026-9009", driverId: "LD-311", route: "Subang Airport (SZB) → Nu Sentral Hotel", detail: "Chloe Lee · 1 passenger · Executive", fare: 48.00, status: "completed", time: "Completed 12:30", rating: 5 },
+        { id: "TRP-2026-9010", driverId: "LD-118", route: "Empire Shopping Gallery → Paradigm Mall", detail: "Wan Nadiah · 1 passenger · Standard", fare: 25.00, status: "completed", time: "Completed 12:45", rating: 5 },
+        { id: "TRP-2026-9011", driverId: "LD-204", route: "The Gardens Mall → St. Regis Kuala Lumpur", detail: "Anis Syahirah · 1 passenger · Executive", fare: 34.00, status: "in_progress", time: "Started 12 min ago" },
+        { id: "TRP-2026-9012", driverId: "LD-118", route: "Tropicana Gardens Mall → Dataran Sunway", detail: "Jessica Gomez · 2 passengers · Standard", fare: 18.00, status: "in_progress", time: "Started 8 min ago" },
+        { id: "TRP-2026-9013", driverId: "LD-311", route: "Solaris Dutamas → Intermark Mall, Jalan Tun Razak", detail: "Siti Hajar · 1 passenger · Standard", fare: 33.00, status: "in_progress", time: "Started 5 min ago" },
+        { id: "TRP-2026-9014", driverId: "LD-204", route: "Plaza Arkadia → Bandar Utama Central Park", detail: "Kavita Devi · 3 passengers · Standard", fare: 27.50, status: "assigned", time: "Pickup by 13:30" },
+        { id: "TRP-2026-9015", driverId: "LD-311", route: "Starhill Gallery → Four Seasons Hotel KL", detail: "Brenda Teoh · 1 passenger · Executive", fare: 29.00, status: "assigned", time: "Pickup by 13:35" },
+        { id: "TRP-2026-9016", driverId: "LD-118", route: "Bangsar Shopping Centre → UM Medical Centre", detail: "Natalie Chen · 2 passengers · Standard", fare: 26.00, status: "assigned", time: "Pickup by 13:40" },
+        { id: "TRP-2026-9017", driverId: "LD-204", route: "IOI City Mall → Cyberjaya Shaftsbury Square", detail: "Zainab Omar · 1 passenger · Standard", fare: 36.00, status: "assigned", time: "Pickup by 13:45" },
+        { id: "TRP-2026-9018", driverId: "LD-118", route: "LRT Kelana Jaya → Sunway Geo Avenue", detail: "Karen Low · 1 passenger · Standard", fare: 23.50, status: "assigned", time: "Pickup by 13:50" },
+        { id: "TRP-2026-9019", driverId: "LD-311", route: "Hartamas Shopping Centre → Sentul Depot", detail: "Elena Rostova · 2 passengers · Standard", fare: 27.00, status: "assigned", time: "Pickup by 13:55" },
+        { id: "TRP-2026-9020", driverId: "LD-311", route: "TRX Exchange Mall → MyTOWN Shopping Centre", detail: "Sarah Jenkins · 2 passengers · Standard", fare: 25.50, status: "disputed", time: "Fare in review" }
       ];
 
       const currency = new Intl.NumberFormat("en-MY", { style: "currency", currency: "MYR", minimumFractionDigits: 2 });
