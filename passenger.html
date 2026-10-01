@@ -20,7 +20,16 @@
   </style>
   <script src="/_sdk/0e8d3a91e1c6f495.data_sdk.js" type="text/javascript" integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="></script>
   <script src="/_sdk/04cc6185e046f597.resizing_sdk.js" type="text/javascript" integrity="sha512-CiE/G92aQF0nxneFg1kdOvXih8sQ1Z2a2QI3+r/WvzJwQqH6+IyB3iL07OkJmpm3ABAaf07+FnqWny98f5sR6w=="></script>
- </head>
+ 
+  
+<script>
+(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+({key: "%VITE_GOOGLE_MAPS_API_KEY%", v: "weekly", internalUsageAttributionIds: "gmp_mcp_codeassist_v1_aistudio" });
+</script>
+
+
+<meta id="gmap-key" name="gmap-key" content="%VITE_GOOGLE_MAPS_API_KEY%">
+</head>
  <body data-template-id="__page-root" style="background: rgb(247, 247, 245);">
   <div class="app-shell w-full">
    <header class="w-full px-4 py-5 sm:px-7 lg:px-10">
@@ -133,8 +142,7 @@
          <h2 data-template-id="live-title" class="canva-text display-font mt-2 text-3xl font-bold" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 21px;">Your driver is on the way.</h2>
          <p id="live-reference" class="mt-2 text-xs font-bold uppercase tracking-[.14em] text-white/48">LD-2841</p>
         </div><span data-template-id="live-status" class="canva-tag rounded-full bg-[#c8f264] px-3 py-2 text-[10px] font-bold uppercase tracking-[.12em] text-[#263414]" style="background: rgb(200, 242, 100); color: rgb(38, 52, 20); font-weight: 700; font-style: normal; font-size: 14px;">En route to pickup</span>
-       </div>
-       <div class="mt-7 grid gap-4 sm:grid-cols-2">
+              </div>       <div class="mt-7 grid gap-4 sm:grid-cols-2">
         <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
          <p data-template-id="driver-label" class="canva-text text-[10px] font-bold uppercase tracking-[.13em] text-white/48" style="color: rgb(189, 190, 183); font-weight: 700; font-style: normal; font-size: 14px;">Your driver</p>
          <div class="mt-3 flex items-center gap-3">
@@ -264,6 +272,7 @@ function showTracking(reference) {
           }
           
           if (data.driverId) {
+
              // In a real app we would join with drivers collection, 
              // but for simplicity we'll just show the driver ID or fetch it.
              const dRef = doc(db, "drivers", data.driverId);
@@ -337,6 +346,32 @@ onSnapshot(q, (snapshot) => {
 
 lucide.createIcons();
 
-</script>
- 
-</body></html>
+
+// Google Maps Places Autocomplete
+async function initAutocomplete() {
+    try {
+        const { Autocomplete } = await google.maps.importLibrary("places");
+        
+        const pickupInput = document.getElementById('pickup');
+        const destinationInput = document.getElementById('destination');
+        
+        if (pickupInput) {
+            new Autocomplete(pickupInput, {
+                componentRestrictions: { country: "my" },
+                fields: ["formatted_address", "geometry", "name"],
+            });
+        }
+        
+        if (destinationInput) {
+            new Autocomplete(destinationInput, {
+                componentRestrictions: { country: "my" },
+                fields: ["formatted_address", "geometry", "name"],
+            });
+        }
+    } catch (e) {
+        console.error("Maps API not loaded or error initializing autocomplete", e);
+    }
+}
+initAutocomplete();
+
+</script></body></html>
